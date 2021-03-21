@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/custom_post_card.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/home/home.dart';
 import 'package:food_insta/screens/login.dart';
