@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_post_card.dart';
 import 'package:food_insta/models/user.dart';
-import 'package:food_insta/screens/home/home.dart';
+import 'package:food_insta/screens/home/root_app.dart';
 import 'package:food_insta/screens/login.dart';
 import 'package:food_insta/screens/registration/registeration_page.dart';
 import 'package:food_insta/screens/registration/user_type.dart';
@@ -22,7 +22,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  bool isLoggedIn = false;
+  bool isLoggedIn = true;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: isLoggedIn ? Home() : Login(),
+        home: isLoggedIn ? RootApp() : Login(),
       ),
     );
   }
