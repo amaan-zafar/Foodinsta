@@ -1,13 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/components/custom_post_card.dart';
 import 'package:food_insta/models/user.dart';
-import 'package:food_insta/screens/root_app/camera.dart';
-import 'package:food_insta/screens/root_app/root_app.dart';
+import 'package:food_insta/screens/root_app/map_page.dart';
 import 'package:food_insta/screens/auth/login.dart';
-import 'package:food_insta/screens/auth/registeration_page.dart';
-import 'package:food_insta/screens/auth/user_type.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:provider/provider.dart';
@@ -26,27 +21,19 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  bool isLoggedIn = false;
+  bool isLoggedIn = true;
   final CameraDescription camera;
 
   MyApp(this.camera);
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserNotifier(),
-        )
-      ],
+      providers: [ChangeNotifierProvider(create: (context) => UserNotifier())],
       child: MaterialApp(
         title: Constants.APP_LABEL,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.themeData(),
-        home: isLoggedIn
-            ? RootApp()
-            : TakePictureScreen(
-                camera: camera,
-              ),
+        home: isLoggedIn ? MapWidget() : LoginPage(),
       ),
     );
   }
