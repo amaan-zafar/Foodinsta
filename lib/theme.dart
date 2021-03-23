@@ -51,7 +51,7 @@ final TextTheme _textTheme = TextTheme(
       fontWeight: FontWeight.w400,
       letterSpacing: 0.15), // Text Field
   bodyText2: GoogleFonts.nunito(
-      fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+      fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.15), // T&C
   button: GoogleFonts.nunito(
       fontSize: 18,
       fontWeight: FontWeight.w700,

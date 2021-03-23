@@ -5,7 +5,7 @@ class CustomButton extends StatelessWidget {
   final String textOnButton;
   final Color color;
 
-  CustomButton({this.textOnButton, this.onPressed, this.color});
+  CustomButton({this.textOnButton, this.onPressed, this.color = Colors.blue});
   @override
   Widget build(BuildContext context) {
     return Row(

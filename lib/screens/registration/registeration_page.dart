@@ -7,12 +7,15 @@ import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:food_insta/constants.dart' as Constants;
 
 class RegistrationForm extends StatefulWidget {
+  final int userType;
+
+  const RegistrationForm({Key key, this.userType}) : super(key: key);
   @override
-  _RegistrationFormState createState() => _RegistrationFormState();
+  _RegistrationFormState createState() => _RegistrationFormState(userType);
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
-  int userType = 0;
+  final int userType;
 
   bool isChecked = false;
 
@@ -23,6 +26,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
   List<String> _cities = [];
 
   final _formKey = GlobalKey<FormState>();
+
+  _RegistrationFormState(this.userType);
 
   String _validate(String value, bool isRequired) {
     if (value.isEmpty && isRequired) return Constants.ERR_EMPTY_FIELD;
@@ -37,6 +42,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         Text(
           'Final step, fill out your details',
           style: Theme.of(context).textTheme.headline6,
+          textAlign: TextAlign.center,
         ),
         SizedBox(height: 16),
         CustomTextField(
@@ -96,12 +102,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
               )
             : Container(),
         CheckboxListTile(
-          title: Text(Constants.ACEEPT_TNC),
+          title: Text(
+            Constants.ACEEPT_TNC,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
           value: isChecked,
           onChanged: (newValue) {
-            // setState(() {
-            //   isChecked = newValue;
-            // });
+            setState(() {
+              isChecked = newValue;
+            });
           },
           controlAffinity: ListTileControlAffinity.leading,
         ),

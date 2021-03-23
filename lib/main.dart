@@ -8,6 +8,7 @@ import 'package:food_insta/screens/login.dart';
 import 'package:food_insta/screens/registration/registeration_page.dart';
 import 'package:food_insta/screens/registration/user_type.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/constants.dart' as Constants;
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        title: 'FoodEx',
+        title: Constants.APP_LABEL,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.themeData(),
         home: isLoggedIn ? RootApp() : LoginPage(),

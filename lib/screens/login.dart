@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_button.dart';
+import 'package:food_insta/screens/registration/user_type.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:food_insta/constants.dart' as Constants;
 
@@ -9,6 +10,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool userAuthorised = true;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -63,7 +65,12 @@ class _LoginPageState extends State<LoginPage> {
                             color: AppTheme.signInButtonColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => UserTypePage()));
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
