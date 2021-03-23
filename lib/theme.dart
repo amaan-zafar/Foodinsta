@@ -3,16 +3,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const bgColorBeginGradient = Color(0xFF158897);
-const bgColorEndGradient = Color(0xFF158897);
-const signInButtonColor = Color(0xFF4285F4);
-const textFieldColor = Color(0xFFF8F8F8);
-const customButtonColor = Colors.blue;
+const double bottomPaddingForCard = 64.0;
+const whiteBgScreenColor = Color(0xFFF5F9FF);
+const whiteBgCardColor = Color(0xFFFEFEFE);
+const bgColorBeginGradient = Color(0xFFFCB100);
+const bgColorEndGradient = Color(0xFFFDBF2D);
+const signInButtonColor = Color(0xFF2D9CDB);
+const textFieldColor = Color(0xFFEEF5FF);
+const customButtonColor = Color(0xFF2D9CDB);
+const customApprovedButtonColor = Color(0xFF34FF01);
+const customRejectedButtonColor = Color(0xFF2D9CDB);
+const customCompletedButtonColor = Color(0xFF979797);
+const customRequestButtonColor = Color(0xFFF54580);
 const bgLinearGradient = LinearGradient(
-  colors: [
-    const Color(0xFF158897),
-    const Color(0xFF2E4554),
-  ],
+  colors: [bgColorBeginGradient, bgColorEndGradient],
   begin: const FractionalOffset(0.0, -1.0),
   end: const FractionalOffset(0.0, 1.0),
   stops: [0.0, 1.0],

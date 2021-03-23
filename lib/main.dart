@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/map_page.dart';
 import 'package:food_insta/screens/auth/login.dart';
@@ -21,7 +22,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  bool isLoggedIn = true;
+  bool isLoggedIn = false;
   final CameraDescription camera;
 
   MyApp(this.camera);
