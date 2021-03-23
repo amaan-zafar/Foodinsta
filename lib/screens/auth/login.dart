@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_button.dart';
-import 'package:food_insta/screens/registration/user_type.dart';
+import 'package:food_insta/screens/auth/user_type.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:food_insta/constants.dart' as Constants;
 

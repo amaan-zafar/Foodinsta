@@ -3,6 +3,10 @@
    <application
         android:label="food_insta"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDFbXEFzzx7CUhk6CaGdz64KUGVnBZ2FvI" />
+    
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

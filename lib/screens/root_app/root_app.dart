@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/screens/home/home_page.dart';
+import 'package:food_insta/screens/root_app/home_page.dart';
 
 class RootApp extends StatefulWidget {
   @override

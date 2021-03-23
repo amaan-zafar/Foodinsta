@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_button.dart';
 import 'package:food_insta/components/custom_scaffold.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/screens/registration/registeration_page.dart';
+import 'package:food_insta/screens/auth/registeration_page.dart';
 import 'package:food_insta/utils.dart';
 
 class UserTypePage extends StatelessWidget {
