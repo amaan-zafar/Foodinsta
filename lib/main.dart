@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_post_card.dart';
-import 'package:food_insta/components/temp_form.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/home/root_app.dart';
 import 'package:food_insta/screens/login.dart';
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
         title: 'FoodEx',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.themeData(),
-        home: isLoggedIn ? RootApp() : TempForm(),
+        home: isLoggedIn ? RootApp() : LoginPage(),
       ),
     );
   }

@@ -10,9 +10,7 @@ class UserTypePage extends StatelessWidget {
         textOnButton: 'I am ${Utils.getMemberType(userType)}',
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => RegisterationPage(userType: userType)));
+              context, MaterialPageRoute(builder: (_) => RegistrationForm()));
         });
   }
 
