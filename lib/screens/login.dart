@@ -9,6 +9,7 @@ import 'package:food_insta/models/user.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/components/page_indicator.dart' as Indicator;
 import 'package:food_insta/screens/registration/user_type.dart';
+import 'package:food_insta/theme.dart' as AppTheme;
 
 class Login extends StatefulWidget {
   @override
@@ -84,7 +85,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   Expanded(
                     child: CustomTextField(
                       keyboardType: TextInputType.number,
-                      labelText: 'Phone Number',
+                      hintText: 'Phone Number',
                       validator: validatePhone,
                       onChanged: (value) {
                         if (value != null && value.length == 10) {
@@ -197,38 +198,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text(Constants.APP_LABEL)),
-        elevation: 0,
-      ),
-      body: Container(
-        color: Colors.white,
-        height: MediaQuery.of(context).size.height,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: pageController,
-                  onPageChanged: (int page) {
-                    setState(() {
-                      currentPage = page;
-                    });
-                  },
-                  children: <Widget>[
-                    _buildPhoneNumberPage(),
-                    _buildOtpPage(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    return Scaffold();
   }
 }

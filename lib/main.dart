@@ -1,11 +1,14 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_post_card.dart';
+import 'package:food_insta/components/temp_form.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/home/root_app.dart';
 import 'package:food_insta/screens/login.dart';
 import 'package:food_insta/screens/registration/registeration_page.dart';
 import 'package:food_insta/screens/registration/user_type.dart';
+import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -22,7 +25,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  bool isLoggedIn = true;
+  bool isLoggedIn = false;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -33,10 +36,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'FoodEx',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: isLoggedIn ? RootApp() : Login(),
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.themeData(),
+        home: isLoggedIn ? RootApp() : TempForm(),
       ),
     );
   }

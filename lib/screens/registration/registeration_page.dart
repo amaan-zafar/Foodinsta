@@ -34,24 +34,11 @@ class _RegisterUserState extends State<RegisterationPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: Text(Constants.APP_LABEL),
-          ),
-          // leading: Container(),
-        ),
         body: Container(
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
               buildForm(userType),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(32.0, 4.0, 32.0, 16.0),
-                child: CustomButton(
-                  textOnButton: Constants.REGISTER_TEXT,
-                  onPressed: isChecked ? () {} : () {},
-                ),
-              ),
             ],
           ),
         ),
@@ -83,7 +70,7 @@ class _RegisterUserState extends State<RegisterationPage> {
               ),
               CustomTextField(
                 keyboardType: TextInputType.name,
-                labelText: Constants.NAME_TEXT,
+                hintText: Constants.NAME_TEXT,
                 validator: (value) {
                   return _validate(value, true);
                 },
@@ -91,7 +78,7 @@ class _RegisterUserState extends State<RegisterationPage> {
               SizedBox(height: 24),
               CustomTextField(
                 keyboardType: TextInputType.emailAddress,
-                labelText:
+                hintText:
                     '${Constants.EMAIL_TEXT} (${Constants.OPTIONAL_TEXT})',
                 validator: (value) {
                   return _validate(value, false);
@@ -113,7 +100,7 @@ class _RegisterUserState extends State<RegisterationPage> {
               userType == 1
                   ? CustomTextField(
                       keyboardType: TextInputType.emailAddress,
-                      labelText: Constants.REGISTERATION_NUMBER_TEXT,
+                      hintText: Constants.REGISTERATION_NUMBER_TEXT,
                       validator: (value) {
                         return _validate(value, true);
                       },
@@ -124,7 +111,7 @@ class _RegisterUserState extends State<RegisterationPage> {
                           flex: 2,
                           child: CustomTextField(
                             keyboardType: TextInputType.number,
-                            labelText: Constants.STD_CODE,
+                            hintText: Constants.STD_CODE,
                             validator: (value) {
                               return _validate(value, false);
                             },
@@ -135,7 +122,7 @@ class _RegisterUserState extends State<RegisterationPage> {
                           flex: 3,
                           child: CustomTextField(
                             keyboardType: TextInputType.number,
-                            labelText:
+                            hintText:
                                 '${Constants.LANDLINE_TEXT} (${Constants.OPTIONAL_TEXT})',
                             validator: (value) {
                               return _validate(value, false);
@@ -147,7 +134,7 @@ class _RegisterUserState extends State<RegisterationPage> {
               SizedBox(height: 24),
               CustomTextField(
                 keyboardType: TextInputType.multiline,
-                labelText: Constants.STREET_ADDRESS,
+                hintText: Constants.STREET_ADDRESS,
                 validator: (value) {
                   return _validate(value, true);
                 },
@@ -156,7 +143,7 @@ class _RegisterUserState extends State<RegisterationPage> {
               userType == 2
                   ? CustomTextField(
                       keyboardType: TextInputType.text,
-                      labelText:
+                      hintText:
                           '${Constants.WEBSITE_TEXT} (${Constants.OPTIONAL_TEXT})',
                       validator: (value) {
                         return _validate(value, false);

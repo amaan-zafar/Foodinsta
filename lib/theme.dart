@@ -3,60 +3,61 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const Color appBarColor = Color(0xFF020202); //900
-const Color buttonColor = Color(0xFF212121); //800
-const Color primaryColor = Color(0xFF212121); //800
+const bgColorBeginGradient = Color(0xFF158897);
+const bgColorEndGradient = Color(0xFF158897);
+const signInButtonColor = Color(0xFF4285F4);
+const textFieldColor = Color(0xFFF8F8F8);
+const customButtonColor = Colors.blue;
+const bgLinearGradient = LinearGradient(
+  colors: [
+    const Color(0xFF158897),
+    const Color(0xFF2E4554),
+  ],
+  begin: const FractionalOffset(0.0, -1.0),
+  end: const FractionalOffset(0.0, 1.0),
+  stops: [0.0, 1.0],
+  tileMode: TileMode.clamp,
+);
 
-ThemeData blueTheme() {
+ThemeData themeData() {
   return ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    primaryColor: primaryColor,
-    primaryColorDark: appBarColor,
-    backgroundColor: primaryColor,
     textTheme: _textTheme,
-    // colorScheme: _colorScheme,
-    buttonTheme: ButtonThemeData(
-        height: 50,
-        textTheme: ButtonTextTheme.primary,
-        buttonColor: buttonColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-    inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-    cardTheme: CardTheme(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-    // dividerTheme: const DividerThemeData(
-    //   thickness: 1,
-    //   space: 30,
-    //   color: dividerColor,
-    // ),
-
-    //dialogTheme: DialogTheme(backgroundColor: lightColor1)
   );
 }
 
 final TextTheme _textTheme = TextTheme(
-  headline1: GoogleFonts.ubuntu(
-      fontSize: 98, fontWeight: FontWeight.w300, letterSpacing: -1.5),
-  headline2: GoogleFonts.ubuntu(
-      fontSize: 61, fontWeight: FontWeight.w300, letterSpacing: -0.5),
-  headline3: GoogleFonts.ubuntu(fontSize: 49, fontWeight: FontWeight.w400),
-  headline4: GoogleFonts.ubuntu(
-      fontSize: 35, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-  headline5: GoogleFonts.ubuntu(fontSize: 24, fontWeight: FontWeight.w400),
-  headline6: GoogleFonts.ubuntu(
-      fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
-  subtitle1: GoogleFonts.ubuntu(
-      fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
-  subtitle2: GoogleFonts.ubuntu(
-      fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
-  bodyText1: GoogleFonts.sourceSansPro(
-      fontSize: 17, fontWeight: FontWeight.w400, letterSpacing: 0.5),
-  bodyText2: GoogleFonts.sourceSansPro(
+  headline1: GoogleFonts.nunito(
+      fontSize: 103, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+  headline2: GoogleFonts.nunito(
+      fontSize: 64, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+  headline3: GoogleFonts.nunito(fontSize: 51, fontWeight: FontWeight.w400),
+  headline4: GoogleFonts.nunito(
+      fontSize: 36, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+
+  //App Title
+  headline5: GoogleFonts.nunito(fontSize: 24, fontWeight: FontWeight.w800),
+  // Form Headings
+  headline6: GoogleFonts.nunito(
+      fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: 0.37),
+  subtitle1: GoogleFonts.nunito(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.37), // Form Desc
+  subtitle2: GoogleFonts.nunito(
+      fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 0.1),
+  bodyText1: GoogleFonts.nunito(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.15), // Text Field
+  bodyText2: GoogleFonts.nunito(
       fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-  button: GoogleFonts.sourceSansPro(
-      fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 1.25),
-  caption: GoogleFonts.sourceSansPro(
+  button: GoogleFonts.nunito(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.37), // Buttons
+  caption: GoogleFonts.nunito(
       fontSize: 13, fontWeight: FontWeight.w400, letterSpacing: 0.4),
-  overline: GoogleFonts.sourceSansPro(
+  overline: GoogleFonts.nunito(
       fontSize: 11, fontWeight: FontWeight.w400, letterSpacing: 1.5),
 );

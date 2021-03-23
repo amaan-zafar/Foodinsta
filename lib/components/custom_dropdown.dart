@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/theme.dart' as AppTheme;
 
 class CustomDropDown extends StatelessWidget {
   final Function(dynamic) onChanged;
@@ -13,23 +14,26 @@ class CustomDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-        ),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        color: AppTheme.textFieldColor,
         child: DropdownButton(
-          elevation: 0,
+          isExpanded: true,
+          elevation: 2,
           itemHeight: itemHeight,
           value: value,
           onChanged: onChanged,
-          items: list.map((code) {
+          items: list.map((indexValue) {
             return DropdownMenuItem(
               child: Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: new Text(code),
+                padding: const EdgeInsets.fromLTRB(18, 16, 0, 16),
+                child: new Text(
+                  indexValue,
+                  overflow: TextOverflow.clip,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ),
-              value: code,
+              value: indexValue,
             );
           }).toList(),
         ),
