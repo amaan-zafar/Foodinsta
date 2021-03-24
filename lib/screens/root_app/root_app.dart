@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/components/app_scaffold.dart';
-import 'package:food_insta/components/custom_appbar.dart';
 import 'package:food_insta/components/custom_background.dart';
-import 'package:food_insta/components/custom_button.dart';
-import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/components/custom_scaffold.dart';
+import 'package:food_insta/components/custom_bottomnavbar.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/screens/root_app/home_screen.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
 
 class RootApp extends StatefulWidget {
@@ -21,64 +16,36 @@ class _RootAppState extends State<RootApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: buildBody(context),
-      bottomNavigationBar: buildFooter(),
-    );
-  }
-
-  Widget buildAppBar() {
-    return Container(
-      height: double.infinity,
-      color: Colors.black,
-      child: Container(
-        width: double.infinity,
-        height: 100,
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              children: [
-                Text(
-                  Constants.APP_LABEL,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white, width: 8)),
+        height: MediaQuery.of(context).size.width * 0.22,
+        width: MediaQuery.of(context).size.width * 0.22,
+        child: FloatingActionButton(
+          backgroundColor: AppTheme.iconColor,
+          onPressed: () {},
+          tooltip: 'Create a Post',
+          child: Icon(Icons.add),
+          elevation: 0.0,
         ),
-        decoration: BoxDecoration(gradient: AppTheme.bgLinearGradient),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: CustomBottomNavBar(
+        items: [
+          CustomBottomNavBarItem(
+              iconData: Icons.home, text: '', color: AppTheme.iconColor),
+          CustomBottomNavBarItem(
+              iconData: Icons.place_rounded,
+              text: '',
+              color: AppTheme.iconColor),
+          CustomBottomNavBarItem(
+              iconData: Icons.photo, text: '', color: AppTheme.iconColor),
+          CustomBottomNavBarItem(
+              iconData: Icons.person, text: '', color: AppTheme.iconColor),
+        ],
       ),
     );
-    // if (pageIndex == 0) {
-    //   return AppBar(
-    //     title: Row(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         Icon(Icons.camera),
-    //         Text('My feed'),
-    //         Icon(Icons.notifications)
-    //       ],
-    //     ),
-    //   );
-    // } else if (pageIndex == 1) {
-    //   return AppBar(
-    //     title: Center(
-    //       child: Text('Search'),
-    //     ),
-    //   );
-    // } else if (pageIndex == 2) {
-    //   return AppBar(
-    //     title: Row(
-    //       children: [
-    //         Text('Profile'),
-    //         Spacer(),
-    //         Icon(Icons.notifications),
-    //       ],
-    //     ),
-    //   );
-    // }
   }
 
   Widget buildBody(BuildContext context) {
@@ -91,136 +58,145 @@ class _RootAppState extends State<RootApp> {
           height: 100,
           decoration: BoxDecoration(gradient: AppTheme.bgLinearGradient),
           child: SafeArea(
-            child: Row(
+            child: Column(
               children: [
-                Text(
-                  Constants.APP_LABEL,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(color: Colors.white),
-                ),
-                Spacer(),
+                // AppBar
                 Row(
                   children: [
-                    MaterialButton(
-                      elevation: 0.0,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      onPressed: () {},
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.place_rounded,
-                            color: AppTheme.iconColor,
-                          ),
-                          Text(
-                            'City',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2
-                                .copyWith(color: AppTheme.iconColor),
-                          )
-                        ],
-                      ),
+                    Text(
+                      Constants.APP_LABEL,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1
+                          .copyWith(color: Colors.white),
                     ),
-                    SizedBox(width: 10),
-                    MaterialButton(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      onPressed: () {},
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.settings,
-                            color: AppTheme.iconColor,
+                    Spacer(),
+                    Row(
+                      children: [
+                        MaterialButton(
+                          elevation: 0.0,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.place_rounded,
+                                color: AppTheme.iconColor,
+                              ),
+                              Text(
+                                'City',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2
+                                    .copyWith(color: AppTheme.iconColor),
+                              )
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                        SizedBox(width: 10),
+                        MaterialButton(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.settings,
+                                color: AppTheme.iconColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
                   ],
-                )
+                ),
+                // Body
+                // ListView.builder(
+                //   itemBuilder: (context, index) {
+                //     return CustomAppCard(
+                //       children: [
+                //         Row(
+                //           children: [
+                //             Icon(Icons.person),
+                //             Column(
+                //               children: [
+                //                 Text(
+                //                   'Aggarwal sweets',
+                //                   style: Theme.of(context).textTheme.subtitle1,
+                //                 ),
+                //                 Text(
+                //                   '6 hours ago',
+                //                   style: Theme.of(context).textTheme.subtitle1,
+                //                 ),
+                //               ],
+                //             ),
+                //             Spacer(),
+                //             Column(
+                //               children: [
+                //                 Text('Rating'),
+                //                 MaterialButton(
+                //                   color: Color(0xFF34FF01),
+                //                   shape: RoundedRectangleBorder(
+                //                       borderRadius: BorderRadius.circular(16)),
+                //                   onPressed: () {},
+                //                   elevation: 0,
+                //                   child: Text(
+                //                     'Business',
+                //                     style:
+                //                         Theme.of(context).textTheme.subtitle1,
+                //                   ),
+                //                 ),
+                //               ],
+                //             )
+                //           ],
+                //         ),
+                //         SizedBox(
+                //           width: double.infinity,
+                //           height: 240,
+                //         ),
+                //         Row(
+                //           children: [
+                //             Icon(Icons.group),
+                //             Text('36'),
+                //             SizedBox(
+                //               width: 8,
+                //             ),
+                //             Icon(Icons.store),
+                //             Spacer(),
+                //             MaterialButton(
+                //               color: Color(0xFFF54580),
+                //               shape: RoundedRectangleBorder(
+                //                   borderRadius: BorderRadius.circular(16)),
+                //               onPressed: () {},
+                //               elevation: 0,
+                //               child: Text(
+                //                 'Request',
+                //                 style: Theme.of(context).textTheme.subtitle1,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //         Padding(
+                //           padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                //           child: Text(
+                //             'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                //             textAlign: TextAlign.center,
+                //             style: Theme.of(context).textTheme.caption,
+                //           ),
+                //         )
+                //       ],
+                //     );
+                //   },
+                // ),
               ],
             ),
           ),
         ),
       ),
-      ListView.builder(itemBuilder: (context, index) {
-        return CustomAppCard(
-          children: [
-            Row(
-              children: [
-                Icon(Icons.person),
-                Column(
-                  children: [
-                    Text(
-                      'Aggarwal sweets',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    Text(
-                      '6 hours ago',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                  ],
-                ),
-                Spacer(),
-                Column(
-                  children: [
-                    Text('Rating'),
-                    MaterialButton(
-                      color: Color(0xFF34FF01),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      onPressed: () {},
-                      elevation: 0,
-                      child: Text(
-                        'Business',
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 240,
-            ),
-            Row(
-              children: [
-                Icon(Icons.group),
-                Text('36'),
-                SizedBox(
-                  width: 8,
-                ),
-                Icon(Icons.store),
-                Spacer(),
-                MaterialButton(
-                  color: Color(0xFFF54580),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  onPressed: () {},
-                  elevation: 0,
-                  child: Text(
-                    'Request',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-              child: Text(
-                'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption,
-              ),
-            )
-          ],
-        );
-      }),
     ]);
   }
 
