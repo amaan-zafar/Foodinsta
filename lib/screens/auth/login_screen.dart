@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/app_scaffold.dart';
-import 'package:food_insta/components/custom_button.dart';
+import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/screens/auth/user_type_screen.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
     var size = MediaQuery.of(context).size;
     return AppScaffold(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 64),
+        padding: EdgeInsets.fromLTRB(12, size.height / 6, 12, 0),
         child: CustomAppCard(
           children: [
             Container(

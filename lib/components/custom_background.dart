@@ -10,6 +10,8 @@ class CustomBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    final topPadding = MediaQuery.of(context).padding.top;
+
     return Container(
       width: width,
       height: height,
@@ -24,6 +26,11 @@ class CustomBackground extends StatelessWidget {
                   gradient: AppTheme.bgLinearGradient,
                   borderRadius:
                       BorderRadius.vertical(bottom: Radius.circular(16))),
+            ),
+            Container(
+              width: double.infinity,
+              height: topPadding + 74,
+              decoration: BoxDecoration(gradient: AppTheme.bgLinearGradient),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(12, height / 6, 12, 0),

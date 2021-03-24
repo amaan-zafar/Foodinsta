@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_bottomnavbar.dart';
+import 'package:food_insta/components/custom_card.dart';
+import 'package:food_insta/components/custom_dropdown.dart';
+import 'package:food_insta/components/custom_icon_button.dart';
+import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/theme.dart' as AppTheme;
 
@@ -10,6 +14,7 @@ class RootApp extends StatefulWidget {
 }
 
 int pageIndex = 0;
+bool _selectCity = false;
 
 class _RootAppState extends State<RootApp> {
   @override
@@ -49,188 +54,214 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget buildBody(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    final topPadding = MediaQuery.of(context).padding.top;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    AppBar appBar = new AppBar();
+    print('top padding $topPadding');
+    print('bottom padding $bottomPadding');
+
     return Stack(children: [
       CustomBackground(),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+      SafeArea(
         child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 100,
-          decoration: BoxDecoration(gradient: AppTheme.bgLinearGradient),
-          child: SafeArea(
-            child: Column(
-              children: [
-                // AppBar
-                Row(
-                  children: [
-                    Text(
-                      Constants.APP_LABEL,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1
-                          .copyWith(color: Colors.white),
-                    ),
-                    Spacer(),
-                    Row(
+          height: size.height,
+          width: size.width,
+          child: Column(
+            children: [
+              // AppBar
+              SizedBox(
+                height: 74,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        Constants.APP_LABEL,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1
+                            .copyWith(color: Colors.white),
+                      ),
+                      Spacer(),
+                      Row(
+                        children: [
+                          MaterialButton(
+                            elevation: 0.0,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            onPressed: () {
+                              setState(() {
+                                _selectCity = true;
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.place_rounded,
+                                  color: AppTheme.iconColor,
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  'City',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline2
+                                      .copyWith(color: AppTheme.iconColor),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          CustomIconButton(
+                            icon: Icon(
+                              Icons.settings,
+                              color: AppTheme.iconColor,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: false,
+                child: SizedBox(
+                  height: 74,
+                  child: Row(
+                    children: [
+                      Row(
+                        children: [
+                          CustomIconButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectCity = false;
+                              });
+                            },
+                            icon: Icon(
+                              Icons.check,
+                              color: AppTheme.customApprovedButtonColor,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              // Body
+              Expanded(
+                child: ListView.builder(itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: CustomAppCard(
                       children: [
-                        MaterialButton(
-                          elevation: 0.0,
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
-                          onPressed: () {},
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 18),
                           child: Row(
                             children: [
-                              Icon(
-                                Icons.place_rounded,
-                                color: AppTheme.iconColor,
+                              CircleAvatar(
+                                backgroundColor: Colors.greenAccent[400],
+                                radius: 24,
+                                child: Text('DP'),
+                              ), //Text
+                              SizedBox(width: 8),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Aggarwal sweets',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        .copyWith(fontSize: 14),
+                                  ),
+                                  Text(
+                                    '6 hours ago',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        .copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                'City',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2
-                                    .copyWith(color: AppTheme.iconColor),
+                              Spacer(),
+                              Column(
+                                children: [
+                                  Text('Rating'),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(64),
+                                        right: Radius.circular(64)),
+                                    child: Container(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8, horizontal: 22),
+                                        child: Text(
+                                          'Business',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle2
+                                              .copyWith(fontSize: 14),
+                                        ),
+                                      ),
+                                      color: AppTheme.customApprovedButtonColor,
+                                    ),
+                                  )
+                                ],
                               )
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
-                        MaterialButton(
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
-                          onPressed: () {},
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.settings,
-                                color: AppTheme.iconColor,
-                              ),
-                            ],
-                          ),
+                        Container(
+                          color: Colors.blue,
+                          width: double.infinity,
+                          height: 240,
                         ),
+                        Row(
+                          children: [
+                            Icon(Icons.group),
+                            Text('36'),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Icon(Icons.store),
+                            Spacer(),
+                            MaterialButton(
+                              color: Color(0xFFF54580),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16)),
+                              onPressed: () {},
+                              elevation: 0,
+                              child: Text(
+                                'Request',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          child: Text(
+                            'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        )
                       ],
-                    )
-                  ],
-                ),
-                // Body
-                // ListView.builder(
-                //   itemBuilder: (context, index) {
-                //     return CustomAppCard(
-                //       children: [
-                //         Row(
-                //           children: [
-                //             Icon(Icons.person),
-                //             Column(
-                //               children: [
-                //                 Text(
-                //                   'Aggarwal sweets',
-                //                   style: Theme.of(context).textTheme.subtitle1,
-                //                 ),
-                //                 Text(
-                //                   '6 hours ago',
-                //                   style: Theme.of(context).textTheme.subtitle1,
-                //                 ),
-                //               ],
-                //             ),
-                //             Spacer(),
-                //             Column(
-                //               children: [
-                //                 Text('Rating'),
-                //                 MaterialButton(
-                //                   color: Color(0xFF34FF01),
-                //                   shape: RoundedRectangleBorder(
-                //                       borderRadius: BorderRadius.circular(16)),
-                //                   onPressed: () {},
-                //                   elevation: 0,
-                //                   child: Text(
-                //                     'Business',
-                //                     style:
-                //                         Theme.of(context).textTheme.subtitle1,
-                //                   ),
-                //                 ),
-                //               ],
-                //             )
-                //           ],
-                //         ),
-                //         SizedBox(
-                //           width: double.infinity,
-                //           height: 240,
-                //         ),
-                //         Row(
-                //           children: [
-                //             Icon(Icons.group),
-                //             Text('36'),
-                //             SizedBox(
-                //               width: 8,
-                //             ),
-                //             Icon(Icons.store),
-                //             Spacer(),
-                //             MaterialButton(
-                //               color: Color(0xFFF54580),
-                //               shape: RoundedRectangleBorder(
-                //                   borderRadius: BorderRadius.circular(16)),
-                //               onPressed: () {},
-                //               elevation: 0,
-                //               child: Text(
-                //                 'Request',
-                //                 style: Theme.of(context).textTheme.subtitle1,
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //         Padding(
-                //           padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                //           child: Text(
-                //             'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                //             textAlign: TextAlign.center,
-                //             style: Theme.of(context).textTheme.caption,
-                //           ),
-                //         )
-                //       ],
-                //     );
-                //   },
-                // ),
-              ],
-            ),
+                    ),
+                  );
+                }),
+              )
+            ],
           ),
         ),
       ),
     ]);
-  }
-
-  Widget buildFooter() {
-    List<IconData> bottomIcons = [
-      Icons.home,
-      Icons.map,
-      Icons.add_box_outlined,
-      Icons.person
-    ];
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-      width: double.infinity,
-      height: 80,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(bottomIcons.length, (index) {
-          return InkWell(
-            onTap: () {
-              selectedTab(index);
-            },
-            child: Icon(
-              bottomIcons[index],
-              color: AppTheme.iconColor,
-            ),
-          );
-        }),
-      ),
-    );
-  }
-
-  void selectedTab(int index) {
-    setState(() {
-      pageIndex = index;
-    });
   }
 }

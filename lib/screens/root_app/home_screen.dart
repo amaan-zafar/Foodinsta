@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/components/custom_button.dart';
+import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/remove_later/post_json.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
@@ -35,9 +35,9 @@ class _HomePageState extends State<HomePage> {
             Spacer(),
             Column(
               children: [
-                CustomButton(
+                CustomTextButton(
                   textOnButton: 'Business',
-                  color: AppTheme.customButtonColor,
+                  color: AppTheme.CustomTextButtonColor,
                   onPressed: () {},
                 )
               ],
