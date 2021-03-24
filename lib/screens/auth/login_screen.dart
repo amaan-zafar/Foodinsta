@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/app_scaffold.dart';
 import 'package:food_insta/components/custom_button.dart';
 import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/screens/auth/user_type.dart';
+import 'package:food_insta/screens/auth/user_type_screen.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:food_insta/constants.dart' as Constants;
 
@@ -52,7 +52,9 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
-            Spacer(),
+            SizedBox(
+              height: 80,
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 48),
               child: Image(

@@ -15,32 +15,18 @@ class AppScaffold extends StatelessWidget {
     return Scaffold(
       body: Container(
           color: AppTheme.whiteBgScreenColor,
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: size.width,
-                      height: size.height / 4.5,
-                      decoration: BoxDecoration(
-                          gradient: AppTheme.bgLinearGradient,
-                          borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(16))),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(12, size.height / 6, 12, 0),
-                      child: child,
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                child: Container(
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                Container(
                   width: size.width,
-                  height: 100,
+                  height: size.height / 4,
+                  decoration: BoxDecoration(
+                      gradient: AppTheme.bgLinearGradient,
+                      borderRadius:
+                          BorderRadius.vertical(bottom: Radius.circular(16))),
                   child: Align(
-                    alignment: Alignment(0, 0.4),
+                    alignment: Alignment(0, 0),
                     child: Text(
                       Constants.APP_LABEL,
                       style: Theme.of(context)
@@ -49,12 +35,13 @@ class AppScaffold extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     ),
                   ),
-                  decoration: BoxDecoration(
-                    gradient: AppTheme.bgLinearGradient,
-                  ),
                 ),
-              ),
-            ],
+                Container(
+                  margin: EdgeInsets.fromLTRB(12, size.height / 6, 12, 0),
+                  child: child,
+                ),
+              ],
+            ),
           )),
     );
   }

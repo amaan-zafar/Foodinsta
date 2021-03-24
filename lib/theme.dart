@@ -9,6 +9,7 @@ const whiteBgCardColor = Color(0xFFFEFEFE);
 const bgColorBeginGradient = Color(0xFFFCB100);
 const bgColorEndGradient = Color(0xFFFDBF2D);
 const signInButtonColor = Color(0xFF2D9CDB);
+const iconColor = Color(0xFFFCBC23);
 const textFieldColor = Color(0xFFEEF5FF);
 const customButtonColor = Color(0xFF2D9CDB);
 const customApprovedButtonColor = Color(0xFF34FF01);
@@ -26,6 +27,7 @@ const bgLinearGradient = LinearGradient(
 ThemeData themeData() {
   return ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    buttonColor: iconColor,
     textTheme: _textTheme,
   );
 }
@@ -49,7 +51,7 @@ final TextTheme _textTheme = TextTheme(
       fontWeight: FontWeight.w600,
       letterSpacing: 0.37), // Form Desc
   subtitle2: GoogleFonts.nunito(
-      fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 0.1),
+      fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: -0.17),
   bodyText1: GoogleFonts.nunito(
       fontSize: 16,
       fontWeight: FontWeight.w400,
@@ -61,7 +63,7 @@ final TextTheme _textTheme = TextTheme(
       fontWeight: FontWeight.w700,
       letterSpacing: 0.37), // Buttons
   caption: GoogleFonts.nunito(
-      fontSize: 13, fontWeight: FontWeight.w400, letterSpacing: 0.4),
+      fontSize: 11, fontWeight: FontWeight.w400, letterSpacing: -0.17),
   overline: GoogleFonts.nunito(
       fontSize: 11, fontWeight: FontWeight.w400, letterSpacing: 1.5),
 );

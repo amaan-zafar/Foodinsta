@@ -4,7 +4,7 @@ import 'package:food_insta/components/custom_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_scaffold.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/screens/auth/registeration_page.dart';
+import 'package:food_insta/screens/auth/registeration_screen.dart';
 import 'package:food_insta/utils.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
 

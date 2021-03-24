@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/screens/root_app/home_page.dart';
+import 'package:food_insta/screens/root_app/home_screen.dart';
+import 'package:food_insta/theme.dart' as AppTheme;
 
 class RootApp extends StatefulWidget {
   @override
@@ -13,41 +14,65 @@ class _RootAppState extends State<RootApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
-      body: buildBody(),
+      body: buildAppBar(),
       bottomNavigationBar: buildFooter(),
     );
   }
 
   Widget buildAppBar() {
-    if (pageIndex == 0) {
-      return AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(Icons.camera),
-            Text('My feed'),
-            Icon(Icons.notifications)
-          ],
+    return Container(
+      height: double.infinity,
+      color: Colors.black,
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              children: [
+                Text(
+                  Constants.APP_LABEL,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
         ),
-      );
-    } else if (pageIndex == 1) {
-      return AppBar(
-        title: Center(
-          child: Text('Search'),
-        ),
-      );
-    } else if (pageIndex == 2) {
-      return AppBar(
-        title: Row(
-          children: [
-            Text('Profile'),
-            Spacer(),
-            Icon(Icons.notifications),
-          ],
-        ),
-      );
-    }
+        decoration: BoxDecoration(gradient: AppTheme.bgLinearGradient),
+      ),
+    );
+    // if (pageIndex == 0) {
+    //   return AppBar(
+    //     title: Row(
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: [
+    //         Icon(Icons.camera),
+    //         Text('My feed'),
+    //         Icon(Icons.notifications)
+    //       ],
+    //     ),
+    //   );
+    // } else if (pageIndex == 1) {
+    //   return AppBar(
+    //     title: Center(
+    //       child: Text('Search'),
+    //     ),
+    //   );
+    // } else if (pageIndex == 2) {
+    //   return AppBar(
+    //     title: Row(
+    //       children: [
+    //         Text('Profile'),
+    //         Spacer(),
+    //         Icon(Icons.notifications),
+    //       ],
+    //     ),
+    //   );
+    // }
   }
 
   Widget buildBody() {
@@ -72,10 +97,12 @@ class _RootAppState extends State<RootApp> {
   Widget buildFooter() {
     List<IconData> bottomIcons = [
       Icons.home,
+      Icons.map,
       Icons.add_box_outlined,
       Icons.person
     ];
     return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
       width: double.infinity,
       height: 80,
       child: Row(
@@ -85,7 +112,10 @@ class _RootAppState extends State<RootApp> {
             onTap: () {
               selectedTab(index);
             },
-            child: Icon(bottomIcons[index]),
+            child: Icon(
+              bottomIcons[index],
+              color: AppTheme.iconColor,
+            ),
           );
         }),
       ),

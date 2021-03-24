@@ -1,5 +1,7 @@
 library constants;
 
+const String DUMMY_URL = 'https://picsum.photos/250?image=9';
+
 const String APP_LABEL = 'FoodEx';
 const String APP_SLOGAN = 'Striving for zero hunger';
 const String SAVE_CHANGES = 'Save Changes';
