@@ -14,35 +14,36 @@ class AppScaffold extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-          color: AppTheme.whiteBgScreenColor,
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Container(
-                  width: size.width,
-                  height: size.height / 4,
-                  decoration: BoxDecoration(
-                      gradient: AppTheme.bgLinearGradient,
-                      borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(16))),
-                  child: Align(
-                    alignment: Alignment(0, 0),
-                    child: Text(
-                      Constants.APP_LABEL,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5
-                          .copyWith(color: Colors.white),
-                    ),
+        color: AppTheme.whiteBgScreenColor,
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Container(
+                width: size.width,
+                height: size.height / 4,
+                decoration: BoxDecoration(
+                    gradient: AppTheme.bgLinearGradient,
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(16))),
+                child: Align(
+                  alignment: Alignment(0, 0),
+                  child: Text(
+                    Constants.APP_LABEL,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1
+                        .copyWith(color: Colors.white),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(12, size.height / 6, 12, 0),
-                  child: child,
-                ),
-              ],
-            ),
-          )),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(12, size.height / 6, 12, 0),
+                child: child,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -50,7 +50,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           SizedBox(height: 16),
           Text(
             'Final step, fill out your details',
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.headline2,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 16),
@@ -124,12 +124,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
             controlAffinity: ListTileControlAffinity.leading,
           ),
           SizedBox(height: 16),
-          CustomButton(
-            onPressed: () {
-              _navigateToRootApp(context);
-            },
-            textOnButton: Constants.REGISTER_TEXT,
-            color: AppTheme.customButtonColor,
+          SizedBox(
+            width: double.infinity,
+            child: CustomButton(
+              onPressed: () {
+                _navigateToRootApp(context);
+              },
+              textOnButton: Constants.REGISTER_TEXT,
+              color: AppTheme.customButtonColor,
+            ),
           ),
           SizedBox(height: 16),
         ],

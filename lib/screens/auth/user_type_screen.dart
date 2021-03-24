@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/app_scaffold.dart';
 import 'package:food_insta/components/custom_button.dart';
 import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/components/custom_scaffold.dart';
-import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/screens/auth/registeration_screen.dart';
-import 'package:food_insta/utils.dart';
+import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/theme.dart' as AppTheme;
 
 class UserTypePage extends StatelessWidget {
@@ -32,25 +30,34 @@ class UserTypePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ),
-            CustomButton(
-              textOnButton: 'I represent an NGO',
-              onPressed: () {
-                _navigateToRegisterationScreen(context, 0);
-              },
+            SizedBox(
+              width: double.infinity,
+              child: CustomButton(
+                textOnButton: 'I represent an NGO',
+                onPressed: () {
+                  _navigateToRegisterationScreen(context, 0);
+                },
+              ),
             ),
             SizedBox(height: 24),
-            CustomButton(
-              textOnButton: 'I represent a Business',
-              onPressed: () {
-                _navigateToRegisterationScreen(context, 1);
-              },
+            SizedBox(
+              width: double.infinity,
+              child: CustomButton(
+                textOnButton: 'I represent a Business',
+                onPressed: () {
+                  _navigateToRegisterationScreen(context, 0);
+                },
+              ),
             ),
             SizedBox(height: 24),
-            CustomButton(
-              textOnButton: 'I am Solo/Volunteer',
-              onPressed: () {
-                _navigateToRegisterationScreen(context, 2);
-              },
+            SizedBox(
+              width: double.infinity,
+              child: CustomButton(
+                textOnButton: 'I am Solo/Volunteer',
+                onPressed: () {
+                  _navigateToRegisterationScreen(context, 0);
+                },
+              ),
             ),
             SizedBox(height: 24),
           ],

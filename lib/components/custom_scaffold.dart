@@ -30,7 +30,7 @@ class CustomScaffold extends StatelessWidget {
                       Constants.APP_LABEL,
                       style: Theme.of(context)
                           .textTheme
-                          .headline5
+                          .headline1
                           .copyWith(color: Colors.white),
                     ),
                   ),

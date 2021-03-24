@@ -33,17 +33,17 @@ ThemeData themeData() {
 }
 
 final TextTheme _textTheme = TextTheme(
+  //App Title
   headline1: GoogleFonts.nunito(
-      fontSize: 103, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+      fontSize: 24, fontWeight: FontWeight.w800, letterSpacing: 0.37),
+  // Form Headings
   headline2: GoogleFonts.nunito(
-      fontSize: 64, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+      fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: 0.37),
   headline3: GoogleFonts.nunito(fontSize: 51, fontWeight: FontWeight.w400),
   headline4: GoogleFonts.nunito(
       fontSize: 36, fontWeight: FontWeight.w400, letterSpacing: 0.25),
 
-  //App Title
   headline5: GoogleFonts.nunito(fontSize: 24, fontWeight: FontWeight.w800),
-  // Form Headings
   headline6: GoogleFonts.nunito(
       fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: 0.37),
   subtitle1: GoogleFonts.nunito(
@@ -62,6 +62,7 @@ final TextTheme _textTheme = TextTheme(
       fontSize: 18,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.37), // Buttons
+  // Post Caption
   caption: GoogleFonts.nunito(
       fontSize: 11, fontWeight: FontWeight.w400, letterSpacing: -0.17),
   overline: GoogleFonts.nunito(

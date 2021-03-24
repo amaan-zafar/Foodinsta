@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/app_scaffold.dart';
+import 'package:food_insta/components/custom_appbar.dart';
+import 'package:food_insta/components/custom_background.dart';
+import 'package:food_insta/components/custom_button.dart';
+import 'package:food_insta/components/custom_card.dart';
+import 'package:food_insta/components/custom_scaffold.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/screens/root_app/home_screen.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
@@ -14,7 +20,7 @@ class _RootAppState extends State<RootApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildAppBar(),
+      body: buildBody(context),
       bottomNavigationBar: buildFooter(),
     );
   }
@@ -35,7 +41,7 @@ class _RootAppState extends State<RootApp> {
                   Constants.APP_LABEL,
                   style: Theme.of(context)
                       .textTheme
-                      .headline5
+                      .headline1
                       .copyWith(color: Colors.white),
                 ),
               ],
@@ -75,23 +81,147 @@ class _RootAppState extends State<RootApp> {
     // }
   }
 
-  Widget buildBody() {
-    List<Widget> pages = [
-      HomePage(),
-      Center(
-        child: Text('RootApp Page'),
+  Widget buildBody(BuildContext context) {
+    return Stack(children: [
+      CustomBackground(),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 100,
+          decoration: BoxDecoration(gradient: AppTheme.bgLinearGradient),
+          child: SafeArea(
+            child: Row(
+              children: [
+                Text(
+                  Constants.APP_LABEL,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      .copyWith(color: Colors.white),
+                ),
+                Spacer(),
+                Row(
+                  children: [
+                    MaterialButton(
+                      elevation: 0.0,
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.place_rounded,
+                            color: AppTheme.iconColor,
+                          ),
+                          Text(
+                            'City',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline2
+                                .copyWith(color: AppTheme.iconColor),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    MaterialButton(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.settings,
+                            color: AppTheme.iconColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
       ),
-      Center(
-        child: Text('Create a post'),
-      ),
-      Center(
-        child: Text('Profile Page'),
-      ),
-    ];
-    return IndexedStack(
-      index: pageIndex,
-      children: pages,
-    );
+      ListView.builder(itemBuilder: (context, index) {
+        return CustomAppCard(
+          children: [
+            Row(
+              children: [
+                Icon(Icons.person),
+                Column(
+                  children: [
+                    Text(
+                      'Aggarwal sweets',
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    Text(
+                      '6 hours ago',
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Column(
+                  children: [
+                    Text('Rating'),
+                    MaterialButton(
+                      color: Color(0xFF34FF01),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                      onPressed: () {},
+                      elevation: 0,
+                      child: Text(
+                        'Business',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 240,
+            ),
+            Row(
+              children: [
+                Icon(Icons.group),
+                Text('36'),
+                SizedBox(
+                  width: 8,
+                ),
+                Icon(Icons.store),
+                Spacer(),
+                MaterialButton(
+                  color: Color(0xFFF54580),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  onPressed: () {},
+                  elevation: 0,
+                  child: Text(
+                    'Request',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Text(
+                'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.caption,
+              ),
+            )
+          ],
+        );
+      }),
+    ]);
   }
 
   Widget buildFooter() {
