@@ -15,6 +15,7 @@ const customButtonColor = Color(0xFF2D9CDB);
 const customApprovedButtonColor = Color(0xFF34FF01);
 const customRejectedButtonColor = Color(0xFF2D9CDB);
 const customCompletedButtonColor = Color(0xFF979797);
+const selectedTabBgColor = Color(0xFFE5E5E5);
 const customRequestButtonColor = Color(0xFFF54580);
 const bgLinearGradient = LinearGradient(
   colors: [bgColorBeginGradient, bgColorEndGradient],
