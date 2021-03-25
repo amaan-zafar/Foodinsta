@@ -1,48 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/components/custom_dropdown.dart';
-import 'package:food_insta/components/custom_textfield.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:food_insta/theme.dart' as AppTheme;
 
 class CustomScaffold extends StatelessWidget {
-  final List<Widget> children;
+  final Widget child;
 
-  const CustomScaffold({Key key, this.children}) : super(key: key);
+  const CustomScaffold({Key key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Container(
-        color: AppTheme.bgColorBeginGradient,
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+        color: AppTheme.whiteBgScreenColor,
+        child: SingleChildScrollView(
+          child: Stack(
             children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  width: size.width,
-                  child: Center(
-                    child: Text(
-                      Constants.APP_LABEL,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1
-                          .copyWith(color: Colors.white),
-                    ),
+              Container(
+                width: size.width,
+                height: size.height / 4,
+                decoration: BoxDecoration(
+                    gradient: AppTheme.bgLinearGradient,
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(16))),
+                child: Align(
+                  alignment: Alignment(0, 0),
+                  child: Text(
+                    Constants.APP_LABEL,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1
+                        .copyWith(color: Colors.white),
                   ),
                 ),
               ),
-              Expanded(
-                flex: 6,
-                child: SingleChildScrollView(
-                  child: CustomAppCard(
-                    children: children,
-                  ),
-                ),
+              Container(
+                child: child,
               ),
             ],
           ),

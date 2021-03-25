@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/components/app_scaffold.dart';
+import 'package:food_insta/components/custom_scaffold.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/screens/auth/registeration_screen.dart';
@@ -10,7 +10,7 @@ class UserTypePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return AppScaffold(
+    return CustomScaffold(
       child: Padding(
         padding: EdgeInsets.fromLTRB(12, size.height / 6, 12, 0),
         child: CustomAppCard(
