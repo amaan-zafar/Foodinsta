@@ -4,8 +4,10 @@ import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -13,10 +15,9 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool isDarkMode = false;
-
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
         body: Stack(
       children: [
@@ -81,10 +82,10 @@ class _SettingsPageState extends State<SettingsPage> {
                             activeColor: Styles.iconColor,
                             onChanged: (bool value) {
                               setState(() {
-                                isDarkMode = !isDarkMode;
+                                themeChange.darkTheme = value;
                               });
                             },
-                            value: isDarkMode,
+                            value: themeChange.darkTheme,
                           ),
                         )
                       ],

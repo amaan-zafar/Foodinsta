@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/screens/root_app/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -54,6 +57,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
+
     return Column(
       children: [
         // AppBar
@@ -75,7 +80,9 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     MaterialButton(
                       elevation: 0.0,
-                      color: Colors.white,
+                      color: darkThemeProvider.darkTheme
+                          ? Styles.black2
+                          : Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16)),
                       onPressed: () {

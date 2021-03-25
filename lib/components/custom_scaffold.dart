@@ -12,7 +12,6 @@ class CustomScaffold extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        color: Styles.whiteBgScreenColor,
         child: SingleChildScrollView(
           child: Stack(
             children: [

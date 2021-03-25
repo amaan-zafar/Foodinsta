@@ -15,7 +15,6 @@ class CustomBackground extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      color: Styles.whiteBgScreenColor,
       child: SingleChildScrollView(
         child: Stack(
           children: [

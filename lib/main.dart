@@ -49,20 +49,22 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserNotifier(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => themeChangeProvider,
-        ),
-      ],
-      child: MaterialApp(
-        title: Constants.APP_LABEL,
-        debugShowCheckedModeBanner: false,
-        theme: Styles.themeData(),
-        home: isLoggedIn ? RootApp() : LoginPage(),
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => UserNotifier(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => themeChangeProvider,
+          ),
+        ],
+        child: Consumer<DarkThemeProvider>(builder: (context, value, child) {
+          return MaterialApp(
+            title: Constants.APP_LABEL,
+            debugShowCheckedModeBanner: false,
+            theme: Styles.themeData(
+                isDarkTheme: themeChangeProvider.darkTheme, context: context),
+            home: isLoggedIn ? RootApp() : LoginPage(),
+          );
+        }));
   }
 }

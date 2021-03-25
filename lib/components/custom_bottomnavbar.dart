@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/theme.dart';
+import 'package:provider/provider.dart';
 
 class CustomBottomNavBarItem {
   CustomBottomNavBarItem({this.iconData, this.text, this.color});
@@ -49,11 +51,13 @@ class CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
     List<Widget> items = List.generate(widget.items.length, (int index) {
       return _buildTabItem(
         item: widget.items[index],
         index: index,
         onPressed: _updateIndex,
+        darkThemeProvider: darkThemeProvider,
       );
     });
     items.insert(items.length >> 1, _buildMiddleTabItem());
@@ -63,9 +67,9 @@ class CustomBottomNavBarState extends State<CustomBottomNavBar> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
+            color: Colors.black.withOpacity(0.4),
+            spreadRadius: 4,
+            blurRadius: 5,
             offset: Offset(0, 3), // changes position of shadow
           ),
         ],
@@ -81,7 +85,7 @@ class CustomBottomNavBarState extends State<CustomBottomNavBar> {
             children: items,
           ),
         ),
-        color: widget.backgroundColor,
+        // color: Styles.screenBgColor,
       ),
     );
   }
@@ -109,10 +113,14 @@ class CustomBottomNavBarState extends State<CustomBottomNavBar> {
     CustomBottomNavBarItem item,
     int index,
     ValueChanged<int> onPressed,
+    DarkThemeProvider darkThemeProvider,
   }) {
     Color color = item.color;
-    Color selectedTabBgColor =
-        _selectedIndex == index ? Styles.selectedTabBgColor : widget.color;
+    Color selectedTabBgColor = _selectedIndex == index
+        ? darkThemeProvider.darkTheme
+            ? Color(0xFF252525)
+            : Color(0xFFE5E5E5)
+        : widget.color;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),

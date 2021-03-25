@@ -9,7 +9,7 @@ class CustomTextButton extends StatelessWidget {
   CustomTextButton({
     this.textOnButton,
     this.onPressed,
-    this.color = Styles.iconColor,
+    this.color,
   });
   @override
   Widget build(BuildContext context) {
