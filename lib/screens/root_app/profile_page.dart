@@ -33,6 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Spacer(),
                 SizedBox(width: 10),
                 CustomIconButton(
+                  onPressed: () {},
                   icon: Icon(
                     Icons.notifications,
                     color: AppTheme.iconColor,

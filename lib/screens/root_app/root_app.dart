@@ -3,6 +3,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_bottomnavbar.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/screens/root_app/home_page.dart';
+import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/root_app/profile_page.dart';
 import 'package:food_insta/screens/root_app/qrcode_page.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
@@ -57,9 +58,11 @@ class _RootAppState extends State<RootApp> {
       SafeArea(
           child: pageIndex == 0
               ? HomePage()
-              : pageIndex == 2
-                  ? QRCodePage()
-                  : ProfilePage()),
+              : pageIndex == 1
+                  ? MapPage()
+                  : pageIndex == 2
+                      ? QRCodePage()
+                      : ProfilePage()),
     ]);
   }
 }

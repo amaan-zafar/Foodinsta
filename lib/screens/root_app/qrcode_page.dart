@@ -25,6 +25,7 @@ class QRCodePage extends StatelessWidget {
                 Spacer(),
                 SizedBox(width: 10),
                 CustomIconButton(
+                  onPressed: () {},
                   icon: Icon(
                     Icons.arrow_back,
                     color: AppTheme.iconColor,

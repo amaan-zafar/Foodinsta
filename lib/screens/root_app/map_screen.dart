@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MapWidget extends StatefulWidget {
+class MapPage extends StatefulWidget {
   @override
-  _MapWidgetState createState() => _MapWidgetState();
+  _MapPageState createState() => _MapPageState();
 }
 
-class _MapWidgetState extends State<MapWidget> {
+class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _controller = Completer();
   final Set<Marker> _markers = {
     Marker(
@@ -84,6 +85,8 @@ class _MapWidgetState extends State<MapWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppTheme.iconColor,
+        elevation: 0.0,
         title: Center(
           child: Text(Constants.APP_LABEL),
         ),
@@ -91,7 +94,7 @@ class _MapWidgetState extends State<MapWidget> {
       body: Stack(
         children: [
           _buildGoogleMap(),
-          _buildFabs(),
+          // _buildFabs(),
           _buildMapInfoContainer(),
         ],
       ),

@@ -22,7 +22,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  bool isLoggedIn = false;
+  bool isLoggedIn = true;
   final CameraDescription camera;
 
   MyApp(this.camera);
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         title: Constants.APP_LABEL,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.themeData(),
-        home: isLoggedIn ? MapWidget() : RootApp(),
+        home: isLoggedIn ? RootApp() : LoginPage(),
       ),
     );
   }
