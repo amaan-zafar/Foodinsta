@@ -15,7 +15,7 @@ class RootApp extends StatefulWidget {
   _RootAppState createState() => _RootAppState();
 }
 
-int pageIndex = 0;
+int pageIndex = 3;
 
 class _RootAppState extends State<RootApp> {
   @override

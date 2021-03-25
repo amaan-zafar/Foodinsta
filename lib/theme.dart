@@ -19,6 +19,8 @@ class Styles {
   static Color customRejectedButtonColor = Color(0xFF2D9CDB);
   static Color customCompletedButtonColor = Color(0xFF979797);
   static Color customRequestButtonColor = Color(0xFFF54580);
+  static Color tileColorLight = Color(0xFFF4F8FE);
+
   static LinearGradient bgLinearGradient = LinearGradient(
     colors: [bgColorBeginGradient, bgColorEndGradient],
     begin: const FractionalOffset(0.0, -1.0),
