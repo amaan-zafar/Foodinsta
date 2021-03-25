@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const double bottomPaddingForCard = 64.0;
+const double bottomPadding = 64.0;
 const whiteBgScreenColor = Color(0xFFF5F9FF);
 const whiteBgCardColor = Color(0xFFFEFEFE);
 const bgColorBeginGradient = Color(0xFFFCB100);
