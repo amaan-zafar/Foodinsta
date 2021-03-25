@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
@@ -19,28 +20,16 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         children: [
           // AppBar
-          SizedBox(
-            height: 74,
-            child: Row(
-              children: [
-                Text(
-                  Constants.APP_LABEL,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(color: Colors.white),
+          CustomAppBar(
+            actions: [
+              CustomIconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.notifications,
+                  color: Styles.iconColor,
                 ),
-                Spacer(),
-                SizedBox(width: 10),
-                CustomIconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Styles.iconColor,
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
 
           // Body

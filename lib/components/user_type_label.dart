@@ -15,7 +15,10 @@ class UserTypeLabel extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
           child: Text(
             label,
-            style: Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 14),
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                .copyWith(fontSize: 14, color: Colors.white),
           ),
         ),
         color: Styles.customApprovedButtonColor,

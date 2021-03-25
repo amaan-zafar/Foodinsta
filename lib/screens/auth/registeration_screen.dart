@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:food_insta/components/custom_app_bar.dart';
+import 'package:food_insta/components/custom_background.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_scaffold.dart';
 import 'package:food_insta/components/custom_text_button.dart';
@@ -29,6 +34,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   final _formKey = GlobalKey<FormState>();
 
+  File _profileImg;
+  File _idProofImg;
+  final picker = ImagePicker();
+
   _RegistrationFormState(this.userType);
 
   String _validate(String value, bool isRequired) {
@@ -41,105 +50,209 @@ class _RegistrationFormState extends State<RegistrationForm> {
         context, MaterialPageRoute(builder: (_) => RootApp()));
   }
 
+  Future _imgFromCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _profileImg = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future _imgFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _profileImg = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return CustomScaffold(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(12, size.height / 6, 12, 0),
-        child: CustomAppCard(
-          children: [
-            SizedBox(height: 16),
-            Text(
-              'Final step, fill out your details',
-              style: Theme.of(context).textTheme.headline2,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 16),
-            CustomTextField(
-              keyboardType: TextInputType.name,
-              hintText: Constants.NAME_TEXT,
-              validator: (value) {
-                return _validate(value, true);
-              },
-            ),
-            SizedBox(height: 16),
-            CustomTextField(
-              keyboardType: TextInputType.emailAddress,
-              hintText: '${Constants.EMAIL_TEXT} (${Constants.OPTIONAL_TEXT})',
-              validator: (value) {
-                return _validate(value, false);
-              },
-            ),
-            SizedBox(height: 16),
-            CustomDropDown(
-              list: _states,
-              value: _selectedState,
-              onChanged: null,
-            ),
-            SizedBox(height: 16),
-            CustomDropDown(
-              list: _states,
-              value: _selectedState,
-              onChanged: null,
-            ),
-            SizedBox(height: 16),
-            CustomTextField(
-              keyboardType: TextInputType.multiline,
-              hintText: Constants.STREET_ADDRESS,
-              validator: (value) {
-                return _validate(value, true);
-              },
-            ),
-            SizedBox(height: 16),
-            userType == 2
-                ? CustomTextField(
-                    keyboardType: TextInputType.text,
-                    hintText:
-                        '${Constants.WEBSITE_TEXT} (${Constants.OPTIONAL_TEXT})',
-                    validator: (value) {
-                      return _validate(value, false);
-                    },
-                  )
-                : Container(),
-            SizedBox(height: 16),
-            userType == 1
-                ? CustomTextField(
-                    keyboardType: TextInputType.emailAddress,
-                    hintText: Constants.REGISTERATION_NUMBER_TEXT,
-                    validator: (value) {
-                      return _validate(value, true);
-                    },
-                  )
-                : Container(),
-            CheckboxListTile(
-              title: Text(
-                Constants.ACEEPT_TNC,
-                style: Theme.of(context).textTheme.bodyText2,
+    return Scaffold(
+        body: Stack(
+      children: [
+        CustomBackground(),
+        SafeArea(
+          child: Column(
+            children: [
+              CustomAppBar(
+                centerTitle: true,
               ),
-              value: isChecked,
-              onChanged: (newValue) {
-                setState(() {
-                  isChecked = newValue;
-                });
-              },
-              controlAffinity: ListTileControlAffinity.leading,
-            ),
-            SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: CustomTextButton(
-                onPressed: () {
-                  _navigateToRootApp(context);
-                },
-                textOnButton: Constants.REGISTER_TEXT,
-                color: Styles.buttonColor2,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.fromLTRB(12, 8, 12, Styles.bottomPadding),
+                    child: CustomAppCard(
+                      children: [
+                        SizedBox(height: 16),
+                        Text(
+                          'Final step, fill out your details',
+                          style: Theme.of(context).textTheme.headline2,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 16),
+                        GestureDetector(
+                          onTap: () {
+                            _showPicker(context);
+                          },
+                          child: CircleAvatar(
+                              backgroundColor: Styles.iconColor,
+                              radius: 55,
+                              child: _profileImg != null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: Image.file(
+                                        _profileImg,
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.fitHeight,
+                                      ),
+                                    )
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                      width: 100,
+                                      height: 100,
+                                      child: Icon(
+                                        Icons.camera_alt,
+                                        color: Colors.grey[800],
+                                      ),
+                                    )),
+                        ),
+                        SizedBox(height: 16),
+                        CustomTextField(
+                          keyboardType: TextInputType.name,
+                          hintText: Constants.NAME_TEXT,
+                          validator: (value) {
+                            return _validate(value, true);
+                          },
+                        ),
+                        SizedBox(height: 16),
+                        CustomTextField(
+                          keyboardType: TextInputType.emailAddress,
+                          hintText:
+                              '${Constants.EMAIL_TEXT} (${Constants.OPTIONAL_TEXT})',
+                          validator: (value) {
+                            return _validate(value, false);
+                          },
+                        ),
+                        SizedBox(height: 16),
+                        CustomDropDown(
+                          list: _states,
+                          value: _selectedState,
+                          onChanged: null,
+                        ),
+                        SizedBox(height: 16),
+                        CustomDropDown(
+                          list: _states,
+                          value: _selectedState,
+                          onChanged: null,
+                        ),
+                        SizedBox(height: 16),
+                        CustomTextField(
+                          keyboardType: TextInputType.multiline,
+                          hintText: Constants.STREET_ADDRESS,
+                          validator: (value) {
+                            return _validate(value, true);
+                          },
+                        ),
+                        SizedBox(height: 16),
+                        userType == 2
+                            ? CustomTextField(
+                                keyboardType: TextInputType.text,
+                                hintText:
+                                    '${Constants.WEBSITE_TEXT} (${Constants.OPTIONAL_TEXT})',
+                                validator: (value) {
+                                  return _validate(value, false);
+                                },
+                              )
+                            : Container(),
+                        SizedBox(height: 16),
+                        userType == 1
+                            ? CustomTextField(
+                                keyboardType: TextInputType.emailAddress,
+                                hintText: Constants.REGISTERATION_NUMBER_TEXT,
+                                validator: (value) {
+                                  return _validate(value, true);
+                                },
+                              )
+                            : Container(),
+                        CheckboxListTile(
+                          title: Text(
+                            Constants.ACEEPT_TNC,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                          value: isChecked,
+                          onChanged: (newValue) {
+                            setState(() {
+                              isChecked = newValue;
+                            });
+                          },
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                        SizedBox(height: 16),
+                        SizedBox(
+                          width: double.infinity,
+                          child: CustomTextButton(
+                            onPressed: () {
+                              _navigateToRootApp(context);
+                            },
+                            textOnButton: Constants.REGISTER_TEXT,
+                            color: Styles.buttonColor2,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      ],
+    ));
   }
 }

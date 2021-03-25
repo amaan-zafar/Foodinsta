@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/user_type_label.dart';
@@ -62,67 +63,47 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: [
         // AppBar
-        SizedBox(
-          height: 74,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
-            child: Row(
-              children: [
-                Text(
-                  Constants.APP_LABEL,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(color: Colors.white),
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    MaterialButton(
-                      elevation: 0.0,
-                      color: darkThemeProvider.darkTheme
-                          ? Styles.black2
-                          : Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      onPressed: () {
-                        setState(() {
-                          _selectCity = true;
-                        });
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.place_rounded,
-                            color: Styles.iconColor,
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'City',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2
-                                .copyWith(color: Styles.iconColor),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    CustomIconButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => SettingsPage()));
-                      },
-                      icon: Icon(
-                        Icons.settings,
-                        color: Styles.iconColor,
-                      ),
-                    ),
-                  ],
-                )
-              ],
+        CustomAppBar(
+          actions: [
+            MaterialButton(
+              elevation: 0.0,
+              color: darkThemeProvider.darkTheme ? Styles.black2 : Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              onPressed: () {
+                setState(() {
+                  _selectCity = true;
+                });
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.place_rounded,
+                    color: Styles.iconColor,
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    'City',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2
+                        .copyWith(color: Styles.iconColor),
+                  )
+                ],
+              ),
             ),
-          ),
+            SizedBox(width: 10),
+            CustomIconButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => SettingsPage()));
+              },
+              icon: Icon(
+                Icons.settings,
+                color: Styles.iconColor,
+              ),
+            ),
+          ],
         ),
         Visibility(
           visible: false,
