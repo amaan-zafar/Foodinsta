@@ -4,7 +4,7 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: () {},
                   icon: Icon(
                     Icons.notifications,
-                    color: AppTheme.iconColor,
+                    color: Styles.iconColor,
                   ),
                 )
               ],
@@ -87,13 +87,13 @@ class _ProfilePageState extends State<ProfilePage> {
             child: CustomTextButton(
               textOnButton: 'My posts and requests',
               onPressed: () {},
-              color: AppTheme.buttonColor1,
+              color: Styles.buttonColor1,
             ),
           ),
           CustomTextButton(
             textOnButton: 'My orders',
             onPressed: () {},
-            color: AppTheme.buttonColor1,
+            color: Styles.buttonColor1,
           ),
         ],
       ),

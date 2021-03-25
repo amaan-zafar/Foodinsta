@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 
 class CustomAppCard extends StatelessWidget {
@@ -24,7 +24,7 @@ class CustomAppCard extends StatelessWidget {
       ),
       child: Card(
         elevation: 0,
-        color: AppTheme.whiteBgCardColor,
+        color: Styles.whiteBgCardColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),

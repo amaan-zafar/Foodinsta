@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class CustomScaffold extends StatelessWidget {
   final Widget child;
@@ -12,7 +12,7 @@ class CustomScaffold extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        color: AppTheme.whiteBgScreenColor,
+        color: Styles.whiteBgScreenColor,
         child: SingleChildScrollView(
           child: Stack(
             children: [
@@ -20,7 +20,7 @@ class CustomScaffold extends StatelessWidget {
                 width: size.width,
                 height: size.height / 4,
                 decoration: BoxDecoration(
-                    gradient: AppTheme.bgLinearGradient,
+                    gradient: Styles.bgLinearGradient,
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(16))),
                 child: Align(

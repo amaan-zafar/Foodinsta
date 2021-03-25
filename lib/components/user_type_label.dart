@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class UserTypeLabel extends StatelessWidget {
   final String label;
@@ -18,7 +18,7 @@ class UserTypeLabel extends StatelessWidget {
             style: Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 14),
           ),
         ),
-        color: AppTheme.customApprovedButtonColor,
+        color: Styles.customApprovedButtonColor,
       ),
     );
   }

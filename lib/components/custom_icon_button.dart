@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class CustomIconButton extends StatelessWidget {
   final Icon icon;

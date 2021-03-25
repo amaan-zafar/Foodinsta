@@ -6,7 +6,7 @@ import 'package:food_insta/screens/root_app/home_page.dart';
 import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/root_app/profile_page.dart';
 import 'package:food_insta/screens/root_app/qrcode_page.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _RootAppState extends State<RootApp> {
         height: MediaQuery.of(context).size.width * 0.22,
         width: MediaQuery.of(context).size.width * 0.22,
         child: FloatingActionButton(
-          backgroundColor: AppTheme.iconColor,
+          backgroundColor: Styles.iconColor,
           onPressed: () {},
           tooltip: 'Create a Post',
           child: Icon(Icons.add),
@@ -38,15 +38,13 @@ class _RootAppState extends State<RootApp> {
       bottomNavigationBar: CustomBottomNavBar(
         items: [
           CustomBottomNavBarItem(
-              iconData: Icons.home, text: '', color: AppTheme.iconColor),
+              iconData: Icons.home, text: '', color: Styles.iconColor),
           CustomBottomNavBarItem(
-              iconData: Icons.place_rounded,
-              text: '',
-              color: AppTheme.iconColor),
+              iconData: Icons.place_rounded, text: '', color: Styles.iconColor),
           CustomBottomNavBarItem(
-              iconData: Icons.photo, text: '', color: AppTheme.iconColor),
+              iconData: Icons.photo, text: '', color: Styles.iconColor),
           CustomBottomNavBarItem(
-              iconData: Icons.person, text: '', color: AppTheme.iconColor),
+              iconData: Icons.person, text: '', color: Styles.iconColor),
         ],
       ),
     );

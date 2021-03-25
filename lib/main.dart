@@ -5,7 +5,7 @@ import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/auth/login_screen.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:provider/provider.dart';
 
@@ -38,10 +38,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    getCurrentAppTheme();
+    getCurrentStyles();
   }
 
-  void getCurrentAppTheme() async {
+  void getCurrentStyles() async {
     themeChangeProvider.darkTheme =
         await themeChangeProvider.darkThemePreference.getTheme();
   }
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: Constants.APP_LABEL,
         debugShowCheckedModeBanner: false,
-        theme: AppTheme.themeData(),
+        theme: Styles.themeData(),
         home: isLoggedIn ? RootApp() : LoginPage(),
       ),
     );

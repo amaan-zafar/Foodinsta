@@ -3,7 +3,7 @@ import 'package:food_insta/components/custom_scaffold.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/screens/auth/user_type_screen.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 
 class LoginPage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             MaterialButton(
               height: 56,
               elevation: 0,
-              color: AppTheme.buttonColor1,
+              color: Styles.buttonColor1,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
               onPressed: () {

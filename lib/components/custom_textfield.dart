@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -20,7 +20,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        color: AppTheme.textFieldColor,
+        color: Styles.textFieldColor,
         child: TextFormField(
           controller: controller,
           keyboardType: keyboardType,

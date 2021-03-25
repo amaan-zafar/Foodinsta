@@ -4,7 +4,7 @@ import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/user_type_label.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 
 class SettingsPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         },
                         icon: Icon(
                           Icons.arrow_back,
-                          color: AppTheme.iconColor,
+                          color: Styles.iconColor,
                         ),
                       )
                     ],
@@ -78,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ListTile(
                           title: Text('Dark mode'),
                           trailing: Switch(
-                            activeColor: AppTheme.iconColor,
+                            activeColor: Styles.iconColor,
                             onChanged: (bool value) {
                               setState(() {
                                 isDarkMode = !isDarkMode;

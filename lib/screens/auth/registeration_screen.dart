@@ -5,7 +5,7 @@ import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_dropdown.dart';
 import 'package:food_insta/components/custom_textfield.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 
 class RegistrationForm extends StatefulWidget {
@@ -133,7 +133,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   _navigateToRootApp(context);
                 },
                 textOnButton: Constants.REGISTER_TEXT,
-                color: AppTheme.buttonColor2,
+                color: Styles.buttonColor2,
               ),
             ),
             SizedBox(height: 16),

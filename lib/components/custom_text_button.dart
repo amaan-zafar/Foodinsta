@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class CustomTextButton extends StatelessWidget {
   final Function onPressed;
@@ -9,7 +9,7 @@ class CustomTextButton extends StatelessWidget {
   CustomTextButton({
     this.textOnButton,
     this.onPressed,
-    this.color = AppTheme.iconColor,
+    this.color = Styles.iconColor,
   });
   @override
   Widget build(BuildContext context) {

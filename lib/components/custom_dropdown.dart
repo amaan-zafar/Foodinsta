@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class CustomDropDown extends StatelessWidget {
   final Function(dynamic) onChanged;
@@ -16,7 +16,7 @@ class CustomDropDown extends StatelessWidget {
     return DropdownButtonHideUnderline(
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        color: AppTheme.textFieldColor,
+        color: Styles.textFieldColor,
         child: DropdownButton(
           isExpanded: true,
           elevation: 2,

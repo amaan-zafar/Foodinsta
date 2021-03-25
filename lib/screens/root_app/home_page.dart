@@ -3,7 +3,7 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/screens/root_app/settings_page.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Icon(
                             Icons.place_rounded,
-                            color: AppTheme.iconColor,
+                            color: Styles.iconColor,
                           ),
                           SizedBox(width: 4),
                           Text(
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2
-                                .copyWith(color: AppTheme.iconColor),
+                                .copyWith(color: Styles.iconColor),
                           )
                         ],
                       ),
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       icon: Icon(
                         Icons.settings,
-                        color: AppTheme.iconColor,
+                        color: Styles.iconColor,
                       ),
                     ),
                   ],
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       icon: Icon(
                         Icons.check,
-                        color: AppTheme.customApprovedButtonColor,
+                        color: Styles.customApprovedButtonColor,
                       ),
                     ),
                   ],

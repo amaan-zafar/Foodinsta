@@ -4,7 +4,7 @@ import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/screens/auth/registeration_screen.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class UserTypePage extends StatelessWidget {
   @override
@@ -34,7 +34,7 @@ class UserTypePage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: CustomTextButton(
-                color: AppTheme.buttonColor1,
+                color: Styles.buttonColor1,
                 textOnButton: 'I represent an NGO',
                 onPressed: () {
                   _navigateToRegisterationScreen(context, 0);
@@ -45,7 +45,7 @@ class UserTypePage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: CustomTextButton(
-                color: AppTheme.buttonColor1,
+                color: Styles.buttonColor1,
                 textOnButton: 'I represent a Business',
                 onPressed: () {
                   _navigateToRegisterationScreen(context, 0);
@@ -56,7 +56,7 @@ class UserTypePage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: CustomTextButton(
-                color: AppTheme.buttonColor1,
+                color: Styles.buttonColor1,
                 textOnButton: 'I am Solo/Volunteer',
                 onPressed: () {
                   _navigateToRegisterationScreen(context, 0);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 
 class QRCodePage extends StatelessWidget {
@@ -28,7 +28,7 @@ class QRCodePage extends StatelessWidget {
                   onPressed: () {},
                   icon: Icon(
                     Icons.arrow_back,
-                    color: AppTheme.iconColor,
+                    color: Styles.iconColor,
                   ),
                 )
               ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class CustomBottomNavBarItem {
   CustomBottomNavBarItem({this.iconData, this.text, this.color});
@@ -112,7 +112,7 @@ class CustomBottomNavBarState extends State<CustomBottomNavBar> {
   }) {
     Color color = item.color;
     Color selectedTabBgColor =
-        _selectedIndex == index ? AppTheme.selectedTabBgColor : widget.color;
+        _selectedIndex == index ? Styles.selectedTabBgColor : widget.color;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),

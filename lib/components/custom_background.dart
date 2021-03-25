@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/theme.dart' as AppTheme;
+import 'package:food_insta/theme.dart';
 
 class CustomBackground extends StatelessWidget {
   final Widget child;
@@ -15,7 +15,7 @@ class CustomBackground extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      color: AppTheme.whiteBgScreenColor,
+      color: Styles.whiteBgScreenColor,
       child: SingleChildScrollView(
         child: Stack(
           children: [
@@ -23,14 +23,14 @@ class CustomBackground extends StatelessWidget {
               width: width,
               height: height / 4,
               decoration: BoxDecoration(
-                  gradient: AppTheme.bgLinearGradient,
+                  gradient: Styles.bgLinearGradient,
                   borderRadius:
                       BorderRadius.vertical(bottom: Radius.circular(16))),
             ),
             Container(
               width: double.infinity,
               height: topPadding + 74,
-              decoration: BoxDecoration(gradient: AppTheme.bgLinearGradient),
+              decoration: BoxDecoration(gradient: Styles.bgLinearGradient),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(12, height / 6, 12, 0),
