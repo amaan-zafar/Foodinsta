@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/auth/login_screen.dart';
@@ -21,15 +22,41 @@ Future<void> main() async {
   runApp(MyApp(firstCamera));
 }
 
-class MyApp extends StatelessWidget {
-  bool isLoggedIn = true;
+class MyApp extends StatefulWidget {
   final CameraDescription camera;
 
   MyApp(this.camera);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isLoggedIn = true;
+  DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentAppTheme();
+  }
+
+  void getCurrentAppTheme() async {
+    themeChangeProvider.darkTheme =
+        await themeChangeProvider.darkThemePreference.getTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => UserNotifier())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => themeChangeProvider,
+        ),
+      ],
       child: MaterialApp(
         title: Constants.APP_LABEL,
         debugShowCheckedModeBanner: false,
