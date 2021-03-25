@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
-import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/user_type_label.dart';
-import 'package:food_insta/remove_later/post_json.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +14,42 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _selectCity = false;
+
+  final String apiUrl = "https://randomuser.me/api/?results=10";
+
+  List<dynamic> _users = [];
+
+  void fetchUsers() async {
+    var result = await http
+        .get(Uri.parse(apiUrl), headers: {"Accept": "application/json"});
+    setState(() {
+      _users = json.decode(result.body)['results'];
+    });
+  }
+
+  String _name(dynamic user) {
+    return user['name']['first'];
+  }
+
+  String _location(dynamic user) {
+    return user['location']['country'];
+  }
+
+  String _age(Map<dynamic, dynamic> user) {
+    return "Age: " + user['dob']['age'].toString();
+  }
+
+  Future<void> _getData() async {
+    setState(() {
+      fetchUsers();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUsers();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +113,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Visibility(
-          visible: _selectCity,
+          visible: false,
           child: SizedBox(
             height: 74,
             child: Row(
@@ -103,91 +139,77 @@ class _HomePageState extends State<HomePage> {
         ),
         // Body
         Expanded(
-          child: ListView.builder(itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: CustomAppCard(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 18),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.greenAccent[400],
-                          radius: 24,
-                          child: Text('DP'),
-                        ), //Text
-                        SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Aggarwal sweets',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  .copyWith(fontSize: 14),
-                            ),
-                            Text(
-                              '6 hours ago',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  .copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        Column(
-                          children: [
-                            Text('Rating'),
-                            UserTypeLabel(label: 'Business')
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: Colors.blue,
-                    width: double.infinity,
-                    height: 240,
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.group),
-                      Text('36'),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Icon(Icons.store),
-                      Spacer(),
-                      MaterialButton(
-                        color: Color(0xFFF54580),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        onPressed: () {},
-                        elevation: 0,
-                        child: Text(
-                          'Request',
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: Text(
-                      'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  )
-                ],
-              ),
-            );
-          }),
+          child: _users.length != 0
+              ? RefreshIndicator(
+                  onRefresh: _getData,
+                  child: ListView.builder(
+                      itemCount: _users.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          child: CustomAppCard(
+                            children: [
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 8, 0, 18),
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      radius: 24,
+                                      backgroundImage: NetworkImage(
+                                          _users[index]['picture']['medium']),
+                                    ),
+                                    title: Text(_name(_users[index])),
+                                    subtitle: Text(_location(_users[index])),
+                                    trailing: Text(_age(_users[index])),
+                                  )),
+                              Container(
+                                color: Colors.black,
+                                child: Image.network(
+                                    _users[index]['picture']['large']),
+                                height: 200,
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.group),
+                                  Text('36'),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Icon(Icons.store),
+                                  Spacer(),
+                                  MaterialButton(
+                                    color: Color(0xFFF54580),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(16)),
+                                    onPressed: () {},
+                                    elevation: 0,
+                                    child: Text(
+                                      'Request',
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                child: Text(
+                                  'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.caption,
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
         )
       ],
     );

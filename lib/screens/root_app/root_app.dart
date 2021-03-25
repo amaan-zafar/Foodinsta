@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_bottomnavbar.dart';
-import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/components/custom_dropdown.dart';
-import 'package:food_insta/components/custom_icon_button.dart';
-import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/screens/root_app/home_page.dart';
 import 'package:food_insta/screens/root_app/profile_page.dart';
+import 'package:food_insta/screens/root_app/qrcode_page.dart';
 import 'package:food_insta/theme.dart' as AppTheme;
 
 class RootApp extends StatefulWidget {
@@ -15,7 +12,7 @@ class RootApp extends StatefulWidget {
   _RootAppState createState() => _RootAppState();
 }
 
-int pageIndex = 1;
+int pageIndex = 0;
 
 class _RootAppState extends State<RootApp> {
   @override
@@ -55,10 +52,14 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget buildBody(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Stack(children: [
       CustomBackground(),
-      SafeArea(child: pageIndex == 0 ? HomePage() : ProfilePage()),
+      SafeArea(
+          child: pageIndex == 0
+              ? HomePage()
+              : pageIndex == 2
+                  ? QRCodePage()
+                  : ProfilePage()),
     ]);
   }
 }
