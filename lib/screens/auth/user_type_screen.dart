@@ -34,6 +34,7 @@ class UserTypePage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: CustomTextButton(
+                color: AppTheme.buttonColor1,
                 textOnButton: 'I represent an NGO',
                 onPressed: () {
                   _navigateToRegisterationScreen(context, 0);
@@ -44,6 +45,7 @@ class UserTypePage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: CustomTextButton(
+                color: AppTheme.buttonColor1,
                 textOnButton: 'I represent a Business',
                 onPressed: () {
                   _navigateToRegisterationScreen(context, 0);
@@ -54,6 +56,7 @@ class UserTypePage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: CustomTextButton(
+                color: AppTheme.buttonColor1,
                 textOnButton: 'I am Solo/Volunteer',
                 onPressed: () {
                   _navigateToRegisterationScreen(context, 0);

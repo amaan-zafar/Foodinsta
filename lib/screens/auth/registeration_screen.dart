@@ -134,7 +134,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   _navigateToRootApp(context);
                 },
                 textOnButton: Constants.REGISTER_TEXT,
-                color: AppTheme.CustomTextButtonColor,
+                color: AppTheme.buttonColor2,
               ),
             ),
             SizedBox(height: 16),

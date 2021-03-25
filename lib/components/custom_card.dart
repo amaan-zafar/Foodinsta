@@ -4,11 +4,13 @@ import 'package:food_insta/constants.dart' as Constants;
 
 class CustomAppCard extends StatelessWidget {
   final List<Widget> children;
+  final double width;
 
-  const CustomAppCard({Key key, this.children}) : super(key: key);
+  const CustomAppCard({Key key, this.children, this.width}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(32),
         boxShadow: [

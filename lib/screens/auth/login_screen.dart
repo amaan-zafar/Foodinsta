@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             MaterialButton(
               height: 56,
               elevation: 0,
-              color: AppTheme.signInButtonColor,
+              color: AppTheme.buttonColor1,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
               onPressed: () {
