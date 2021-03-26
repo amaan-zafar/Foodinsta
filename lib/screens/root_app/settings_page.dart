@@ -84,7 +84,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         ListTile(
                           title: Text('Rate App'),
                           trailing: IconButton(
-                            icon: Icon(Icons.rate_review),
+                            icon: Icon(Icons.open_in_new),
+                            color: Styles.iconColor,
                             onPressed: () {},
                           ),
                         )
@@ -97,7 +98,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         ListTile(
                           title: Text('Privacy Policy'),
                           trailing: IconButton(
-                            icon: Icon(Icons.rate_review),
+                            icon: Icon(Icons.open_in_new),
+                            color: Styles.iconColor,
                             onPressed: () {},
                           ),
                         )
@@ -110,7 +112,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         ListTile(
                           title: Text('Terms and conditions'),
                           trailing: IconButton(
-                            icon: Icon(Icons.rate_review),
+                            icon: Icon(Icons.open_in_new),
+                            color: Styles.iconColor,
                             onPressed: () {},
                           ),
                         )
