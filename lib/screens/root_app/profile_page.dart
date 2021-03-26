@@ -75,6 +75,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     UserTypeLabel(label: 'Business'),
+                    SizedBox(height: 8),
+                    Divider(),
                     buildTabs(context),
                   ],
                 ),
@@ -89,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
   buildTabs(BuildContext context) {
     var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
     Color tileColor =
-        darkThemeProvider.darkTheme ? Styles.tileColorLight : Styles.black2;
+        darkThemeProvider.darkTheme ? Styles.black2 : Styles.tileColorLight;
     return DefaultTabController(
       length: 2,
       initialIndex: 0, // Change it according to user type
@@ -98,8 +100,10 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Container(
             child: TabBar(
-              labelColor: Colors.green,
-              unselectedLabelColor: Colors.black,
+              labelColor:
+                  darkThemeProvider.darkTheme ? Colors.white : Styles.black1,
+              unselectedLabelColor:
+                  darkThemeProvider.darkTheme ? Colors.white70 : Styles.black2,
               tabs: [
                 Tab(text: 'MY POSTS'),
                 Tab(text: 'MY ORDERS'),
@@ -111,10 +115,13 @@ class _ProfilePageState extends State<ProfilePage> {
               decoration: BoxDecoration(
                   border:
                       Border(top: BorderSide(color: Colors.grey, width: 0.5))),
-              child: TabBarView(children: <Widget>[
-                buildPostsTab(tileColor),
-                buildOrdersTab(tileColor),
-              ]))
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: TabBarView(children: <Widget>[
+                  buildPostsTab(tileColor),
+                  buildOrdersTab(tileColor),
+                ]),
+              ))
         ],
       ),
     );
@@ -138,9 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               );
             },
-            separatorBuilder: (_, i) => SizedBox(
-                  height: 12,
-                ),
+            separatorBuilder: (_, i) => SizedBox(height: 12),
             itemCount: 10));
   }
 
@@ -178,9 +183,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               );
             },
-            separatorBuilder: (_, i) => SizedBox(
-                  height: 12,
-                ),
+            separatorBuilder: (_, i) => SizedBox(height: 12),
             itemCount: 10));
   }
 }
