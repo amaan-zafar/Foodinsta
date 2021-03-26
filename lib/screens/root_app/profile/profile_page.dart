@@ -9,6 +9,7 @@ import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/theme.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -141,8 +142,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         MaterialPageRoute(builder: (context) => PostDetail()));
                   },
                   tileColor: tileColor,
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.green,
+                  ),
                   title: Column(
-                    children: [Icon(Icons.group), Icon(Icons.line_weight)],
+                    children: [
+                      Icon(MdiIcons.accountGroup),
+                      Icon(MdiIcons.weight)
+                    ],
                   ),
                   trailing: Icon(Icons.cancel),
                 ),

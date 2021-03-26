@@ -25,7 +25,7 @@ class OrderDetail extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     icon: Icon(
-                      Icons.cancel_rounded,
+                      Icons.close,
                       color: Styles.iconColor,
                     ),
                   )

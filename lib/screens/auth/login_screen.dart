@@ -5,6 +5,7 @@ import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/screens/auth/user_type_screen.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -43,7 +44,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image(image: AssetImage('assets/google_icon.png')),
+                  Icon(
+                    MdiIcons.google,
+                    color: Colors.white,
+                  ),
                   SizedBox(width: 16),
                   Text(
                     'Sign in with Google',

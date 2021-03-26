@@ -8,6 +8,7 @@ import 'package:food_insta/screens/root_app/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:http/http.dart' as http;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:convert';
 
 import 'package:provider/provider.dart';
@@ -167,7 +168,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 title: Text(_name(_users[index])),
                                 subtitle: Text(_location(_users[index])),
-                                trailing: Text(_age(_users[index])),
                               )),
                           Container(
                             color: Colors.black,
@@ -177,12 +177,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Row(
                             children: [
-                              Icon(Icons.group),
+                              Icon(MdiIcons.weight, color: Styles.iconColor),
                               Text('36'),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Icon(Icons.store),
                               Spacer(),
                               MaterialButton(
                                 color: Color(0xFFF54580),
@@ -190,9 +186,29 @@ class _HomePageState extends State<HomePage> {
                                     borderRadius: BorderRadius.circular(16)),
                                 onPressed: () {},
                                 elevation: 0,
-                                child: Text(
-                                  'Request',
-                                  style: Theme.of(context).textTheme.subtitle1,
+                                child: Row(
+                                  children: [
+                                    Icon(MdiIcons.accountGroup,
+                                        color: Colors.white),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(4, 0, 8, 0),
+                                      child: Text('36',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2
+                                              .copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: 13)),
+                                    ),
+                                    Text(
+                                      'Request',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],

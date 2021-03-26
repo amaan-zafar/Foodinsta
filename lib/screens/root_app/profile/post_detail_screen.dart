@@ -8,6 +8,7 @@ import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/screens/root_app/profile/qrcode_page.dart';
 import 'package:food_insta/screens/root_app/profile/requests_page.dart';
 import 'package:food_insta/theme.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class PostDetail extends StatelessWidget {
   String randomImg = 'https://picsum.photos/250?image=9';
@@ -28,7 +29,7 @@ class PostDetail extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     icon: Icon(
-                      Icons.cancel_rounded,
+                      Icons.close,
                       color: Styles.iconColor,
                     ),
                   )
@@ -60,7 +61,10 @@ class PostDetail extends StatelessWidget {
                           top: 4,
                           child: CustomIconButton(
                             onPressed: () {},
-                            icon: Icon(Icons.delete),
+                            icon: Icon(
+                              MdiIcons.deleteEmpty,
+                              color: Styles.customDeclineButtonColor,
+                            ),
                           ),
                         )
                       ],

@@ -34,7 +34,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isLoggedIn = true;
+  bool isLoggedIn = false;
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
 
   @override

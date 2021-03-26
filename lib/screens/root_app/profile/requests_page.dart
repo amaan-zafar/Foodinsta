@@ -6,6 +6,7 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -56,7 +57,7 @@ class _RequestsPageState extends State<RequestsPage> {
                           setState(() {});
                         },
                         icon: Icon(
-                          Icons.delete,
+                          MdiIcons.deleteEmpty,
                           color: Styles.iconColor,
                         ),
                       ),

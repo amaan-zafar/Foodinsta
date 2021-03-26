@@ -8,6 +8,7 @@ import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/root_app/profile/profile_page.dart';
 import 'package:food_insta/screens/root_app/profile/qrcode_page.dart';
 import 'package:food_insta/theme.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class RootApp extends StatefulWidget {
@@ -54,7 +55,7 @@ class _RootAppState extends State<RootApp> {
           CustomBottomNavBarItem(
               iconData: Icons.place_rounded, text: '', color: Styles.iconColor),
           CustomBottomNavBarItem(
-              iconData: Icons.photo, text: '', color: Styles.iconColor),
+              iconData: MdiIcons.qrcodeScan, text: '', color: Styles.iconColor),
           CustomBottomNavBarItem(
               iconData: Icons.person, text: '', color: Styles.iconColor),
         ],
