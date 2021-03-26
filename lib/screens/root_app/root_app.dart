@@ -5,8 +5,8 @@ import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/screens/root_app/home_page.dart';
 import 'package:food_insta/screens/root_app/map_screen.dart';
-import 'package:food_insta/screens/root_app/profile_page.dart';
-import 'package:food_insta/screens/root_app/qrcode_page.dart';
+import 'package:food_insta/screens/root_app/profile/profile_page.dart';
+import 'package:food_insta/screens/root_app/profile/qrcode_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:provider/provider.dart';
 

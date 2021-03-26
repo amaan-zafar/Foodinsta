@@ -6,6 +6,7 @@ import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/models/dark_theme_provder.dart';
+import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -134,14 +135,15 @@ class _ProfilePageState extends State<ProfilePage> {
               return ClipRRect(
                 borderRadius: BorderRadius.circular(32),
                 child: ListTile(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PostDetail()));
+                  },
                   tileColor: tileColor,
                   title: Column(
                     children: [Icon(Icons.group), Icon(Icons.line_weight)],
                   ),
-                  trailing: CustomIconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.cancel),
-                  ),
+                  trailing: Icon(Icons.cancel),
                 ),
               );
             },
@@ -156,6 +158,10 @@ class _ProfilePageState extends State<ProfilePage> {
               return ClipRRect(
                 borderRadius: BorderRadius.circular(32),
                 child: ListTile(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PostDetail()));
+                  },
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   tileColor: tileColor,

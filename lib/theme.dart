@@ -16,6 +16,7 @@ class Styles {
   static Color textFieldColor = Color(0xFFEEF5FF);
   static Color buttonColor2 = Color(0xFF2D9CDB);
   static Color customApprovedButtonColor = Color(0xFF34FF01);
+  static Color customDeclineButtonColor = Color(0xFFEF5C56);
   static Color customRejectedButtonColor = Color(0xFF2D9CDB);
   static Color customCompletedButtonColor = Color(0xFF979797);
   static Color customRequestButtonColor = Color(0xFFF54580);

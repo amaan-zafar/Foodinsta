@@ -58,153 +58,161 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
-
     return Column(
       children: [
         // AppBar
-        CustomAppBar(
-          actions: [
-            MaterialButton(
-              elevation: 0.0,
-              color: darkThemeProvider.darkTheme ? Styles.black2 : Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              onPressed: () {
-                setState(() {
-                  _selectCity = true;
-                });
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.place_rounded,
-                    color: Styles.iconColor,
-                  ),
-                  SizedBox(width: 4),
-                  Text(
-                    'City',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2
-                        .copyWith(color: Styles.iconColor),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(width: 10),
-            CustomIconButton(
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => SettingsPage()));
-              },
-              icon: Icon(
-                Icons.settings,
+        buildAppBar(context),
+        buildCitySelector(),
+        // Body
+        buildBody(),
+      ],
+    );
+  }
+
+  buildAppBar(BuildContext context) {
+    var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
+
+    return CustomAppBar(
+      actions: [
+        MaterialButton(
+          elevation: 0.0,
+          color: darkThemeProvider.darkTheme ? Styles.black2 : Colors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          onPressed: () {
+            setState(() {
+              _selectCity = true;
+            });
+          },
+          child: Row(
+            children: [
+              Icon(
+                Icons.place_rounded,
                 color: Styles.iconColor,
               ),
-            ),
-          ],
-        ),
-        Visibility(
-          visible: false,
-          child: SizedBox(
-            height: 74,
-            child: Row(
-              children: [
-                Row(
-                  children: [
-                    CustomIconButton(
-                      onPressed: () {
-                        setState(() {
-                          _selectCity = false;
-                        });
-                      },
-                      icon: Icon(
-                        Icons.check,
-                        color: Styles.customApprovedButtonColor,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+              SizedBox(width: 4),
+              Text(
+                'City',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2
+                    .copyWith(color: Styles.iconColor),
+              )
+            ],
           ),
         ),
-        // Body
-        Expanded(
-          child: _users.length != 0
-              ? RefreshIndicator(
-                  onRefresh: _getData,
-                  child: ListView.builder(
-                      itemCount: _users.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          child: CustomAppCard(
-                            children: [
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 8, 0, 18),
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      radius: 24,
-                                      backgroundImage: NetworkImage(
-                                          _users[index]['picture']['medium']),
-                                    ),
-                                    title: Text(_name(_users[index])),
-                                    subtitle: Text(_location(_users[index])),
-                                    trailing: Text(_age(_users[index])),
-                                  )),
-                              Container(
-                                color: Colors.black,
-                                child: Image.network(
-                                    _users[index]['picture']['large']),
-                                height: 200,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.group),
-                                  Text('36'),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Icon(Icons.store),
-                                  Spacer(),
-                                  MaterialButton(
-                                    color: Color(0xFFF54580),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(16)),
-                                    onPressed: () {},
-                                    elevation: 0,
-                                    child: Text(
-                                      'Request',
-                                      style:
-                                          Theme.of(context).textTheme.subtitle1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: Text(
-                                  'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.caption,
+        SizedBox(width: 10),
+        CustomIconButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => SettingsPage()));
+          },
+          icon: Icon(
+            Icons.settings,
+            color: Styles.iconColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  buildCitySelector() {
+    return Visibility(
+      visible: false,
+      child: SizedBox(
+        height: 74,
+        child: Row(
+          children: [
+            Row(
+              children: [
+                CustomIconButton(
+                  onPressed: () {
+                    setState(() {
+                      _selectCity = false;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.check,
+                    color: Styles.customApprovedButtonColor,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildBody() {
+    return Expanded(
+      child: _users.length != 0
+          ? RefreshIndicator(
+              onRefresh: _getData,
+              child: ListView.builder(
+                  itemCount: _users.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      child: CustomAppCard(
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 8, 0, 18),
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  radius: 24,
+                                  backgroundImage: NetworkImage(
+                                      _users[index]['picture']['medium']),
                                 ),
-                              )
+                                title: Text(_name(_users[index])),
+                                subtitle: Text(_location(_users[index])),
+                                trailing: Text(_age(_users[index])),
+                              )),
+                          Container(
+                            color: Colors.black,
+                            child: Image.network(
+                                _users[index]['picture']['large']),
+                            height: 200,
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.group),
+                              Text('36'),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Icon(Icons.store),
+                              Spacer(),
+                              MaterialButton(
+                                color: Color(0xFFF54580),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                                onPressed: () {},
+                                elevation: 0,
+                                child: Text(
+                                  'Request',
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
+                              ),
                             ],
                           ),
-                        );
-                      }),
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
-                ),
-        )
-      ],
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                            child: Text(
+                              'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }

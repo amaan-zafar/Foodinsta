@@ -5,7 +5,7 @@ import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/deal_completed.dart';
 import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/auth/login_screen.dart';
-import 'package:food_insta/screens/root_app/profile_page.dart';
+import 'package:food_insta/screens/root_app/profile/profile_page.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
