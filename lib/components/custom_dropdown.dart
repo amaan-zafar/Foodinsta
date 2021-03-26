@@ -13,29 +13,33 @@ class CustomDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        color: Styles.textFieldColor,
-        child: DropdownButton(
-          isExpanded: true,
-          elevation: 2,
-          itemHeight: itemHeight,
-          value: value,
-          onChanged: onChanged,
-          items: list.map((indexValue) {
-            return DropdownMenuItem(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(18, 16, 0, 16),
-                child: new Text(
-                  indexValue,
-                  overflow: TextOverflow.clip,
-                  style: Theme.of(context).textTheme.bodyText1,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: DropdownButtonHideUnderline(
+        child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          color: Styles.textFieldColor,
+          child: DropdownButton(
+            isExpanded: true,
+            elevation: 2,
+            itemHeight: itemHeight,
+            value: value,
+            onChanged: onChanged,
+            items: list.map((indexValue) {
+              return DropdownMenuItem(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 16, 0, 16),
+                  child: new Text(
+                    indexValue,
+                    overflow: TextOverflow.clip,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                 ),
-              ),
-              value: indexValue,
-            );
-          }).toList(),
+                value: indexValue,
+              );
+            }).toList(),
+          ),
         ),
       ),
     );

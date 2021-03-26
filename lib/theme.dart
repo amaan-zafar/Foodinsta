@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Styles {
-  static double bottomPadding = 64.0;
+  static double cardTopPadding = 18.0;
+  static double cardBottomPadding = 64.0;
   static Color black = Color(0xFF050505);
   static Color black1 = Color(0xFF151515);
   static Color black2 = Color(0xFF252525);

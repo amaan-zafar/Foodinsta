@@ -28,6 +28,7 @@ class CustomTextButton extends StatelessWidget {
             Text(
               textOnButton,
               style: TextStyle(color: Colors.white),
+              overflow: TextOverflow.clip,
             ),
           ],
         ),

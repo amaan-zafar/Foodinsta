@@ -44,7 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(8, 18, 8, Styles.bottomPadding),
+                padding:
+                    EdgeInsets.fromLTRB(8, 18, 8, Styles.cardBottomPadding),
                 child: CustomAppCard(
                   width: double.infinity,
                   children: [

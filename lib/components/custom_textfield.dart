@@ -18,24 +18,28 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        color: Styles.textFieldColor,
-        child: TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              contentPadding: const EdgeInsets.fromLTRB(18, 16, 0, 16),
-              hintText: hintText,
-              hintStyle: Theme.of(context).textTheme.bodyText1),
-          onChanged: onChanged,
-          style: style,
-          validator: validator,
-        ));
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          color: Styles.textFieldColor,
+          child: TextFormField(
+            controller: controller,
+            keyboardType: keyboardType,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                contentPadding: const EdgeInsets.fromLTRB(18, 16, 0, 16),
+                hintText: hintText,
+                hintStyle: Theme.of(context).textTheme.bodyText1),
+            onChanged: onChanged,
+            style: style,
+            validator: validator,
+          )),
+    );
   }
 }
