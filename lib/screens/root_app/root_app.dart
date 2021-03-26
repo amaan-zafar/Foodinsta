@@ -43,6 +43,11 @@ class _RootAppState extends State<RootApp> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CustomBottomNavBar(
+        onTabSelected: (index) {
+          setState(() {
+            pageIndex = index;
+          });
+        },
         items: [
           CustomBottomNavBarItem(
               iconData: Icons.home, text: '', color: Styles.iconColor),
