@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_scaffold.dart';
-import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
+import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/screens/auth/user_type_screen.dart';
 import 'package:food_insta/theme.dart';
-import 'package:food_insta/constants.dart' as Constants;
+import 'package:food_insta/utils/authentication.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,7 +14,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool userAuthorised = true;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -30,28 +31,51 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            MaterialButton(
-              height: 56,
-              elevation: 0,
-              color: Styles.buttonColor1,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => UserTypePage()));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image(image: AssetImage('assets/google_icon.png')),
-                  SizedBox(width: 16),
-                  Text(
-                    'Sign in with Google',
-                    style: TextStyle(color: Colors.white),
+            Consumer<LoginController>(builder: (context, controller, child) {
+              if (controller.loginState == LoginState.Loading) {
+                return CircularProgressIndicator();
+              } else if (controller.loginState == LoginState.Loaded ||
+                  controller.loginState == LoginState.Initial) {
+                return MaterialButton(
+                  height: 56,
+                  elevation: 0,
+                  color: Styles.buttonColor1,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  onPressed: () async {
+                    await controller.loginWithGoogle();
+                    if (controller.status == 1) {
+                      //TODO: Change this shit
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => UserTypePage(),
+                        ),
+                      );
+                    } else if (controller.status == 2) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => UserTypePage(),
+                        ),
+                      );
+                    } else {
+                      //TODO: SHow error dialog
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(image: AssetImage('assets/google_icon.png')),
+                      SizedBox(width: 16),
+                      Text(
+                        'Sign in with Google',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                );
+              } else
+                return Container();
+            }),
             SizedBox(
               height: 80,
             ),
