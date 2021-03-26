@@ -6,6 +6,7 @@ import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/models/dark_theme_provder.dart';
+import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/theme.dart';
 import 'package:provider/provider.dart';
@@ -160,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: ListTile(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PostDetail()));
+                        MaterialPageRoute(builder: (context) => OrderDetail()));
                   },
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
