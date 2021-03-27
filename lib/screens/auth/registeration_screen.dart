@@ -3,6 +3,7 @@ import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_dropdown.dart';
 import 'package:food_insta/models/app_types.dart';
+import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_text_button.dart';
@@ -15,6 +16,7 @@ import 'package:country_calling_code_picker/picker.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:food_insta/components/bottom_img_picker.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationForm extends StatefulWidget {
   final USERTYPE userType;
@@ -36,6 +38,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   String _selectedOrg = 'Nirman';
 
   final _formKey = GlobalKey<FormState>();
+
   File _profileImg;
   File _idProofImg;
   final picker = ImagePicker();
@@ -46,15 +49,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
     if (value.isEmpty && isRequired) return Constants.ERR_EMPTY_FIELD;
     return null;
   }
-
-  // bool _validateRegistration(USERTYPE usertype) {
-  //   bool value = false;
-  //   switch (userType) {
-  //     case USERTYPE.NGO:
-  //     case USERTYPE.BUSINESS:
-  //     case USERTYPE.INDIVIDUAL:
-  //   }
-  // }
 
   String _validatePhone(String value) {
     int phone = int.tryParse(value);
@@ -107,6 +101,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   @override
   Widget build(BuildContext context) {
+    var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
+
     return Scaffold(
         body: Stack(
       children: [
@@ -121,7 +117,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                    child: _buildForm(),
+                    child: _buildForm(darkThemeProvider),
                   ),
                 ),
               ),
@@ -132,7 +128,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     ));
   }
 
-  _buildForm() {
+  _buildForm(DarkThemeProvider darkThemeProvider) {
     String userTypeName = _getUserTypeName(userType);
     return CustomAppCard(
       children: [
@@ -162,8 +158,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         return _validate(value, true);
                       },
                     ),
-                    _buildPhoneField(),
-                    _buildCSCPicker(),
+                    _buildPhoneField(darkThemeProvider),
+                    _buildCSCPicker(darkThemeProvider),
                     CustomTextField(
                       onSaved: (value) {},
                       minLines: 4,
@@ -201,7 +197,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
               if (_formKey.currentState.validate() &&
                   isChecked &&
                   cityValue != null) {
-                if (isChecked) _navigateToRootApp(context);
+                _formKey.currentState.save();
+                _navigateToRootApp(context);
               }
             },
             textOnButton: Constants.REGISTER_TEXT,
@@ -269,7 +266,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     }
   }
 
-  Widget _buildPhoneField() {
+  Widget _buildPhoneField(DarkThemeProvider darkThemeProvider) {
     return Row(
       children: [
         GestureDetector(
@@ -281,7 +278,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
               child: Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
-                color: Styles.textFieldColor,
+                color: darkThemeProvider.darkTheme
+                    ? Styles.black2
+                    : Styles.textFieldColor,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 16, 0, 16),
                   child: Row(
@@ -313,10 +312,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 
-  Widget _buildCSCPicker() {
+  Widget _buildCSCPicker(DarkThemeProvider darkThemeProvider) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      color: Styles.textFieldColor,
+      color:
+          darkThemeProvider.darkTheme ? Styles.black2 : Styles.textFieldColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         child: CSCPicker(

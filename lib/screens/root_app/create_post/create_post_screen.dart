@@ -22,7 +22,7 @@ class _CreatePostState extends State<CreatePost> {
   File _foodImg;
   final picker = ImagePicker();
   String _selectedUnit;
-  List<String> _units = ['KG', 'Meals'];
+  List<String> _units = ['kg', 'Meals'];
   final _formKey = GlobalKey<FormState>();
 
   String _validate(String value, bool isRequired) {
@@ -77,6 +77,7 @@ class _CreatePostState extends State<CreatePost> {
                     SizedBox(height: 16),
                     _buildUploadPhoto(context),
                     CustomTextField(
+                      onChanged: (value) {},
                       keyboardType: TextInputType.streetAddress,
                       hintText: 'Pickup location',
                       validator: (value) {
@@ -86,17 +87,18 @@ class _CreatePostState extends State<CreatePost> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: CustomTextField(
+                            onChanged: (value) {},
                             keyboardType: TextInputType.number,
                             hintText: 'Approx. quantity',
                             validator: (value) {
-                              return _validate(value, true);
+                              return _validate(value, false);
                             },
                           ),
                         ),
                         Expanded(
-                          flex: 1,
+                          flex: 2,
                           child: CustomDropDown(
                             hint: Center(
                               child: Text('Units',
@@ -114,6 +116,7 @@ class _CreatePostState extends State<CreatePost> {
                       ],
                     ),
                     CustomTextField(
+                      onChanged: (value) {},
                       keyboardType: TextInputType.phone,
                       hintText: 'Contact Details',
                       validator: (value) {
@@ -121,12 +124,13 @@ class _CreatePostState extends State<CreatePost> {
                       },
                     ),
                     CustomTextField(
+                      onChanged: (value) {},
                       minLines: 4,
                       maxLines: 4,
                       keyboardType: TextInputType.multiline,
                       hintText: 'Description',
                       validator: (value) {
-                        return _validate(value, true);
+                        return _validate(value, false);
                       },
                     ),
                   ],
@@ -136,7 +140,12 @@ class _CreatePostState extends State<CreatePost> {
         SizedBox(
           width: double.infinity,
           child: CustomTextButton(
-            onPressed: () {},
+            highlightColor: Colors.lightBlue,
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+              }
+            },
             textOnButton: 'Post',
             color: Styles.buttonColor2,
           ),
@@ -196,11 +205,33 @@ class _CreatePostState extends State<CreatePost> {
           ),
         ),
         _foodImg != null
-            ? Image.file(
-                _foodImg,
-                width: 180,
-                height: 180,
-                fit: BoxFit.fitHeight,
+            ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.file(
+                        _foodImg,
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                    Positioned(
+                      child: IconButton(
+                        icon: Icon(Icons.cancel),
+                        onPressed: () {
+                          setState(() {
+                            _foodImg = null;
+                          });
+                        },
+                      ),
+                      right: 1,
+                      top: 1,
+                    )
+                  ],
+                ),
               )
             : Container()
       ],
