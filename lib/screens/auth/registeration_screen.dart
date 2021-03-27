@@ -14,6 +14,7 @@ import 'package:food_insta/constants.dart' as Constants;
 import 'package:country_calling_code_picker/picker.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:food_insta/components/bottom_img_picker.dart';
 
 class RegistrationForm extends StatefulWidget {
   final USERTYPE userType;
@@ -51,9 +52,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
         context, MaterialPageRoute(builder: (_) => RootApp()));
   }
 
-  Future _imgFromCamera() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-
+  Future _getProfileImg(source) async {
+    final pickedFile = await picker.getImage(source: source);
     setState(() {
       if (pickedFile != null) {
         _profileImg = File(pickedFile.path);
@@ -63,46 +63,16 @@ class _RegistrationFormState extends State<RegistrationForm> {
     });
   }
 
-  Future _imgFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  Future _getidProofImg(source) async {
+    final pickedFile = await picker.getImage(source: source);
 
     setState(() {
       if (pickedFile != null) {
-        _profileImg = File(pickedFile.path);
+        _idProofImg = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
     });
-  }
-
-  void _showImagePicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _imgFromGallery();
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
   }
 
   @override
@@ -216,7 +186,20 @@ class _RegistrationFormState extends State<RegistrationForm> {
   Widget buildProfilePhoto() {
     return GestureDetector(
       onTap: () {
-        _showImagePicker(context);
+        showModalBottomSheet(
+            context: context,
+            builder: (BuildContext bc) {
+              return BottomImgPicker(
+                onTapGallery: () {
+                  _getProfileImg(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+                onTapCamera: () {
+                  _getProfileImg(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+              );
+            });
       },
       child: CircleAvatar(
           backgroundColor: Styles.iconColor,
@@ -406,7 +389,22 @@ class _RegistrationFormState extends State<RegistrationForm> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext bc) {
+                          return BottomImgPicker(
+                            onTapGallery: () {
+                              _getidProofImg(ImageSource.gallery);
+                              Navigator.of(context).pop();
+                            },
+                            onTapCamera: () {
+                              _getidProofImg(ImageSource.camera);
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        });
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Styles.iconColor),
@@ -432,6 +430,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       ),
                     ),
                   ),
+                ),
+              ),
+              Visibility(
+                visible: _idProofImg != null,
+                child: Image.file(
+                  _idProofImg,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.fitHeight,
                 ),
               )
             ],
