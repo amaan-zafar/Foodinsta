@@ -31,7 +31,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   Country _selectedCountry;
   String countryValue = "";
   String stateValue = "";
-  String cityValue = "";
+  String cityValue;
   List<String> orgList = ['Nirman', 'NSS', 'Umang'];
   String _selectedOrg = 'Nirman';
 
@@ -47,12 +47,34 @@ class _RegistrationFormState extends State<RegistrationForm> {
     return null;
   }
 
+  // bool _validateRegistration(USERTYPE usertype) {
+  //   bool value = false;
+  //   switch (userType) {
+  //     case USERTYPE.NGO:
+  //     case USERTYPE.BUSINESS:
+  //     case USERTYPE.INDIVIDUAL:
+  //   }
+  // }
+
   String _validatePhone(String value) {
     int phone = int.tryParse(value);
     if (value.length != 10 || phone == null)
       return 'Invalid Phone Number';
     else
       return null;
+  }
+
+  String _getUserTypeName(USERTYPE usertype) {
+    switch (userType) {
+      case USERTYPE.NGO:
+        return "NGO";
+      case USERTYPE.INDIVIDUAL:
+        return "";
+      case USERTYPE.BUSINESS:
+        return "Business name";
+      default:
+        return "";
+    }
   }
 
   _navigateToRootApp(BuildContext context) {
@@ -111,6 +133,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   _buildForm() {
+    String userTypeName = _getUserTypeName(userType);
     return CustomAppCard(
       children: [
         SizedBox(height: 16),
@@ -134,7 +157,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     CustomTextField(
                       onSaved: (value) {},
                       keyboardType: TextInputType.name,
-                      hintText: Constants.NAME_TEXT,
+                      hintText: '$userTypeName Name',
                       validator: (value) {
                         return _validate(value, true);
                       },
@@ -175,7 +198,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
           child: CustomTextButton(
             highlightColor: Colors.lightBlue,
             onPressed: () {
-              if (_formKey.currentState.validate() && isChecked) {
+              if (_formKey.currentState.validate() &&
+                  isChecked &&
+                  cityValue != null) {
                 if (isChecked) _navigateToRootApp(context);
               }
             },
@@ -357,6 +382,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       onSaved: (value) {},
                       hintText: 'Identification number',
                       keyboardType: TextInputType.number,
+                      validator: (value) {
+                        return _validate(value, true);
+                      },
                     )
                   ],
                 ),

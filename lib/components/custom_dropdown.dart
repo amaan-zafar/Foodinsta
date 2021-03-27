@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/theme.dart';
+import 'package:provider/provider.dart';
 
 class CustomDropDown extends StatelessWidget {
   final Function(dynamic) onChanged;
   final List<dynamic> list;
   final double itemHeight;
   final dynamic value;
-  final hint;
+  final dynamic hint;
   const CustomDropDown(
       {Key key,
       this.onChanged,
@@ -18,12 +20,17 @@ class CustomDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: DropdownButtonHideUnderline(
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          color: darkThemeProvider.darkTheme
+              ? Styles.black2
+              : Styles.textFieldColor,
           child: DropdownButton(
             hint: hint,
             isExpanded: true,

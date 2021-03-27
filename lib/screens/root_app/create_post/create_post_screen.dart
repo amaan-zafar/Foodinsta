@@ -23,6 +23,8 @@ class _CreatePostState extends State<CreatePost> {
   final picker = ImagePicker();
   String _selectedUnit;
   List<String> _units = ['KG', 'Meals'];
+  final _formKey = GlobalKey<FormState>();
+
   String _validate(String value, bool isRequired) {
     if (value.isEmpty && isRequired) return Constants.ERR_EMPTY_FIELD;
     return null;
@@ -68,61 +70,67 @@ class _CreatePostState extends State<CreatePost> {
         Container(
             height: MediaQuery.of(context).size.height / 1.7,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 16),
-                  _buildUploadPhoto(context),
-                  CustomTextField(
-                    keyboardType: TextInputType.streetAddress,
-                    hintText: 'Pickup location',
-                    validator: (value) {
-                      return _validate(value, true);
-                    },
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: CustomTextField(
-                          keyboardType: TextInputType.number,
-                          hintText: 'Approx. quantity',
-                          validator: (value) {
-                            return _validate(value, true);
-                          },
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    SizedBox(height: 16),
+                    _buildUploadPhoto(context),
+                    CustomTextField(
+                      keyboardType: TextInputType.streetAddress,
+                      hintText: 'Pickup location',
+                      validator: (value) {
+                        return _validate(value, true);
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: CustomTextField(
+                            keyboardType: TextInputType.number,
+                            hintText: 'Approx. quantity',
+                            validator: (value) {
+                              return _validate(value, true);
+                            },
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: CustomDropDown(
-                          hint: Center(child: Text('Units')),
-                          value: _selectedUnit,
-                          list: _units,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedUnit = value;
-                            });
-                          },
+                        Expanded(
+                          flex: 1,
+                          child: CustomDropDown(
+                            hint: Center(
+                              child: Text('Units',
+                                  style: Theme.of(context).textTheme.bodyText1),
+                            ),
+                            value: _selectedUnit,
+                            list: _units,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedUnit = value;
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  CustomTextField(
-                    keyboardType: TextInputType.phone,
-                    hintText: 'Contact Details',
-                    validator: (value) {
-                      return _validate(value, true);
-                    },
-                  ),
-                  CustomTextField(
-                    minLines: 4,
-                    maxLines: 4,
-                    keyboardType: TextInputType.multiline,
-                    hintText: 'Description',
-                    validator: (value) {
-                      return _validate(value, true);
-                    },
-                  ),
-                ],
+                      ],
+                    ),
+                    CustomTextField(
+                      keyboardType: TextInputType.phone,
+                      hintText: 'Contact Details',
+                      validator: (value) {
+                        return _validate(value, true);
+                      },
+                    ),
+                    CustomTextField(
+                      minLines: 4,
+                      maxLines: 4,
+                      keyboardType: TextInputType.multiline,
+                      hintText: 'Description',
+                      validator: (value) {
+                        return _validate(value, true);
+                      },
+                    ),
+                  ],
+                ),
               ),
             )),
         SizedBox(
