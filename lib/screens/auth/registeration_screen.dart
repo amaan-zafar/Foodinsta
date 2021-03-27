@@ -432,15 +432,14 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   ),
                 ),
               ),
-              Visibility(
-                visible: _idProofImg != null,
-                child: Image.file(
-                  _idProofImg,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.fitHeight,
-                ),
-              )
+              _idProofImg != null
+                  ? Image.file(
+                      _idProofImg,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.fitHeight,
+                    )
+                  : Container()
             ],
           )
         : Container();
