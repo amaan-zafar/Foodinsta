@@ -11,6 +11,7 @@ import 'package:food_insta/screens/root_app/profile/qrcode_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:food_insta/screens/root_app/create_post/create_post_screen.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -38,8 +39,8 @@ class _RootAppState extends State<RootApp> {
         child: FloatingActionButton(
           backgroundColor: Styles.iconColor,
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TakePictureScreen()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => CreatePost()));
           },
           tooltip: 'Create a Post',
           child: Icon(Icons.add),

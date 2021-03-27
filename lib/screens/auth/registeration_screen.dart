@@ -47,6 +47,14 @@ class _RegistrationFormState extends State<RegistrationForm> {
     return null;
   }
 
+  String _validatePhone(String value) {
+    int phone = int.tryParse(value);
+    if (value.length != 10 || phone == null)
+      return 'Invalid Phone Number';
+    else
+      return null;
+  }
+
   _navigateToRootApp(BuildContext context) {
     return Navigator.push(
         context, MaterialPageRoute(builder: (_) => RootApp()));
@@ -91,7 +99,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                    child: buildForm(),
+                    child: _buildForm(),
                   ),
                 ),
               ),
@@ -102,18 +110,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     ));
   }
 
-  void _showCountryPicker() async {
-    final country = await showCountryPickerSheet(
-      context,
-    );
-    if (country != null) {
-      setState(() {
-        _selectedCountry = country;
-      });
-    }
-  }
-
-  buildForm() {
+  _buildForm() {
     return CustomAppCard(
       children: [
         SizedBox(height: 16),
@@ -126,53 +123,61 @@ class _RegistrationFormState extends State<RegistrationForm> {
         Container(
             height: MediaQuery.of(context).size.height / 1.7,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  buildProfilePhoto(),
-                  SizedBox(height: 8),
-                  Text('Upload Profile Photo'),
-                  SizedBox(height: 16),
-                  CustomTextField(
-                    keyboardType: TextInputType.name,
-                    hintText: Constants.NAME_TEXT,
-                    validator: (value) {
-                      return _validate(value, true);
-                    },
-                  ),
-                  buildPhoneField(),
-                  buildCSCPicker(),
-                  CustomTextField(
-                    minLines: 4,
-                    maxLines: 4,
-                    keyboardType: TextInputType.multiline,
-                    hintText: Constants.STREET_ADDRESS,
-                    validator: (value) {
-                      return _validate(value, true);
-                    },
-                  ),
-                  buildNgoFields(),
-                  buildVolunteerFields(),
-                  CheckboxListTile(
-                    title: Text(
-                      Constants.ACEEPT_TNC,
-                      style: Theme.of(context).textTheme.bodyText2,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    _buildProfilePhoto(),
+                    SizedBox(height: 8),
+                    Text('Upload Profile Photo'),
+                    SizedBox(height: 16),
+                    CustomTextField(
+                      onSaved: (value) {},
+                      keyboardType: TextInputType.name,
+                      hintText: Constants.NAME_TEXT,
+                      validator: (value) {
+                        return _validate(value, true);
+                      },
                     ),
-                    value: isChecked,
-                    onChanged: (newValue) {
-                      setState(() {
-                        isChecked = newValue;
-                      });
-                    },
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                ],
+                    _buildPhoneField(),
+                    _buildCSCPicker(),
+                    CustomTextField(
+                      onSaved: (value) {},
+                      minLines: 4,
+                      maxLines: 4,
+                      keyboardType: TextInputType.multiline,
+                      hintText: Constants.STREET_ADDRESS,
+                      validator: (value) {
+                        return _validate(value, true);
+                      },
+                    ),
+                    _buildNgoFields(),
+                    _buildVolunteerFields(),
+                    CheckboxListTile(
+                      title: Text(
+                        Constants.ACEEPT_TNC,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      value: isChecked,
+                      onChanged: (newValue) {
+                        setState(() {
+                          isChecked = newValue;
+                        });
+                      },
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                  ],
+                ),
               ),
             )),
         SizedBox(
           width: double.infinity,
           child: CustomTextButton(
+            highlightColor: Colors.lightBlue,
             onPressed: () {
-              if (isChecked) _navigateToRootApp(context);
+              if (_formKey.currentState.validate() && isChecked) {
+                if (isChecked) _navigateToRootApp(context);
+              }
             },
             textOnButton: Constants.REGISTER_TEXT,
             color: Styles.buttonColor2,
@@ -183,7 +188,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 
-  Widget buildProfilePhoto() {
+  Widget _buildProfilePhoto() {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -228,7 +233,18 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 
-  Widget buildPhoneField() {
+  void _showCountryPicker() async {
+    final country = await showCountryPickerSheet(
+      context,
+    );
+    if (country != null) {
+      setState(() {
+        _selectedCountry = country;
+      });
+    }
+  }
+
+  Widget _buildPhoneField() {
     return Row(
       children: [
         GestureDetector(
@@ -260,10 +276,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
         Expanded(
           flex: 5,
           child: CustomTextField(
+            onSaved: (value) {},
             keyboardType: TextInputType.phone,
             hintText: '${Constants.PHONE_NUMBER_TEXT}',
             validator: (value) {
-              return _validate(value, false);
+              return _validatePhone(value);
             },
           ),
         ),
@@ -271,7 +288,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 
-  Widget buildCSCPicker() {
+  Widget _buildCSCPicker() {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       color: Styles.textFieldColor,
@@ -306,36 +323,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
         ),
       ),
     );
-    // CustomDropDown(
-    //   list: _states,
-    //   value: _selectedState,
-    //   onChanged: null,
-    // ),
-    // CustomDropDown(
-    //   list: _states,
-    //   value: _selectedState,
-    //   onChanged: null,
-    // ),
-    // Padding(
-    //   padding: const EdgeInsets.symmetric(vertical: 8.0),
-    //   child: DropdownButtonHideUnderline(
-    //     child: Card(
-    //       shape: RoundedRectangleBorder(
-    //           borderRadius: BorderRadius.circular(16)),
-    //       color: Styles.textFieldColor,
-    //       child: DropdownWithSearch(
-    //         items: ['Assam', 'Bihar', 'Delhi'],
-    //         onChanged: () {},
-    //         placeHolder: 'State',
-    //         selected: null,
-    //         title: 'State',
-    //       ),
-    //     ),
-    //   ),
-    // ),
   }
 
-  Widget buildVolunteerFields() {
+  Widget _buildVolunteerFields() {
     return userType == USERTYPE.INDIVIDUAL
         ? Column(
             children: [
@@ -364,6 +354,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       },
                     ),
                     CustomTextField(
+                      onSaved: (value) {},
                       hintText: 'Identification number',
                       keyboardType: TextInputType.number,
                     )
@@ -375,11 +366,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
         : Container();
   }
 
-  Widget buildNgoFields() {
+  Widget _buildNgoFields() {
     return userType == USERTYPE.NGO
         ? Column(
             children: [
               CustomTextField(
+                onSaved: (value) {},
                 keyboardType: TextInputType.number,
                 hintText: Constants.REGISTERATION_NUMBER_TEXT,
                 validator: (value) {

@@ -14,7 +14,7 @@ class CustomIconButton extends StatelessWidget {
     var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
     return MaterialButton(
       minWidth: 0,
-      color: darkThemeProvider.darkTheme ? Styles.black2 : Colors.white,
+      // color: darkThemeProvider.darkTheme ? Styles.black2 : Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       onPressed: onPressed,
       child: icon,

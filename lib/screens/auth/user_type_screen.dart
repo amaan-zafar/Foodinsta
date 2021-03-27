@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
-import 'package:food_insta/components/custom_scaffold.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/models/app_types.dart';
 import 'package:food_insta/screens/auth/registeration_screen.dart';
-import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/theme.dart';
 
 class UserTypePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [
@@ -46,41 +43,14 @@ class UserTypePage extends StatelessWidget {
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                           ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: CustomTextButton(
-                              color: Styles.buttonColor1,
-                              textOnButton: 'I represent an NGO',
-                              onPressed: () {
-                                _navigateToRegisterationScreen(
-                                    context, USERTYPE.NGO);
-                              },
-                            ),
-                          ),
+                          _buildButton(
+                              context, 'I represent an NGO', USERTYPE.NGO),
                           SizedBox(height: 8),
-                          SizedBox(
-                            width: double.infinity,
-                            child: CustomTextButton(
-                              color: Styles.buttonColor1,
-                              textOnButton: 'I represent a Business',
-                              onPressed: () {
-                                _navigateToRegisterationScreen(
-                                    context, USERTYPE.BUSINESS);
-                              },
-                            ),
-                          ),
+                          _buildButton(context, 'I represent a Business',
+                              USERTYPE.BUSINESS),
                           SizedBox(height: 8),
-                          SizedBox(
-                            width: double.infinity,
-                            child: CustomTextButton(
-                              color: Styles.buttonColor1,
-                              textOnButton: 'I am Individual/Volunteer',
-                              onPressed: () {
-                                _navigateToRegisterationScreen(
-                                    context, USERTYPE.INDIVIDUAL);
-                              },
-                            ),
-                          ),
+                          _buildButton(context, 'I am Individual/Volunteer',
+                              USERTYPE.INDIVIDUAL),
                           SizedBox(height: 24),
                         ],
                       ),
@@ -95,10 +65,20 @@ class UserTypePage extends StatelessWidget {
     );
   }
 
-  _navigateToRegisterationScreen(BuildContext context, USERTYPE userType) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => RegistrationForm(userType: userType)));
+  SizedBox _buildButton(BuildContext context, String text, USERTYPE userType) {
+    return SizedBox(
+      width: double.infinity,
+      child: CustomTextButton(
+        color: Styles.buttonColor1,
+        highlightColor: Colors.lightBlue,
+        textOnButton: text,
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => RegistrationForm(userType: userType)));
+        },
+      ),
+    );
   }
 }

@@ -6,9 +6,14 @@ class CustomDropDown extends StatelessWidget {
   final List<dynamic> list;
   final double itemHeight;
   final dynamic value;
-
+  final hint;
   const CustomDropDown(
-      {Key key, this.onChanged, this.list, this.itemHeight = 56, this.value})
+      {Key key,
+      this.onChanged,
+      this.list,
+      this.itemHeight = 56,
+      this.value,
+      this.hint})
       : super(key: key);
 
   @override
@@ -19,8 +24,8 @@ class CustomDropDown extends StatelessWidget {
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          color: Styles.textFieldColor,
           child: DropdownButton(
+            hint: hint,
             isExpanded: true,
             elevation: 2,
             itemHeight: itemHeight,

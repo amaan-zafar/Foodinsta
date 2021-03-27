@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Styles {
-  static double cardTopPadding = 18.0;
-  static double cardBottomPadding = 64.0;
-  static Color black = Color(0xFF050505);
-  static Color black1 = Color(0xFF151515);
-  static Color black2 = Color(0xFF252525);
-  static Color white = Color(0xFFE9E9E9);
-  static Color white2 = Color(0xFFC9C9C9);
-  static Color white3 = Color(0xFFB9B9B9);
-  static Color bgColorBeginGradient = Color(0xFFFCB100);
-  static Color bgColorEndGradient = Color(0xFFFDBF2D);
-  static Color buttonColor1 = Color(0xFF2D9CDB);
-  static Color iconColor = Color(0xFFFCBC23);
-  static Color textFieldColor = Color(0xFFEEF5FF);
-  static Color buttonColor2 = Color(0xFF2D9CDB);
-  static Color customApprovedButtonColor = Color(0xFF34FF01);
-  static Color customDeclineButtonColor = Color(0xFFEF5C56);
-  static Color customRejectedButtonColor = Color(0xFF2D9CDB);
-  static Color customCompletedButtonColor = Color(0xFF979797);
-  static Color customRequestButtonColor = Color(0xFFF54580);
-  static Color tileColorLight = Color(0xFFF4F8FE);
+  static const double cardTopPadding = 18.0;
+  static const double cardBottomPadding = 64.0;
+  static const Color black = Color(0xFF050505);
+  static const Color black1 = Color(0xFF151515);
+  static const Color black2 = Color(0xFF252525);
+  static const Color white = Color(0xFFE9E9E9);
+  static const Color white2 = Color(0xFFC9C9C9);
+  static const Color white3 = Color(0xFFB9B9B9);
+  static const Color bgColorBeginGradient = Color(0xFFFCB100);
+  static const Color bgColorEndGradient = Color(0xFFFDBF2D);
+  static const Color buttonColor1 = Color(0xFF2D9CDB);
+  static const Color iconColor = Color(0xFFFCBC23);
+  static const Color textFieldColor = Color(0xFFEEF5FF);
+  static const Color buttonColor2 = Color(0xFF2D9CDB);
+  static const Color customApprovedButtonColor = Color(0xFF34FF01);
+  static const Color customDeclineButtonColor = Color(0xFFEF5C56);
+  static const Color customRejectedButtonColor = Color(0xFF2D9CDB);
+  static const Color customCompletedButtonColor = Color(0xFF979797);
+  static const Color customRequestButtonColor = Color(0xFFF54580);
+  static const Color tileColorLight = Color(0xFFF4F8FE);
 
   static LinearGradient bgLinearGradient = LinearGradient(
     colors: [bgColorBeginGradient, bgColorEndGradient],
@@ -51,9 +51,8 @@ class Styles {
           colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light(),
           buttonColor: isDarkTheme ? Color(0xFF252525) : Colors.white),
       bottomAppBarColor: isDarkTheme ? Color(0xFF151515) : Color(0xFFFEFEFE),
-      floatingActionButtonTheme: isDarkTheme
-          ? FloatingActionButtonThemeData(foregroundColor: black1)
-          : FloatingActionButtonThemeData(foregroundColor: Colors.white),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+          foregroundColor: isDarkTheme ? black1 : Colors.white),
       appBarTheme: AppBarTheme(
         elevation: 0.0,
       ),
