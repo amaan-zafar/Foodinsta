@@ -6,28 +6,28 @@ import 'package:flutter/material.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
-  final CameraDescription camera;
-
-  const TakePictureScreen({
-    Key key,
-    @required this.camera,
-  }) : super(key: key);
-
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
+  // Obtain a list of the available cameras on the device.
+  var cameras;
+  CameraDescription firstCamera;
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
-    _controller = CameraController(
-      widget.camera,
-      ResolutionPreset.medium,
-    );
+    availableCameras().then((value) {
+      cameras = value;
+      firstCamera = cameras.first;
+      _controller = CameraController(
+        firstCamera,
+        ResolutionPreset.medium,
+      );
+    });
 
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();

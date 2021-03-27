@@ -3,6 +3,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_bottomnavbar.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/models/dark_theme_provder.dart';
+import 'package:food_insta/screens/root_app/camera_screen.dart';
 import 'package:food_insta/screens/root_app/home_page.dart';
 import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/root_app/profile/profile_page.dart';
@@ -36,7 +37,10 @@ class _RootAppState extends State<RootApp> {
         width: MediaQuery.of(context).size.width * 0.22,
         child: FloatingActionButton(
           backgroundColor: Styles.iconColor,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TakePictureScreen()));
+          },
           tooltip: 'Create a Post',
           child: Icon(Icons.add),
           elevation: 0.0,

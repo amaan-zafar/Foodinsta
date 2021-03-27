@@ -51,6 +51,9 @@ class Styles {
           colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light(),
           buttonColor: isDarkTheme ? Color(0xFF252525) : Colors.white),
       bottomAppBarColor: isDarkTheme ? Color(0xFF151515) : Color(0xFFFEFEFE),
+      floatingActionButtonTheme: isDarkTheme
+          ? FloatingActionButtonThemeData(foregroundColor: black1)
+          : FloatingActionButtonThemeData(foregroundColor: Colors.white),
       appBarTheme: AppBarTheme(
         elevation: 0.0,
       ),

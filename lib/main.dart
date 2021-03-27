@@ -21,35 +21,29 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
 
   themeChangeProvider.darkTheme =
-  await themeChangeProvider.darkThemePreference.getTheme();
+      await themeChangeProvider.darkThemePreference.getTheme();
   // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-  final CustomHttpClient _customHttpClient = CustomHttpClient(
-      'foodinsta.herokuapp.com', Client(), _secureStorage);
+  final CustomHttpClient _customHttpClient =
+      CustomHttpClient('foodinsta.herokuapp.com', Client(), _secureStorage);
 
   final AuthRepository authRepository =
-  AuthRepository(_customHttpClient, _secureStorage);
+      AuthRepository(_customHttpClient, _secureStorage);
 
   bool isloggedIn = !((await _secureStorage.read(key: 'access')) == null);
 
-  runApp(MyApp(firstCamera, themeChangeProvider, isloggedIn,
-      authRepository: authRepository));
+  runApp(
+      MyApp(themeChangeProvider, isloggedIn, authRepository: authRepository));
 }
 
 class MyApp extends StatelessWidget {
-  final CameraDescription camera;
   final DarkThemeProvider darkThemeProvider;
   final bool isLoggedIn;
   final AuthRepository authRepository;
-  MyApp(this.camera, this.darkThemeProvider, this.isLoggedIn,
-      {this.authRepository});
+  MyApp(this.darkThemeProvider, this.isLoggedIn, {this.authRepository});
 
   @override
   Widget build(BuildContext context) {
