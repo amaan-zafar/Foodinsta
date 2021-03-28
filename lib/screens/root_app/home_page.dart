@@ -52,6 +52,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  String city;
+  List<String> cities = ['Patna', 'Delhi', 'Patiala', 'Agra'];
+
   @override
   void initState() {
     super.initState();
@@ -94,7 +97,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(width: 4),
               Text(
-                'City',
+                city,
                 style: Theme.of(context)
                     .textTheme
                     .headline2
@@ -120,27 +123,45 @@ class _HomePageState extends State<HomePage> {
 
   buildCitySelector() {
     return Visibility(
-      visible: false,
+      visible: _selectCity,
       child: SizedBox(
         height: 74,
-        child: Row(
-          children: [
-            Row(
-              children: [
-                CustomIconButton(
-                  onPressed: () {
-                    setState(() {
-                      _selectCity = false;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.check,
-                    color: Styles.customApprovedButtonColor,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            child: DropdownButton<String>(
+              underline: Container(),
+              hint: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: Text(city, style: Theme.of(context).textTheme.bodyText1),
+              ),
+              isExpanded: true,
+              elevation: 0,
+
+              // itemHeight: 56,
+              // value: 'Patna',
+              onChanged: (value) {
+                setState(() {
+                  print(value);
+                  city = value;
+                  _selectCity = false;
+                });
+              },
+              items: cities.map((String value) {
+                print('hi $value');
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: new Text(
+                    value,
+                    overflow: TextOverflow.clip,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
-                ),
-              ],
-            )
-          ],
+                );
+              }).toList(),
+            ),
+          ),
         ),
       ),
     );

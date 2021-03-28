@@ -9,6 +9,7 @@ import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/repository/auth_repo.dart';
 import 'package:food_insta/repository/ngo_list_repo.dart';
 import 'package:food_insta/repository/registration_repo.dart';
+import 'package:food_insta/route_generator.dart';
 import 'package:food_insta/screens/auth/login_screen.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
@@ -93,6 +94,7 @@ class MyApp extends StatelessWidget {
             theme: Styles.themeData(
                 isDarkTheme: darkThemeProvider.darkTheme, context: context),
             home: isLoggedIn ? RootApp() : LoginPage(),
+            onGenerateRoute: RouteGenerator.generateRoute,
           );
         }));
   }

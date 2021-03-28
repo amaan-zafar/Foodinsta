@@ -4,7 +4,9 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/screens/auth/user_type_screen.dart';
+import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -54,11 +56,12 @@ class _LoginPageState extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
                             onPressed: () async {
+                              await controller.loginWithGoogle();
                               if (controller.status == 1) {
                                 //TODO: Change this shit
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (context) => UserTypePage(),
+                                    builder: (context) => RootApp(),
                                   ),
                                 );
                               } else if (controller.status == 2) {
@@ -74,10 +77,12 @@ class _LoginPageState extends State<LoginPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image(
-                                    image:
-                                        AssetImage('assets/google_icon.png')),
-                                SizedBox(width: 16),
+                                Icon(
+                                  MdiIcons.google,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                                SizedBox(width: 6),
                                 Text(
                                   'Sign in with Google',
                                   style: TextStyle(color: Colors.white),

@@ -102,8 +102,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   _navigateToRootApp(BuildContext context) {
-    return Navigator.push(
-        context, MaterialPageRoute(builder: (_) => RootApp()));
+    return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) => RootApp()),
+        ModalRoute.withName('/'));
   }
 
   Future _getProfileImg(source) async {
