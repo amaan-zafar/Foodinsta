@@ -7,6 +7,7 @@ import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../theme.dart';
 
@@ -127,7 +128,10 @@ class RequestApprovalPage extends StatelessWidget {
                             ),
                             CustomIconButton(
                               height: 64,
-                              onPressed: () {},
+                              onPressed: () {
+                                var phone = "7870193349";
+                                launch("tel://$phone");
+                              },
                               color: Styles.buttonColor2,
                               icon: Icon(MdiIcons.phone),
                             ),
