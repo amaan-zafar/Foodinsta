@@ -198,8 +198,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   isChecked &&
                   cityValue != null) {
                 _formKey.currentState.save();
-                _navigateToRootApp(context);
               }
+              _navigateToRootApp(context);
             },
             textOnButton: Constants.REGISTER_TEXT,
             color: Styles.buttonColor2,
