@@ -194,11 +194,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
           child: CustomTextButton(
             highlightColor: Colors.lightBlue,
             onPressed: () {
-              if (_formKey.currentState.validate() &&
-                  isChecked &&
-                  cityValue != null) {
-                _formKey.currentState.save();
-              }
+              // if (_formKey.currentState.validate() &&
+              //     isChecked &&
+              //     cityValue != null) {
+              //   _formKey.currentState.save();
+              // }
               _navigateToRootApp(context);
             },
             textOnButton: Constants.REGISTER_TEXT,

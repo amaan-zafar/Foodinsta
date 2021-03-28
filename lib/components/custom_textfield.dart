@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final int maxLines;
   final void Function(String) onChanged;
   final void Function(String) onSaved;
+  final bool enabled;
   CustomTextField({
     this.hintText,
     this.keyboardType,
@@ -23,6 +24,7 @@ class CustomTextField extends StatelessWidget {
     this.minLines = 1,
     this.maxLines = 1,
     this.onSaved,
+    this.enabled,
   });
 
   @override
@@ -40,6 +42,7 @@ class CustomTextField extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(18, 4, 0, 4),
             child: TextFormField(
+              enabled: false,
               onSaved: onSaved,
               controller: controller,
               keyboardType: keyboardType,

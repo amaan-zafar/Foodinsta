@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/theme.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -83,21 +84,21 @@ class _MapPageState extends State<MapPage> {
   static const LatLng _center = const LatLng(28.644800, 77.216721);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Styles.iconColor,
-        elevation: 0.0,
-        title: Center(
-          child: Text(Constants.APP_LABEL),
+    return Column(
+      children: [
+        CustomAppBar(
+          centerTitle: true,
         ),
-      ),
-      body: Stack(
-        children: [
-          _buildGoogleMap(),
-          // _buildFabs(),
-          _buildMapInfoContainer(),
-        ],
-      ),
+        Expanded(
+          child: Stack(
+            children: [
+              _buildGoogleMap(),
+              // _buildFabs(),
+              _buildMapInfoContainer(),
+            ],
+          ),
+        )
+      ],
     );
   }
 

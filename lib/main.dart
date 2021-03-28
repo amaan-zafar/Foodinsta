@@ -12,6 +12,7 @@ import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'package:food_insta/controllers/location_controller.dart';
 
 import 'models/dark_theme_provder.dart';
 
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => LoginController(authRepository),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => LocationController(),
           ),
         ],
         child: Consumer<DarkThemeProvider>(builder: (context, value, child) {

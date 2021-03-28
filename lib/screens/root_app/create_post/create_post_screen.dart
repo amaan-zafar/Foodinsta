@@ -9,9 +9,15 @@ import 'package:food_insta/components/custom_dropdown.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_textfield.dart';
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:food_insta/controllers/location_controller.dart';
 import 'package:food_insta/theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+
+const kGoogleApiKey = "AIzaSyDFbXEFzzx7CUhk6CaGdz64KUGVnBZ2FvI";
+
+// GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class CreatePost extends StatefulWidget {
   @override
@@ -24,7 +30,8 @@ class _CreatePostState extends State<CreatePost> {
   String _selectedUnit;
   List<String> _units = ['kg', 'Meals'];
   final _formKey = GlobalKey<FormState>();
-
+  String city = 'Pickup Location';
+  // LocationController locationController = LocationController();
   String _validate(String value, bool isRequired) {
     if (value.isEmpty && isRequired) return Constants.ERR_EMPTY_FIELD;
     return null;
@@ -76,45 +83,8 @@ class _CreatePostState extends State<CreatePost> {
                   children: [
                     SizedBox(height: 16),
                     _buildUploadPhoto(context),
-                    CustomTextField(
-                      onChanged: (value) {},
-                      keyboardType: TextInputType.streetAddress,
-                      hintText: 'Pickup location',
-                      validator: (value) {
-                        return _validate(value, true);
-                      },
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: CustomTextField(
-                            onChanged: (value) {},
-                            keyboardType: TextInputType.number,
-                            hintText: 'Approx. quantity',
-                            validator: (value) {
-                              return _validate(value, false);
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: CustomDropDown(
-                            hint: Center(
-                              child: Text('Units',
-                                  style: Theme.of(context).textTheme.bodyText1),
-                            ),
-                            value: _selectedUnit,
-                            list: _units,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedUnit = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                    _buildPickupLocation(),
+                    _buildQuantity(context),
                     CustomTextField(
                       onChanged: (value) {},
                       keyboardType: TextInputType.phone,
@@ -141,16 +111,91 @@ class _CreatePostState extends State<CreatePost> {
           width: double.infinity,
           child: CustomTextButton(
             highlightColor: Colors.lightBlue,
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-              }
+            onPressed: () async {
+              // if (_formKey.currentState.validate()) {
+              //   _formKey.currentState.save();
+              // }
             },
             textOnButton: 'Post',
             color: Styles.buttonColor2,
           ),
         ),
         SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildPickupLocation() {
+    return Consumer<LocationController>(builder: (context, controller, child) {
+      return Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: CustomTextField(
+              enabled: false,
+              onChanged: (value) {},
+              keyboardType: TextInputType.streetAddress,
+              hintText: controller.loadingStatus == LoadingStatus.Initial ||
+                      controller.loadingStatus == LoadingStatus.Loading
+                  ? 'Pickup Location'
+                  : '${controller.firstAddress.subLocality}, ${controller.firstAddress.locality}',
+              validator: (value) {
+                return _validate(value, true);
+              },
+            ),
+          ),
+          Expanded(
+              flex: 1,
+              child: controller.loadingStatus == LoadingStatus.Initial
+                  ? IconButton(
+                      icon: Icon(
+                        MdiIcons.crosshairsGps,
+                        color: Styles.iconColor,
+                      ),
+                      onPressed: () {
+                        controller.setCurrentLocation();
+                      })
+                  : controller.loadingStatus == LoadingStatus.Loading
+                      ? Center(child: CircularProgressIndicator())
+                      : Icon(
+                          MdiIcons.mapMarkerCheck,
+                          color: Styles.iconColor,
+                        ))
+        ],
+      );
+    });
+  }
+
+  Row _buildQuantity(context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: CustomTextField(
+            onChanged: (value) {},
+            keyboardType: TextInputType.number,
+            hintText: 'Approx. quantity',
+            validator: (value) {
+              return _validate(value, false);
+            },
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: CustomDropDown(
+            hint: Center(
+              child:
+                  Text('Units', style: Theme.of(context).textTheme.bodyText1),
+            ),
+            value: _selectedUnit,
+            list: _units,
+            onChanged: (value) {
+              setState(() {
+                _selectedUnit = value;
+              });
+            },
+          ),
+        ),
       ],
     );
   }

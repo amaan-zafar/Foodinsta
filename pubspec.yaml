@@ -27,9 +27,9 @@ dependencies:
   provider: ^5.0.0
   path_provider: ^2.0.1
   camera: ^0.8.0
-  flutter_verification_code: ^1.0.0+1
+  # flutter_verification_code: ^1.0.0+1
   http: ^0.13.0
-  sqflite: ^2.0.0+3
+  # sqflite: ^2.0.0+3
   google_maps_flutter: ^2.0.1
   font_awesome_flutter: ^9.0.0
   shared_preferences: ^2.0.5
@@ -43,6 +43,13 @@ dependencies:
   country_calling_code_picker: ^1.0.2
   csc_picker: ^0.1.0
   flutter_rating_bar: ^4.0.0
+  # flutter_google_places: ^0.2.8
+  # google_maps_webservice: ^0.0.19
+
+  # For converting coordinates into address and vice-versa
+  geocoder: ^0.2.1
+  # To get current location
+  geolocator: ^7.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
