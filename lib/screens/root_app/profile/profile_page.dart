@@ -3,6 +3,7 @@ import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
+import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/models/dark_theme_provder.dart';
@@ -68,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -77,6 +78,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: Theme.of(context).textTheme.bodyText1)
                         ],
                       ),
+                    ),
+                    RatingIndicator(
+                      itemSize: 20,
+                      rating: 4.5,
+                    ),
+                    SizedBox(
+                      height: 8,
                     ),
                     UserTypeLabel(label: 'Business'),
                     SizedBox(height: 8),
@@ -143,16 +151,32 @@ class _ProfilePageState extends State<ProfilePage> {
                         MaterialPageRoute(builder: (context) => PostDetail()));
                   },
                   tileColor: tileColor,
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.green,
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      color: Colors.green,
+                    ),
                   ),
-                  title: Column(
+                  title: Row(
                     children: [
                       Icon(MdiIcons.accountGroup),
-                      Icon(MdiIcons.weight)
+                      Spacer(),
                     ],
                   ),
-                  trailing: Icon(Icons.cancel),
+                  subtitle: Row(
+                    children: [
+                      Icon(MdiIcons.weight),
+                      Spacer(),
+                    ],
+                  ),
+                  trailing: CustomIconButton(
+                    height: 52,
+                    elevation: 0,
+                    onPressed: () {},
+                    icon: Icon(MdiIcons.qrcode),
+                  ),
                 ),
               );
             },
