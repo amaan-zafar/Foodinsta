@@ -25,10 +25,12 @@ class AuthRepository {
             'users/login/', {"firebase_id": user.uid},
             requireAuth: false);
         int status = response['status'];
+        print('response is $response');
         print(status);
         if (status == 1) {
           await _secureStorage.write(key: 'access', value: response['access']);
-          await _secureStorage.write(key: 'refresh', value: response['refresh']);
+          await _secureStorage.write(
+              key: 'refresh', value: response['refresh']);
         }
         return status;
       }
