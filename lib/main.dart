@@ -3,8 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:food_insta/controllers/login_controller.dart';
+import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/repository/auth_repo.dart';
+import 'package:food_insta/repository/registration_repo.dart';
 import 'package:food_insta/screens/auth/login_screen.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
@@ -34,17 +36,26 @@ Future<void> main() async {
   final AuthRepository authRepository =
       AuthRepository(_customHttpClient, _secureStorage);
 
+  final RegistrationRepository registrationRepository =
+      RegistrationRepository(_customHttpClient, _secureStorage);
+
   bool isloggedIn = !((await _secureStorage.read(key: 'access')) == null);
 
-  runApp(
-      MyApp(themeChangeProvider, isloggedIn, authRepository: authRepository));
+  runApp(MyApp(
+    themeChangeProvider,
+    isloggedIn,
+    authRepository: authRepository,
+    registrationRepository: registrationRepository,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final DarkThemeProvider darkThemeProvider;
   final bool isLoggedIn;
   final AuthRepository authRepository;
-  MyApp(this.darkThemeProvider, this.isLoggedIn, {this.authRepository});
+  final RegistrationRepository registrationRepository;
+  MyApp(this.darkThemeProvider, this.isLoggedIn,
+      {this.authRepository, this.registrationRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +66,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => LoginController(authRepository),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => RegisController(registrationRepository),
           ),
           ChangeNotifierProvider(
             create: (context) => LocationController(),

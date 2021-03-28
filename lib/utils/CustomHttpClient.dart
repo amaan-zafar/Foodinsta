@@ -83,12 +83,10 @@ class CustomHttpClient {
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
         return json.decode(response.body);
       } else {
-        print("INSIDE POST REQ");
         var response = await _client.post(
           Uri.https(_baseURL, path),
           body: jsonEncode(body),
         );
-        print("RESPONSE INSIDE POST REQ IS ${response.toString()}");
         if (response.statusCode != 200)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');

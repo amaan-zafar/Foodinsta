@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_dropdown.dart';
+import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/models/app_types.dart';
 import 'package:food_insta/models/dark_theme_provder.dart';
+import 'package:food_insta/repository/registration_repo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_text_button.dart';
@@ -189,22 +191,35 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 ),
               ),
             )),
-        SizedBox(
-          width: double.infinity,
-          child: CustomTextButton(
-            highlightColor: Colors.lightBlue,
-            onPressed: () {
-              // if (_formKey.currentState.validate() &&
-              //     isChecked &&
-              //     cityValue != null) {
-              //   _formKey.currentState.save();
-              // }
-              _navigateToRootApp(context);
-            },
-            textOnButton: Constants.REGISTER_TEXT,
-            color: Styles.buttonColor2,
-          ),
-        ),
+        Consumer<RegisController>(builder: (context, controller, child) {
+          if (controller.registrationState == RegistrationState.Loading) {
+            return CircularProgressIndicator();
+          } else {
+            return SizedBox(
+              width: double.infinity,
+              child: CustomTextButton(
+                highlightColor: Colors.lightBlue,
+                onPressed: () {
+                  if (_formKey.currentState.validate() &&
+                      isChecked &&
+                      cityValue != null) {
+                    _formKey.currentState.save();
+                    controller
+                        .register(UserObject(
+                          // address: ,
+                          // id: ,
+                          // name: ,
+                        ), userType)
+                        .whenComplete(() => _navigateToRootApp(context));
+                  }
+                  //TODO:
+                },
+                textOnButton: Constants.REGISTER_TEXT,
+                color: Styles.buttonColor2,
+              ),
+            );
+          }
+        }),
         SizedBox(height: 16),
       ],
     );

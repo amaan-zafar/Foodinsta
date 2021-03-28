@@ -1,15 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
-import 'package:food_insta/components/custom_scaffold.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/screens/auth/user_type_screen.dart';
 import 'package:food_insta/theme.dart';
-import 'package:food_insta/constants.dart' as Constants;
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:food_insta/utils/authentication.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
