@@ -14,13 +14,14 @@ class AuthRepository {
     this._secureStorage,
   );
 
-  Future<int> signInWithGoogle() async {
+  Future<Map<String, dynamic>> signInWithGoogle() async {
     try {
       User user = await Authentication.signInWithGoogle();
       if (user == null)
         throw Failure('Sigin was aborted');
       else {
         print("API IS CALLED NOW");
+        var email = user.email;
         var response = await _customHttpClient.postRequest(
             'users/login/', {"firebase_id": user.uid},
             requireAuth: false);
@@ -32,16 +33,18 @@ class AuthRepository {
           await _secureStorage.write(
               key: 'refresh', value: response['refresh']);
         }
-        return status;
+        Map<String, dynamic> map = {'status': status, 'email': email};
+        print('map is $map');
+        return map;
       }
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
-      return 0;
+      return null;
     } catch (unexpectedError) {
       print("UNEXPECTED ERROR OCCURED: ${unexpectedError.toString()}");
       await Authentication.signOut();
-      return 0;
+      return null;
     }
   }
 }

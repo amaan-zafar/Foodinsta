@@ -41,7 +41,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      Consumer<LoginController>(builder: (context, controller, child) {
+                      Consumer<LoginController>(
+                          builder: (context, controller, child) {
                         if (controller.loginState == LoginState.Loading) {
                           return CircularProgressIndicator();
                         } else if (controller.loginState == LoginState.Loaded ||
@@ -53,7 +54,6 @@ class _LoginPageState extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
                             onPressed: () async {
-                              await controller.loginWithGoogle();
                               if (controller.status == 1) {
                                 //TODO: Change this shit
                                 Navigator.of(context).pushReplacement(
@@ -74,7 +74,9 @@ class _LoginPageState extends State<LoginPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image(image: AssetImage('assets/google_icon.png')),
+                                Image(
+                                    image:
+                                        AssetImage('assets/google_icon.png')),
                                 SizedBox(width: 16),
                                 Text(
                                   'Sign in with Google',

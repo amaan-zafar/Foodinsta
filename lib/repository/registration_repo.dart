@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -67,6 +67,7 @@ class RegistrationRepository {
             },
             requireAuth: false);
       }
+      print('reg response is $response');
       String access = response['access'];
       String refresh = response['refresh'];
       await _secureStorage.write(key: 'access', value: access);

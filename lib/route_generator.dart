@@ -1,21 +1,22 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:food_insta/screens/auth/registeration_screen.dart';
+import 'package:food_insta/screens/auth/user_type_screen.dart';
+import 'package:food_insta/screens/root_app/root_app.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return null;
-      case 'register':
-        return null;
+        return MaterialPageRoute(builder: (_) => RootApp());
+      case '/user-type-screen':
+        return MaterialPageRoute(builder: (_) => UserTypePage());
 
-      case '/register-ngo':
-        return null;
+      case '/registeration':
+        return MaterialPageRoute(builder: (_) => RegistrationForm());
 
-      case 'register-restaurant':
-        return null;
-
-      case '/register-individual':
-        return null;
+      case '/root-app':
+        return MaterialPageRoute(builder: (_) => RootApp());
     }
   }
 }

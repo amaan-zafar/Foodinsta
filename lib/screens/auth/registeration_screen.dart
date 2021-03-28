@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_dropdown.dart';
+import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/models/app_types.dart';
 import 'package:food_insta/models/dark_theme_provder.dart';
+import 'package:food_insta/repository/ngo_list_repo.dart';
 import 'package:food_insta/repository/registration_repo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -22,22 +24,40 @@ import 'package:provider/provider.dart';
 
 class RegistrationForm extends StatefulWidget {
   final USERTYPE userType;
-
-  const RegistrationForm({Key key, this.userType}) : super(key: key);
+  final List<Ngo> ngoList;
+  const RegistrationForm({
+    Key key,
+    this.userType,
+    this.ngoList,
+  }) : super(key: key);
   @override
-  _RegistrationFormState createState() => _RegistrationFormState(userType);
+  _RegistrationFormState createState() =>
+      _RegistrationFormState(userType, ngoList);
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
   final USERTYPE userType;
-  bool isChecked = false;
+  final List<Ngo> ngoList;
+
+  // Common fields
+  String name;
+  String cityValue;
+  String phone;
+  String address;
+  File profileImage;
+  // Ngo
+  String regisNo;
+  File idPhoto;
+  // Individual
   bool isVolunteer = false;
+  Ngo selectedNgo;
+
+  String id;
+
+  bool isChecked = false;
   Country _selectedCountry;
   String countryValue = "";
   String stateValue = "";
-  String cityValue;
-  List<String> orgList = ['Nirman', 'NSS', 'Umang'];
-  String _selectedOrg = 'Nirman';
 
   final _formKey = GlobalKey<FormState>();
 
@@ -45,7 +65,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
   File _idProofImg;
   final picker = ImagePicker();
 
-  _RegistrationFormState(this.userType);
+  _RegistrationFormState(
+    this.userType,
+    this.ngoList,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   String _validate(String value, bool isRequired) {
     if (value.isEmpty && isRequired) return Constants.ERR_EMPTY_FIELD;
@@ -104,7 +132,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
-
     return Scaffold(
         body: Stack(
       children: [
@@ -153,7 +180,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     Text('Upload Profile Photo'),
                     SizedBox(height: 16),
                     CustomTextField(
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        name = value;
+                      },
                       keyboardType: TextInputType.name,
                       hintText: '$userTypeName Name',
                       validator: (value) {
@@ -163,7 +192,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     _buildPhoneField(darkThemeProvider),
                     _buildCSCPicker(darkThemeProvider),
                     CustomTextField(
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        address = value;
+                      },
                       minLines: 4,
                       maxLines: 4,
                       keyboardType: TextInputType.multiline,
@@ -173,7 +204,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       },
                     ),
                     _buildNgoFields(),
-                    _buildVolunteerFields(),
+                    _buildVolunteerFields(darkThemeProvider),
                     CheckboxListTile(
                       title: Text(
                         Constants.ACEEPT_TNC,
@@ -192,6 +223,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
               ),
             )),
         Consumer<RegisController>(builder: (context, controller, child) {
+          String email =
+              Provider.of<LoginController>(context, listen: false).email;
+          print('Email at login screen is $email');
           if (controller.registrationState == RegistrationState.Loading) {
             return CircularProgressIndicator();
           } else {
@@ -205,14 +239,25 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       cityValue != null) {
                     _formKey.currentState.save();
                     controller
-                        .register(UserObject(
-                          // address: ,
-                          // id: ,
-                          // name: ,
-                        ), userType)
+                        .register(
+                            UserObject(
+                              name: name,
+                              address: address,
+                              city: cityValue,
+                              email: email,
+                              id: id,
+                              profileImage: null,
+                              isVol: isVolunteer,
+                              idPhoto: null,
+                              phone: phone,
+                              orgId: selectedNgo != null
+                                  ? selectedNgo.staticId
+                                  : null,
+                              regisNo: regisNo,
+                            ),
+                            userType)
                         .whenComplete(() => _navigateToRootApp(context));
                   }
-                  //TODO:
                 },
                 textOnButton: Constants.REGISTER_TEXT,
                 color: Styles.buttonColor2,
@@ -315,7 +360,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
         Expanded(
           flex: 5,
           child: CustomTextField(
-            onSaved: (value) {},
+            onSaved: (value) {
+              phone = value;
+            },
             keyboardType: TextInputType.phone,
             hintText: '${Constants.PHONE_NUMBER_TEXT}',
             validator: (value) {
@@ -365,7 +412,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 
-  Widget _buildVolunteerFields() {
+  Widget _buildVolunteerFields(DarkThemeProvider darkThemeProvider) {
     return userType == USERTYPE.INDIVIDUAL
         ? Column(
             children: [
@@ -384,17 +431,53 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 visible: isVolunteer,
                 child: Column(
                   children: [
-                    CustomDropDown(
-                      value: _selectedOrg,
-                      list: orgList,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedOrg = value;
-                        });
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: DropdownButtonHideUnderline(
+                        child: Card(
+                          color: darkThemeProvider.darkTheme
+                              ? Styles.black2
+                              : Styles.textFieldColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          child: DropdownButton<Ngo>(
+                            hint: Padding(
+                              padding: const EdgeInsets.only(left: 16.0),
+                              child: Text('Select organisation',
+                                  style: Theme.of(context).textTheme.bodyText1),
+                            ),
+                            isExpanded: true,
+                            elevation: 2,
+                            itemHeight: 56,
+                            value: selectedNgo,
+                            onChanged: (Ngo ngo) {
+                              setState(() {
+                                selectedNgo = ngo;
+                              });
+                            },
+                            items: ngoList.map((Ngo ngo) {
+                              return DropdownMenuItem<Ngo>(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(18, 16, 0, 16),
+                                  child: new Text(
+                                    ngo.name,
+                                    overflow: TextOverflow.clip,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ),
+                                value: ngo,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                     ),
                     CustomTextField(
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        id = value;
+                      },
                       hintText: 'Identification number',
                       keyboardType: TextInputType.number,
                       validator: (value) {
@@ -414,7 +497,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
         ? Column(
             children: [
               CustomTextField(
-                onSaved: (value) {},
+                onSaved: (value) {
+                  regisNo = value;
+                },
                 keyboardType: TextInputType.number,
                 hintText: Constants.REGISTERATION_NUMBER_TEXT,
                 validator: (value) {

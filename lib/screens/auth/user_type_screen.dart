@@ -3,9 +3,12 @@ import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
+import 'package:food_insta/controllers/ngo_list_controller.dart';
 import 'package:food_insta/models/app_types.dart';
+import 'package:food_insta/repository/ngo_list_repo.dart';
 import 'package:food_insta/screens/auth/registeration_screen.dart';
 import 'package:food_insta/theme.dart';
+import 'package:provider/provider.dart';
 
 class UserTypePage extends StatelessWidget {
   @override
@@ -72,11 +75,17 @@ class UserTypePage extends StatelessWidget {
         color: Styles.buttonColor1,
         highlightColor: Colors.lightBlue,
         textOnButton: text,
-        onPressed: () {
+        onPressed: () async {
+          List<Ngo> ngoList =
+              await Provider.of<NgoListController>(context, listen: false)
+                  .getNgoList();
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => RegistrationForm(userType: userType)));
+                  builder: (_) => RegistrationForm(
+                        userType: userType,
+                        ngoList: ngoList,
+                      )));
         },
       ),
     );

@@ -6,15 +6,22 @@ enum LoginState { Initial, Loading, Loaded }
 class LoginController with ChangeNotifier {
   final AuthRepository authRepository;
   LoginState loginState = LoginState.Initial;
+  Map<String, dynamic> map;
   int status = 1;
+  String email;
 
   LoginController(this.authRepository) {}
 
-  Future<void> loginWithGoogle() async {
+  Future<String> loginWithGoogle() async {
     loginState = LoginState.Loading;
     notifyListeners();
-    status = await authRepository.signInWithGoogle();
+    map = await authRepository.signInWithGoogle();
+    print('map in logincontroller is $map');
+    status = map['status'];
+    email = map['email'];
+    print('status in lc is $status and email is $email');
     loginState = LoginState.Loaded;
     notifyListeners();
+    return email;
   }
 }
