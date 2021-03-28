@@ -7,6 +7,7 @@ import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:food_insta/screens/root_app/profile/request_approval.dart';
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -72,46 +73,59 @@ class _RequestsPageState extends State<RequestsPage> {
                     const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12),
                 child: ListView.separated(
                     itemBuilder: (context, index) {
-                      return CustomAppCard(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              CircleAvatar(
-                                radius: 24,
-                                backgroundColor: Colors.green,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'NIRMAN',
-                                      style:
-                                          Theme.of(context).textTheme.subtitle1,
-                                    ),
-                                    UserTypeLabel(
-                                      label: 'Business',
-                                    ),
-                                  ],
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RequestApprovalPage()));
+                        },
+                        child: CustomAppCard(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CircleAvatar(
+                                  radius: 24,
+                                  backgroundColor: Colors.green,
                                 ),
-                              ),
-                              IconButton(
-                                  iconSize: 38,
-                                  icon: Icon(
-                                    Icons.check_circle,
-                                    color: Styles.customApprovedButtonColor,
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'NIRMAN',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1
+                                            .copyWith(fontSize: 16),
+                                      ),
+                                      UserTypeLabel(
+                                        label: 'Business',
+                                      ),
+                                    ],
                                   ),
-                                  onPressed: () {}),
-                              IconButton(
-                                  iconSize: 38,
-                                  icon: Icon(
-                                    Icons.cancel,
-                                    color: Styles.customDeclineButtonColor,
-                                  ),
-                                  onPressed: () {}),
-                            ],
-                          )
-                        ],
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                IconButton(
+                                    iconSize: 24,
+                                    icon: Icon(
+                                      Icons.check_circle,
+                                      color: Styles.customApprovedButtonColor,
+                                    ),
+                                    onPressed: () {}),
+                                IconButton(
+                                    iconSize: 24,
+                                    icon: Icon(
+                                      Icons.cancel,
+                                      color: Styles.customDeclineButtonColor,
+                                    ),
+                                    onPressed: () {}),
+                              ],
+                            )
+                          ],
+                        ),
                       );
                     },
                     separatorBuilder: (_, i) => SizedBox(height: 12),

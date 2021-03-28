@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_card.dart';
+import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/models/dark_theme_provder.dart';
 import 'package:food_insta/screens/root_app/settings_page.dart';
@@ -159,8 +160,9 @@ class _HomePageState extends State<HomePage> {
                       child: CustomAppCard(
                         children: [
                           Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 8, 0, 18),
+                              padding: const EdgeInsets.only(bottom: 18),
                               child: ListTile(
+                                contentPadding: const EdgeInsets.all(0),
                                 leading: CircleAvatar(
                                   radius: 24,
                                   backgroundImage: NetworkImage(
@@ -168,24 +170,53 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 title: Text(_name(_users[index])),
                                 subtitle: Text(_location(_users[index])),
+                                trailing: Column(
+                                  children: [
+                                    RatingIndicator(
+                                      itemSize: 16,
+                                      rating: 4.5,
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    UserTypeLabel(
+                                      label: 'Business',
+                                    ),
+                                  ],
+                                ),
                               )),
-                          Container(
-                            color: Colors.black,
-                            child: Image.network(
-                                _users[index]['picture']['large']),
-                            height: 200,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Container(
+                              color: Colors.black,
+                              child: Image.network(
+                                _users[index]['picture']['large'],
+                                fit: BoxFit.cover,
+                              ),
+                              height: 220,
+                              width: double.infinity,
+                            ),
                           ),
                           Row(
                             children: [
                               Icon(MdiIcons.weight, color: Styles.iconColor),
-                              Text('36'),
+                              SizedBox(width: 4),
+                              Text(
+                                '50kg',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                              ),
                               Spacer(),
                               MaterialButton(
                                 color: Color(0xFFF54580),
+                                highlightColor: Colors.pink,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16)),
                                 onPressed: () {},
-                                elevation: 0,
                                 child: Row(
                                   children: [
                                     Icon(MdiIcons.accountGroup,
@@ -232,12 +263,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-// BoxDecoration(
-//                       shape: BoxShape.circle,
-//                       image: DecorationImage(
-//                         image:
-//                             NetworkImage('https://picsum.photos/250?image=9'),
-//                         fit: BoxFit.cover,
-//                       ),
-//                     ),

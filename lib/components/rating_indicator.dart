@@ -19,7 +19,6 @@ class RatingIndicator extends StatelessWidget {
         ),
         itemCount: 5,
         itemSize: itemSize,
-        direction: Axis.vertical,
       ),
     );
   }

@@ -14,6 +14,7 @@ class Styles {
   static const Color bgColorEndGradient = Color(0xFFFDBF2D);
   static const Color buttonColor1 = Color(0xFF2D9CDB);
   static const Color iconColor = Color(0xFFFCBC23);
+  static const Color blueIconColor = Color(0xFF0066FF);
   static const Color textFieldColor = Color(0xFFEEF5FF);
   static const Color buttonColor2 = Color(0xFF2D9CDB);
   static const Color customApprovedButtonColor = Color(0xFF34FF01);

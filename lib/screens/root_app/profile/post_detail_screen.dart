@@ -42,31 +42,63 @@ class PostDetail extends StatelessWidget {
                 child: CustomAppCard(
                   width: double.infinity,
                   children: [
-                    Stack(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 220,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    'https://picsum.photos/250?image=9'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: 12,
+                            top: 4,
+                            child: CustomIconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                MdiIcons.deleteEmpty,
+                                color: Styles.customDeclineButtonColor,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          height: 220,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://picsum.photos/250?image=9'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                        Icon(MdiIcons.accountGroup,
+                            color: Styles.blueIconColor),
+                        Text(
+                          '36',
+                          style: Theme.of(context).textTheme.subtitle2.copyWith(
+                              fontWeight: FontWeight.w500, fontSize: 16),
                         ),
-                        Positioned(
-                          right: 12,
-                          top: 4,
-                          child: CustomIconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              MdiIcons.deleteEmpty,
-                              color: Styles.customDeclineButtonColor,
-                            ),
-                          ),
-                        )
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Icon(MdiIcons.weight, color: Styles.blueIconColor),
+                        Text(
+                          '50kg',
+                          style: Theme.of(context).textTheme.subtitle2.copyWith(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                        ),
+                        SizedBox(
+                          width: 22,
+                        ),
+                        Text(
+                          '6 hours ago',
+                          style: Theme.of(context).textTheme.subtitle2.copyWith(
+                              fontWeight: FontWeight.w500, fontSize: 12),
+                        ),
                       ],
                     ),
                     Padding(
@@ -76,17 +108,6 @@ class PostDetail extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.caption,
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Icon(Icons.group),
-                        Text('36'),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Icon(Icons.store),
-                        Text('50kg'),
-                      ],
                     ),
                     CustomTextButton(
                       onPressed: () {

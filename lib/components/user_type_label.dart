@@ -12,7 +12,7 @@ class UserTypeLabel extends StatelessWidget {
           left: Radius.circular(64), right: Radius.circular(64)),
       child: Container(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
           child: Text(
             label,
             style: Theme.of(context)
