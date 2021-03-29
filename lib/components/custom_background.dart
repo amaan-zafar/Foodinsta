@@ -32,7 +32,7 @@ class CustomBackground extends StatelessWidget {
               decoration: BoxDecoration(gradient: Styles.bgLinearGradient),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(12, 18, 12, 0),
+              margin: const EdgeInsets.fromLTRB(12, 18, 12, 0),
               child: child,
             ),
           ],

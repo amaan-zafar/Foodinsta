@@ -42,7 +42,8 @@ class _SettingsPageState extends State<SettingsPage> {
               // Body
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 18),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 18),
                   children: [
                     CustomAppCard(
                       children: [

@@ -5,6 +5,7 @@ import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/controllers/ngo_list_controller.dart';
 import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
+import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/repository/auth_repo.dart';
 import 'package:food_insta/repository/post_repo.dart';
 import 'package:food_insta/repository/ngo_list_repo.dart';
@@ -94,6 +95,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => LocationController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => AppUserController(),
           ),
         ],
         child: Consumer<DarkThemeProvider>(builder: (context, value, child) {

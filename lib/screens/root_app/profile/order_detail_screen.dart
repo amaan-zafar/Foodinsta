@@ -54,8 +54,7 @@ class OrderDetail extends StatelessWidget {
                           ),
                           CustomTextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (_) {}));
+                              Navigator.pop(context);
                             },
                             textOnButton: 'Cancel Request',
                             color: Styles.customRejectedButtonColor,

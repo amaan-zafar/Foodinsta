@@ -45,7 +45,7 @@ class RegistrationRepository {
               },
               "name": obj.name,
               "is_volunteer": obj.isVol,
-              "id_number": obj.id,
+              "id_number": obj.volId,
               "ngo_static_id": obj.orgId
             },
             requireAuth: false);
@@ -81,7 +81,7 @@ class RegistrationRepository {
   }
 }
 
-enum USERTYPE { NGO, BUSINESS, INDIVIDUAL }
+enum USERTYPE { NGO, BUSINESS, INDIVIDUAL, VOLUNTEER }
 
 class UserObject {
   final String name;
@@ -96,14 +96,14 @@ class UserObject {
 
   final bool isVol;
   final String orgId;
-  final String id;
+  final String volId;
 
   UserObject(
       {this.city,
       this.name,
       this.address,
       this.email,
-      this.id,
+      this.volId,
       this.idPhoto,
       this.isVol,
       this.orgId,

@@ -30,8 +30,8 @@ class _LoginPageState extends State<LoginPage> {
                   centerTitle: true,
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(12, Styles.cardTopPadding, 12, 0),
+                  padding: const EdgeInsets.fromLTRB(
+                      12, Styles.cardTopPadding, 12, 0),
                   child: CustomAppCard(
                     children: [
                       Container(

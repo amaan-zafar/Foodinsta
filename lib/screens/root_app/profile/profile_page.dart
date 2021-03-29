@@ -5,6 +5,8 @@ import 'package:food_insta/components/profile_card.dart';
 import 'package:food_insta/components/order_status_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/dark_theme_provder.dart';
+import 'package:food_insta/controllers/app_user_controller.dart';
+import 'package:food_insta/repository/registration_repo.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/screens/root_app/qr_code/deal_completed.dart';
@@ -20,6 +22,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  UserObject _userObject;
+  USERTYPE _userType;
+
   List<Order> orders = [
     Order(
         orderedTo: "Ayush grawal",
@@ -46,6 +51,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    AppUserController controller =
+        Provider.of<AppUserController>(context, listen: false);
+    _userObject = controller.userObject;
+    _userType = controller.userType;
+    print('user is ${_userObject.name}');
     return Column(
       children: [
         // AppBar
@@ -71,6 +81,8 @@ class _ProfilePageState extends State<ProfilePage> {
         Expanded(
           child: SingleChildScrollView(
             child: ProfileCard(
+              userObject: _userObject,
+              userType: _userType,
               children: [
                 SizedBox(height: 8),
                 Divider(),

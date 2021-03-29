@@ -18,7 +18,7 @@ class QRCodePage extends StatelessWidget {
               SizedBox(
                 height: 74,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: Row(
                     children: [
                       Text(
