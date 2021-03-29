@@ -10,8 +10,9 @@ class LocationController with ChangeNotifier {
   final locationRepository = LocationRepository();
   Position currentLocation;
   Address firstAddress;
-  CurrentLocationStatus loadingStatus = CurrentLocationStatus.Initial;
   Map map;
+  String citySelected;
+  CurrentLocationStatus loadingStatus = CurrentLocationStatus.Initial;
   CityCoordinatesStatus coordinatesStatus = CityCoordinatesStatus.Initial;
 
   setCurrentLocation() async {
@@ -26,13 +27,14 @@ class LocationController with ChangeNotifier {
     notifyListeners();
   }
 
-  getCityCoordinates(String city) async {
+  Future<Map> getCityCoordinates(String city) async {
+    citySelected = city;
     coordinatesStatus = CityCoordinatesStatus.Loading;
     notifyListeners();
     map = await locationRepository.getCoordinatesFromCity(city);
     print('Coordinates are $map');
-
     coordinatesStatus = CityCoordinatesStatus.Loaded;
     notifyListeners();
+    return map;
   }
 }

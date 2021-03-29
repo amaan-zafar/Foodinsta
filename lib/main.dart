@@ -7,6 +7,7 @@ import 'package:food_insta/controllers/ngo_list_controller.dart';
 import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/repository/auth_repo.dart';
+import 'package:food_insta/repository/post_repo.dart';
 import 'package:food_insta/repository/ngo_list_repo.dart';
 import 'package:food_insta/repository/registration_repo.dart';
 import 'package:food_insta/route_generator.dart';
@@ -18,6 +19,7 @@ import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:food_insta/controllers/location_controller.dart';
+import 'package:food_insta/controllers/post_controller.dart';
 
 import 'controllers/dark_theme_provder.dart';
 
@@ -45,6 +47,8 @@ Future<void> main() async {
   final NgoListRepository ngoListRepository =
       NgoListRepository(_customHttpClient, _secureStorage);
 
+  final PostRepository postRepo = PostRepository(_customHttpClient);
+
   bool isloggedIn = !((await _secureStorage.read(key: 'access')) == null);
 
   runApp(MyApp(
@@ -53,6 +57,7 @@ Future<void> main() async {
     authRepository: authRepository,
     registrationRepository: registrationRepository,
     ngoListRepository: ngoListRepository,
+    postRepo: postRepo,
   ));
 }
 
@@ -62,10 +67,12 @@ class MyApp extends StatelessWidget {
   final AuthRepository authRepository;
   final RegistrationRepository registrationRepository;
   final NgoListRepository ngoListRepository;
+  final PostRepository postRepo;
   MyApp(this.darkThemeProvider, this.isLoggedIn,
       {this.authRepository,
       this.registrationRepository,
-      this.ngoListRepository});
+      this.ngoListRepository,
+      this.postRepo});
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +89,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => NgoListController(ngoListRepository),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => PostController(postRepo),
           ),
           ChangeNotifierProvider(
             create: (context) => LocationController(),

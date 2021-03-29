@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/repository/registration_repo.dart';
+import 'package:food_insta/components/custom_label.dart';
 import 'package:food_insta/theme.dart';
 
 class UserTypeLabel extends StatelessWidget {
   final String label;
+  final USERTYPE usertype;
 
-  const UserTypeLabel({Key key, this.label}) : super(key: key);
+  const UserTypeLabel({Key key, this.label, this.usertype}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.horizontal(
-          left: Radius.circular(64), right: Radius.circular(64)),
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
-          child: Text(
-            label,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle2
-                .copyWith(fontSize: 14, color: Colors.white),
-          ),
-        ),
-        color: Styles.customApprovedButtonColor,
-      ),
+    return CustomLabel(
+      color: Styles.customApprovedButtonColor,
+      label: label,
     );
   }
 }

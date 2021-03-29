@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
-import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/components/order_status_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/theme.dart';
+import 'package:food_insta/models/order.dart';
+import 'package:food_insta/models/post.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +21,29 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  List posts = [];
-  List orders = [];
+  List<Order> orders = [
+    Order(
+        orderedTo: "Ayush grawal",
+        createdTime: "26-03-2021 15:06:04",
+        image: null,
+        orderStatus: ORDERSTATUS.PENDING),
+    Order(
+        orderedTo: "Ayush kumar",
+        createdTime: "26-03-2021 15:06:04",
+        image: null,
+        orderStatus: ORDERSTATUS.APPROVED),
+    Order(
+        orderedTo: "Ayush pandey",
+        createdTime: "26-03-2021 15:06:04",
+        image: null,
+        orderStatus: ORDERSTATUS.COMPLETED),
+    Order(
+        orderedTo: "kunal grawal",
+        createdTime: "26-03-2021 15:06:04",
+        image: null,
+        orderStatus: ORDERSTATUS.APPROVED)
+  ];
+  List<Post> posts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -214,9 +237,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   subtitle: Wrap(
                     children: [
-                      UserTypeLabel(
-                        label: 'Business',
-                      ),
+                      OrderStatusLabel(
+                        orderstatus: ORDERSTATUS.COMPLETED,
+                      )
                     ],
                   ),
                 ),

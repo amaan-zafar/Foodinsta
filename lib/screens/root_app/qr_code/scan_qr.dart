@@ -21,6 +21,8 @@ class _ScanQRState extends State<ScanQR> {
   String actualQrResult = 'Thanks for using our app.';
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: [
@@ -62,7 +64,7 @@ class _ScanQRState extends State<ScanQR> {
 
               // Body
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 48, 24, 8),
+                padding: EdgeInsets.fromLTRB(24, height * 0.15, 24, 8),
                 child: CustomAppCard(
                   width: double.infinity,
                   children: [
