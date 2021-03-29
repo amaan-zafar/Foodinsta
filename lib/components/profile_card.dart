@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
-import 'package:food_insta/repository/registration_repo.dart';
+import 'package:food_insta/models/user.dart';
 
 class ProfileCard extends StatelessWidget {
   final List<Widget> children;
@@ -19,9 +19,10 @@ class ProfileCard extends StatelessWidget {
         width: double.infinity,
         children: [
           CircleAvatar(
-            backgroundImage: userObject == null
-                ? AssetImage('assets/placeholder_img.png')
-                : FileImage(userObject.profileImage),
+            backgroundImage:
+                userObject == null || userObject.profileImage == null
+                    ? AssetImage('assets/placeholder_img.png')
+                    : FileImage(userObject.profileImage),
             radius: 48,
           ),
           SizedBox(height: 12),

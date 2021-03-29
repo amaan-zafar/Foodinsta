@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/rating_indicator.dart';
+import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:food_insta/models/post.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
@@ -41,40 +43,22 @@ class _MapPageState extends State<MapPage> {
     return Align(
       alignment: Alignment.bottomLeft,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.symmetric(vertical: 32),
         height: 150.0,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            SizedBox(width: 10.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _boxes(
-                  "https://images.unsplash.com/photo-1504940892017-d23b9053d5d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-                  28.544800,
-                  77.006721,
-                  "Blue Hill"),
-            ),
-            SizedBox(width: 10.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _boxes(
-                  "https://lh5.googleusercontent.com/p/AF1QipO3VPL9m-b355xWeg4MXmOQTauFAEkavSluTtJU=w225-h160-k-no",
-                  28.744800,
-                  77.116721,
-                  "Gramercy Tavern"),
-            ),
-            SizedBox(width: 10.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _boxes(
-                  "https://lh5.googleusercontent.com/p/AF1QipMKRN-1zTYMUVPrH-CcKzfTo6Nai7wdL7D8PMkt=w340-h160-k-no",
-                  28.944800,
-                  77.296721,
-                  "Le Bernardin"),
-            ),
-          ],
-        ),
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: postJson.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _boxes(
+                    "https://images.unsplash.com/photo-1504940892017-d23b9053d5d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                    28.544800,
+                    77.006721,
+                    postJson[index]['name'],
+                    index),
+              );
+            }),
       ),
     );
   }
@@ -144,7 +128,8 @@ class _MapPageState extends State<MapPage> {
         target: LatLng(lat, lng), zoom: 18, bearing: 45.0, tilt: 50.0)));
   }
 
-  Widget _boxes(String _image, double lat, double lng, String restaurantName) {
+  Widget _boxes(
+      String _image, double lat, double lng, String restaurantName, int index) {
     return GestureDetector(
       onTap: () {
         _goToLocation(lat, lng);
@@ -173,7 +158,7 @@ class _MapPageState extends State<MapPage> {
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: myDetailsContainer(restaurantName),
+                    child: myDetailsContainer(restaurantName, index),
                   ),
                 )
               ],
@@ -184,31 +169,36 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  Widget myDetailsContainer(String restaurantName) {
+  Widget myDetailsContainer(String restaurantName, int index) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.only(left: 4.0),
           child: Container(
               child: Text(
             restaurantName,
             style: TextStyle(
                 color: Color(0xff6200ee),
-                fontSize: 24.0,
+                fontSize: 28.0,
                 fontWeight: FontWeight.bold),
           )),
         ),
-        SizedBox(height: 5.0),
+        SizedBox(height: 2.0),
         Container(
             child: RatingIndicator(
-          rating: 4.5,
-          itemSize: 18,
+          rating: postJson[index]['rating'],
+          itemSize: 20,
         )),
+        SizedBox(height: 5.0),
+        UserTypeLabel(
+          label: postJson[index]['member_type'],
+          horizontalPadding: 28,
+        ),
         SizedBox(height: 5.0),
         Container(
             child: Text(
-          "50 kgs \u00B7 6 hours ago",
+          "${postJson[index]['weight']} \u00B7 ${postJson[index]['time']}",
           style: TextStyle(
             color: Colors.black54,
             fontSize: 18.0,
@@ -217,7 +207,7 @@ class _MapPageState extends State<MapPage> {
         SizedBox(height: 5.0),
         Container(
             child: Text(
-          "36 pending requests",
+          "${postJson[index]['num_of_requests'].toString()} pending requests",
           style: TextStyle(
               color: Colors.black54,
               fontSize: 18.0,

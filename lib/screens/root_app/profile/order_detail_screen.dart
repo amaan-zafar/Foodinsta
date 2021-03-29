@@ -6,12 +6,14 @@ import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/item_card.dart';
 import 'package:food_insta/components/profile_card.dart';
 import 'package:food_insta/models/order.dart';
+import 'package:food_insta/models/post.dart';
 import 'package:food_insta/theme.dart';
 
 class OrderDetail extends StatelessWidget {
   final ORDERSTATUS orderstatus;
+  final int index;
 
-  const OrderDetail({Key key, this.orderstatus}) : super(key: key);
+  const OrderDetail({Key key, this.orderstatus, this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +45,8 @@ class OrderDetail extends StatelessWidget {
                     children: [
                       ProfileCard(),
                       ItemCard(
+                        json: postJson,
+                        index: index,
                         children: [
                           Divider(),
                           Padding(

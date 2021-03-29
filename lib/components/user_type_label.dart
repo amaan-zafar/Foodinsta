@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/repository/registration_repo.dart';
+import 'package:food_insta/models/user.dart';
 import 'package:food_insta/components/custom_label.dart';
 import 'package:food_insta/theme.dart';
 
@@ -27,7 +27,7 @@ class UserTypeLabel extends StatelessWidget {
       case USERTYPE.VOLUNTEER:
         return "Volunteer";
       default:
-        return "Individual";
+        return "Business";
     }
   }
 
@@ -35,7 +35,7 @@ class UserTypeLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomLabel(
       color: Styles.customApprovedButtonColor,
-      label: _getUserTypeName(userType),
+      label: label == null ? _getUserTypeName(userType) : label,
       fontSize: fontSize,
       horizontalPadding: horizontalPadding,
     );

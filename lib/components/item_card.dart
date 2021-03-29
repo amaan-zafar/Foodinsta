@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/components/custom_text_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:food_insta/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ItemCard extends StatelessWidget {
   final List<Widget> children;
+  final json;
+  final int index;
 
-  const ItemCard({Key key, this.children}) : super(key: key);
+  const ItemCard({Key key, this.children, this.json, this.index})
+      : super(key: key);
 
   void launchMap(String address) async {
     String query = Uri.encodeComponent(address);
@@ -40,7 +42,9 @@ class ItemCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Posuere nulla non cursus lectus. Sit sagittis, nibh porta orci. Non consectetur tellus id purus pellentesque vitae velit vitae at.',
+              json == null
+                  ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Posuere nulla non cursus lectus. Sit sagittis, nibh porta orci. Non consectetur tellus id purus pellentesque vitae velit vitae at.'
+                  : json[index]['description'],
               style: Theme.of(context)
                   .textTheme
                   .caption
@@ -55,20 +59,27 @@ class ItemCard extends StatelessWidget {
                   Row(
                     children: [
                       Icon(MdiIcons.weight, color: Styles.blueIconColor),
+                      SizedBox(width: 8),
                       Text(
-                        ' 50kg',
+                        json == null ? ' 50kg' : json[index]['weight'],
                         style: TextStyle(fontSize: 15),
                       ),
-                      SizedBox(width: 8),
+                    ],
+                  ),
+                  Row(
+                    children: [
                       Icon(MdiIcons.accountGroup, color: Styles.blueIconColor),
+                      SizedBox(width: 8),
                       Text(
-                        ' 36',
+                        json == null
+                            ? ' 36'
+                            : json[index]['num_of_requests'].toString(),
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
                   ),
                   Text(
-                    '6 hours ago',
+                    json == null ? '6 hours ago' : json[index]['time'],
                     style: TextStyle(fontSize: 14),
                   ),
                 ],

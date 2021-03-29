@@ -6,7 +6,7 @@ import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/controllers/ngo_list_controller.dart';
 import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/repository/ngo_list_repo.dart';
-import 'package:food_insta/repository/registration_repo.dart';
+import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/auth/registeration_screen.dart';
 import 'package:food_insta/theme.dart';
 import 'package:provider/provider.dart';

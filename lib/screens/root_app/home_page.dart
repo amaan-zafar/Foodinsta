@@ -5,6 +5,7 @@ import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
+import 'package:food_insta/models/post.dart';
 import 'package:food_insta/screens/root_app/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
@@ -141,9 +142,6 @@ class _HomePageState extends State<HomePage> {
               ),
               isExpanded: true,
               elevation: 0,
-
-              // itemHeight: 56,
-              // value: 'Patna',
               onChanged: (value) {
                 setState(() {
                   print(value);
@@ -175,58 +173,80 @@ class _HomePageState extends State<HomePage> {
           ? RefreshIndicator(
               onRefresh: _getData,
               child: ListView.builder(
-                  itemCount: _users.length,
+                  itemCount: postJson.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8),
                       child: CustomAppCard(
                         children: [
-                          Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.all(0),
-                                leading: CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/placeholder_img.png'),
-                                  radius: 24,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => OrderDetail(
+                                            orderstatus: ORDERSTATUS.PENDING,
+                                            index: index,
+                                          )));
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(0),
+                                  leading: CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        'assets/placeholder_img.png'),
+                                    radius: 24,
+                                  ),
+                                  title: Text(
+                                    postJson[index]['name'],
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  subtitle: Text(
+                                    postJson[index]['time'],
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  trailing: Column(
+                                    children: [
+                                      RatingIndicator(
+                                        itemSize: 15,
+                                        rating: postJson[index]['rating'],
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      UserTypeLabel(
+                                        horizontalPadding: 12,
+                                        label: postJson[index]['member_type'],
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => OrderDetail(
+                                            orderstatus: ORDERSTATUS.PENDING,
+                                            index: index,
+                                          )));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Container(
+                                color: Colors.black,
+                                child: Image(
+                                  image: AssetImage('assets/food_large.png'),
+                                  fit: BoxFit.cover,
                                 ),
-                                title: Text(
-                                  'Aggarwal sweets',
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                subtitle: Text(
-                                  '6 hours ago',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                trailing: Column(
-                                  children: [
-                                    RatingIndicator(
-                                      itemSize: 15,
-                                      rating: 4.5,
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    UserTypeLabel(
-                                      horizontalPadding: 12,
-                                      label: 'Business',
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Container(
-                              color: Colors.black,
-                              child: Image(
-                                image: AssetImage('assets/food_large.png'),
-                                fit: BoxFit.cover,
+                                height: 220,
+                                width: double.infinity,
                               ),
-                              height: 220,
-                              width: double.infinity,
                             ),
                           ),
                           Row(
@@ -235,7 +255,7 @@ class _HomePageState extends State<HomePage> {
                                   color: Styles.blueIconColor),
                               SizedBox(width: 4),
                               Text(
-                                '50kg',
+                                postJson[index]['weight'],
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle2
@@ -249,15 +269,7 @@ class _HomePageState extends State<HomePage> {
                                 highlightColor: Colors.pink,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16)),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => OrderDetail(
-                                                orderstatus:
-                                                    ORDERSTATUS.PENDING,
-                                              )));
-                                },
+                                onPressed: () {},
                                 child: Row(
                                   children: [
                                     Icon(MdiIcons.accountGroup,
@@ -265,7 +277,9 @@ class _HomePageState extends State<HomePage> {
                                     Padding(
                                       padding:
                                           const EdgeInsets.fromLTRB(4, 0, 8, 0),
-                                      child: Text('36',
+                                      child: Text(
+                                          postJson[index]['num_of_requests']
+                                              .toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText2
@@ -288,12 +302,14 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                             child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Posuere nulla non cursus lectus. Sit sagittis, nibh porta orci. Non consectetur tellus id purus pellentesque vitae velit vitae at.',
-                              textAlign: TextAlign.center,
+                              postJson[index]['description'],
+                              textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
                                   .caption
-                                  .copyWith(fontWeight: FontWeight.bold),
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
                             ),
                           )
                         ],

@@ -6,12 +6,12 @@ import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/repository/ngo_list_repo.dart';
-import 'package:food_insta/repository/registration_repo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_textfield.dart';
+import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
@@ -361,7 +361,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   Widget _buildVolunteerFields(DarkThemeProvider darkThemeProvider) {
-    return _userType == USERTYPE.INDIVIDUAL
+    return _userType == USERTYPE.INDIVIDUAL || _userType == USERTYPE.VOLUNTEER
         ? Column(
             children: [
               CheckboxListTile(
