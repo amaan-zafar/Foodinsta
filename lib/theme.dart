@@ -17,7 +17,8 @@ class Styles {
   static const Color blueIconColor = Color(0xFF0066FF);
   static const Color textFieldColor = Color(0xFFEEF5FF);
   static const Color buttonColor2 = Color(0xFF2D9CDB);
-  static const Color customApprovedButtonColor = Color(0xFF34FF01);
+  // static const Color customApprovedButtonColor = Color(0xFF34FF01);
+  static const Color customApprovedButtonColor = Colors.lightGreen;
   static const Color customPendingColor = Color(0xFFFCBC23);
   static const Color customDeclineButtonColor = Color(0xFFEF5C56);
   static const Color customRejectedButtonColor = Color(0xFF2D9CDB);

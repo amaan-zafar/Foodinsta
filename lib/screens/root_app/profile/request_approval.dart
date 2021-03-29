@@ -4,6 +4,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
+import 'package:food_insta/components/profile_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/components/launcher_widgets.dart';
@@ -43,47 +44,9 @@ class RequestApprovalPage extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 18, 24, 64),
-                    child: CustomAppCard(
-                      width: double.infinity,
+                    padding: const EdgeInsets.only(bottom: 48),
+                    child: ProfileCard(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 4, 0, 18),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.greenAccent[400],
-                            radius: 48,
-                            child: Text('DP'),
-                          ),
-                        ),
-                        Text(
-                          'Aggarwal Sweets',
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                        SizedBox(height: 12),
-                        Text(
-                          'A-41, Sector 47 Gurgaon, Haryana 1010101',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.phone),
-                              Text('+91-9313093130',
-                                  style: Theme.of(context).textTheme.bodyText1)
-                            ],
-                          ),
-                        ),
-                        RatingIndicator(
-                          itemSize: 20,
-                          rating: 4.5,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        UserTypeLabel(label: 'Business'),
                         SizedBox(height: 8),
                         Divider(),
                         Padding(
@@ -94,17 +57,18 @@ class RequestApprovalPage extends StatelessWidget {
                           ),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconButton(
-                                iconSize: 40,
+                                iconSize: 48,
                                 icon: Icon(
                                   Icons.cancel,
                                   color: Styles.customDeclineButtonColor,
                                 ),
                                 onPressed: () {}),
+                            SizedBox(width: 8),
                             IconButton(
-                                iconSize: 40,
+                                iconSize: 48,
                                 icon: Icon(
                                   Icons.check_circle,
                                   color: Styles.customApprovedButtonColor,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
+import 'package:food_insta/components/profile_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/components/order_status_label.dart';
@@ -9,6 +10,7 @@ import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
+import 'package:food_insta/screens/root_app/qr_code/deal_completed.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/models/order.dart';
 import 'package:food_insta/models/post.dart';
@@ -47,15 +49,18 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.0),
-      child: Column(
-        children: [
-          // AppBar
-          CustomAppBar(
+    return Column(
+      children: [
+        // AppBar
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: CustomAppBar(
             actions: [
               CustomIconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => DealCompletedPage()));
+                },
                 icon: Icon(
                   Icons.notifications,
                   color: Styles.iconColor,
@@ -63,63 +68,21 @@ class _ProfilePageState extends State<ProfilePage> {
               )
             ],
           ),
+        ),
 
-          // Body
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding:
-                    EdgeInsets.fromLTRB(8, 18, 8, Styles.cardBottomPadding),
-                child: CustomAppCard(
-                  width: double.infinity,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 4, 0, 18),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.greenAccent[400],
-                        radius: 48,
-                        child: Text('DP'),
-                      ),
-                    ),
-                    Text(
-                      'Aggarwal Sweets',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    SizedBox(height: 12),
-                    Text(
-                      'A-41, Sector 47 Gurgaon, Haryana 1010101',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.phone),
-                          Text('+91-9313093130',
-                              style: Theme.of(context).textTheme.bodyText1)
-                        ],
-                      ),
-                    ),
-                    RatingIndicator(
-                      itemSize: 20,
-                      rating: 4.5,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    UserTypeLabel(label: 'Business'),
-                    SizedBox(height: 8),
-                    Divider(),
-                    buildTabs(context),
-                  ],
-                ),
-              ),
+        // Body
+        Expanded(
+          child: SingleChildScrollView(
+            child: ProfileCard(
+              children: [
+                SizedBox(height: 8),
+                Divider(),
+                buildTabs(context),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -179,26 +142,44 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Container(
                       width: 48,
                       height: 48,
-                      color: Colors.green,
+                      child: Image(
+                        image: AssetImage('assets/food_large.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   title: Row(
                     children: [
-                      Icon(MdiIcons.accountGroup),
+                      Icon(MdiIcons.accountGroup,
+                          color: Styles.customRequestButtonColor),
+                      SizedBox(width: 8),
+                      Text('36'),
                       Spacer(),
                     ],
                   ),
                   subtitle: Row(
                     children: [
-                      Icon(MdiIcons.weight),
+                      Icon(MdiIcons.weight, color: Styles.blueIconColor),
+                      SizedBox(width: 8),
+                      Text(
+                        '50 kg',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
                       Spacer(),
                     ],
                   ),
                   trailing: CustomIconButton(
-                    height: 52,
+                    color: Styles.iconColor,
+                    height: double.infinity,
                     elevation: 0,
                     onPressed: () {},
-                    icon: Icon(MdiIcons.qrcode),
+                    icon: Icon(
+                      MdiIcons.qrcode,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               );
@@ -226,8 +207,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   tileColor: tileColor,
                   leading: CircleAvatar(
+                    backgroundImage: AssetImage('assets/placeholder_img.png'),
                     radius: 34,
-                    backgroundColor: Colors.green,
                   ),
                   title: SizedBox(
                     height: 28,

@@ -9,8 +9,10 @@ import 'package:food_insta/screens/root_app/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:http/http.dart' as http;
+import 'package:food_insta/models/order.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:convert';
+import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -34,17 +36,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  String _name(dynamic user) {
-    return user['name']['first'];
-  }
+  // String _name(dynamic user) {
+  //   return user['name']['first'];
+  // }
 
-  String _location(dynamic user) {
-    return user['location']['country'];
-  }
+  // String _location(dynamic user) {
+  //   return user['location']['country'];
+  // }
 
-  String _age(Map<dynamic, dynamic> user) {
-    return "Age: " + user['dob']['age'].toString();
-  }
+  // String _age(Map<dynamic, dynamic> user) {
+  //   return "Age: " + user['dob']['age'].toString();
+  // }
 
   Future<void> _getData() async {
     setState(() {
@@ -181,26 +183,35 @@ class _HomePageState extends State<HomePage> {
                       child: CustomAppCard(
                         children: [
                           Padding(
-                              padding: const EdgeInsets.only(bottom: 18),
+                              padding: const EdgeInsets.only(bottom: 8),
                               child: ListTile(
                                 contentPadding: const EdgeInsets.all(0),
                                 leading: CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage('assets/placeholder_img.png'),
                                   radius: 24,
-                                  backgroundImage: NetworkImage(
-                                      _users[index]['picture']['medium']),
                                 ),
-                                title: Text(_name(_users[index])),
-                                subtitle: Text(_location(_users[index])),
+                                title: Text(
+                                  'Aggarwal sweets',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                subtitle: Text(
+                                  '6 hours ago',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
                                 trailing: Column(
                                   children: [
                                     RatingIndicator(
-                                      itemSize: 16,
+                                      itemSize: 15,
                                       rating: 4.5,
                                     ),
                                     SizedBox(
-                                      height: 2,
+                                      height: 4,
                                     ),
                                     UserTypeLabel(
+                                      horizontalPadding: 12,
                                       label: 'Business',
                                     ),
                                   ],
@@ -210,8 +221,8 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(16),
                             child: Container(
                               color: Colors.black,
-                              child: Image.network(
-                                _users[index]['picture']['large'],
+                              child: Image(
+                                image: AssetImage('assets/food_large.png'),
                                 fit: BoxFit.cover,
                               ),
                               height: 220,
@@ -220,7 +231,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Row(
                             children: [
-                              Icon(MdiIcons.weight, color: Styles.iconColor),
+                              Icon(MdiIcons.weight,
+                                  color: Styles.blueIconColor),
                               SizedBox(width: 4),
                               Text(
                                 '50kg',
@@ -237,7 +249,15 @@ class _HomePageState extends State<HomePage> {
                                 highlightColor: Colors.pink,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16)),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => OrderDetail(
+                                                orderstatus:
+                                                    ORDERSTATUS.PENDING,
+                                              )));
+                                },
                                 child: Row(
                                   children: [
                                     Icon(MdiIcons.accountGroup,
@@ -268,9 +288,12 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                             child: Text(
-                              'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Posuere nulla non cursus lectus. Sit sagittis, nibh porta orci. Non consectetur tellus id purus pellentesque vitae velit vitae at.',
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.caption,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  .copyWith(fontWeight: FontWeight.bold),
                             ),
                           )
                         ],

@@ -86,8 +86,9 @@ class _RequestsPageState extends State<RequestsPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage('assets/placeholder_img.png'),
                                   radius: 24,
-                                  backgroundColor: Colors.green,
                                 ),
                                 Expanded(
                                   child: Column(
