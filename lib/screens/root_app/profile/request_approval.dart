@@ -6,12 +6,15 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/components/launcher_widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../theme.dart';
 
 class RequestApprovalPage extends StatelessWidget {
+  String phone = "7870193349";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +43,7 @@ class RequestApprovalPage extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 18, 24, 8),
+                    padding: const EdgeInsets.fromLTRB(24, 18, 24, 64),
                     child: CustomAppCard(
                       width: double.infinity,
                       children: [
@@ -117,32 +120,7 @@ class RequestApprovalPage extends StatelessWidget {
                             style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomIconButton(
-                              height: 64,
-                              color: Styles.buttonColor2,
-                              onPressed: () {},
-                              icon: Icon(MdiIcons.androidMessages),
-                            ),
-                            CustomIconButton(
-                              height: 64,
-                              onPressed: () {
-                                var phone = "7870193349";
-                                launch("tel://$phone");
-                              },
-                              color: Styles.buttonColor2,
-                              icon: Icon(MdiIcons.phone),
-                            ),
-                            CustomIconButton(
-                              height: 64,
-                              onPressed: () {},
-                              color: Styles.buttonColor2,
-                              icon: Icon(MdiIcons.whatsapp),
-                            ),
-                          ],
-                        ),
+                        LauncherWidgets()
                       ],
                     ),
                   ),

@@ -14,12 +14,12 @@ import 'package:provider/provider.dart';
 import 'package:food_insta/screens/root_app/create_post/create_post_screen.dart';
 import 'package:food_insta/screens/root_app/qr_code/scan_qr.dart';
 
+int pageIndex = 0;
+
 class RootApp extends StatefulWidget {
   @override
   _RootAppState createState() => _RootAppState();
 }
-
-int pageIndex = 0;
 
 class _RootAppState extends State<RootApp> {
   @override

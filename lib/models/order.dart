@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:food_insta/theme.dart';
+
 enum ORDERSTATUS { PENDING, APPROVED, REJECTED, COMPLETED }
 
 class Order {
@@ -25,4 +28,35 @@ class Order {
   //   data['image'] = this.image;
   //   return data;
   // }
+
+  String toLabel(ORDERSTATUS orderstatus) {
+    switch (orderStatus) {
+      case ORDERSTATUS.APPROVED:
+        return 'Approved';
+      case ORDERSTATUS.COMPLETED:
+        return 'Completed';
+      case ORDERSTATUS.REJECTED:
+        return 'Rejected';
+      case ORDERSTATUS.PENDING:
+        return 'Pending';
+    }
+    return 'Pending';
+  }
+
+  Color getOrderStatusColor(ORDERSTATUS orderstatus) {
+    switch (orderStatus) {
+      case ORDERSTATUS.APPROVED:
+        return Styles.customApprovedButtonColor;
+
+      case ORDERSTATUS.COMPLETED:
+        return Styles.customRejectedButtonColor;
+
+      case ORDERSTATUS.REJECTED:
+        return Styles.customRejectedButtonColor;
+
+      case ORDERSTATUS.PENDING:
+        return Styles.customRejectedButtonColor;
+    }
+    return Styles.customRejectedButtonColor;
+  }
 }
