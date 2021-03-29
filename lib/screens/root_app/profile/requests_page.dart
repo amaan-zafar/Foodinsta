@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/custom_alert.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
@@ -55,11 +56,13 @@ class _RequestsPageState extends State<RequestsPage> {
                       ),
                       CustomIconButton(
                         onPressed: () {
-                          setState(() {});
+                          showAlert(context, 'DELETE ALL REQUESTS',
+                                  'Are you sure you want to delete all requests?')
+                              .show();
                         },
                         icon: Icon(
                           MdiIcons.deleteEmpty,
-                          color: Styles.iconColor,
+                          color: Styles.customDeclineButtonColor,
                         ),
                       ),
                     ],
@@ -109,20 +112,16 @@ class _RequestsPageState extends State<RequestsPage> {
                                 SizedBox(
                                   width: 8,
                                 ),
-                                IconButton(
-                                    iconSize: 24,
-                                    icon: Icon(
-                                      Icons.check_circle,
-                                      color: Styles.customApprovedButtonColor,
-                                    ),
-                                    onPressed: () {}),
-                                IconButton(
-                                    iconSize: 24,
-                                    icon: Icon(
-                                      Icons.cancel,
-                                      color: Styles.customDeclineButtonColor,
-                                    ),
-                                    onPressed: () {}),
+                                Icon(
+                                  Icons.check_circle,
+                                  size: 24,
+                                  color: Styles.customApprovedButtonColor,
+                                ),
+                                Icon(
+                                  Icons.cancel,
+                                  size: 24,
+                                  color: Styles.customDeclineButtonColor,
+                                ),
                               ],
                             )
                           ],

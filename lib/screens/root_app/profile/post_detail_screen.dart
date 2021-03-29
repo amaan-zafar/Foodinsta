@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/components/custom_alert.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
-import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/item_card.dart';
-import 'package:food_insta/components/user_type_label.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:food_insta/screens/root_app/profile/qrcode_page.dart';
 import 'package:food_insta/screens/root_app/profile/requests_page.dart';
 import 'package:food_insta/theme.dart';
@@ -13,6 +13,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class PostDetail extends StatelessWidget {
   String randomImg = 'https://picsum.photos/250?image=9';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +68,10 @@ class PostDetail extends StatelessWidget {
                       right: 44,
                       top: 36,
                       child: CustomIconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showAlert(context, 'DELETE POST',
+                              'Are you sure you want to delete the post');
+                        },
                         icon: Icon(
                           MdiIcons.deleteEmpty,
                           color: Styles.customDeclineButtonColor,
