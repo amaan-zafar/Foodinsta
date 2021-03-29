@@ -4,6 +4,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
+import 'package:food_insta/components/item_card.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/screens/root_app/profile/qrcode_page.dart';
 import 'package:food_insta/screens/root_app/profile/requests_page.dart';
@@ -37,97 +38,45 @@ class PostDetail extends StatelessWidget {
               ),
 
               // Body
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 18, 24, 8),
-                child: CustomAppCard(
-                  width: double.infinity,
+              Expanded(
+                  child: SingleChildScrollView(
+                child: Stack(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            height: 220,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://picsum.photos/250?image=9'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            right: 12,
-                            top: 4,
-                            child: CustomIconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                MdiIcons.deleteEmpty,
-                                color: Styles.customDeclineButtonColor,
-                              ),
-                            ),
-                          )
-                        ],
+                    ItemCard(children: [
+                      SizedBox(height: 16),
+                      CustomTextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => RequestsPage()));
+                        },
+                        textOnButton: 'Show requests',
+                        color: Styles.customRequestButtonColor,
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(MdiIcons.accountGroup,
-                            color: Styles.blueIconColor),
-                        Text(
-                          '36',
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              fontWeight: FontWeight.w500, fontSize: 16),
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Icon(MdiIcons.weight, color: Styles.blueIconColor),
-                        Text(
-                          '50kg',
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              fontWeight: FontWeight.w500, fontSize: 16),
-                        ),
-                        SizedBox(
-                          width: 22,
-                        ),
-                        Text(
-                          '6 hours ago',
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              fontWeight: FontWeight.w500, fontSize: 12),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      child: Text(
-                        'ajfdoiajoisdjfoiakjdjfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.caption,
+                      CustomTextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => QRCodePage()));
+                        },
+                        textOnButton: 'Show QR code',
+                        color: Styles.iconColor,
                       ),
-                    ),
-                    CustomTextButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => RequestsPage()));
-                      },
-                      textOnButton: 'Show requests',
-                      color: Styles.customRequestButtonColor,
-                    ),
-                    CustomTextButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => QRCodePage()));
-                      },
-                      textOnButton: 'Show QR code',
-                      color: Styles.iconColor,
-                    ),
+                    ]),
+                    Positioned(
+                      right: 44,
+                      top: 36,
+                      child: CustomIconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          MdiIcons.deleteEmpty,
+                          color: Styles.customDeclineButtonColor,
+                        ),
+                      ),
+                    )
                   ],
                 ),
-              ),
+              ))
             ],
           ),
         )
