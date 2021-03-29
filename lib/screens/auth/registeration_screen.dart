@@ -236,30 +236,31 @@ class _RegistrationFormState extends State<RegistrationForm> {
               child: CustomTextButton(
                 highlightColor: Colors.lightBlue,
                 onPressed: () {
-                  if (_formKey.currentState.validate() &&
-                      isChecked &&
-                      cityValue != null) {
-                    _formKey.currentState.save();
-                    controller
-                        .register(
-                            UserObject(
-                              name: name,
-                              address: address,
-                              city: cityValue,
-                              email: email,
-                              id: id,
-                              profileImage: null,
-                              isVol: isVolunteer,
-                              idPhoto: null,
-                              phone: phone,
-                              orgId: selectedNgo != null
-                                  ? selectedNgo.staticId
-                                  : null,
-                              regisNo: regisNo,
-                            ),
-                            userType)
-                        .whenComplete(() => _navigateToRootApp(context));
-                  }
+                  // if (_formKey.currentState.validate() &&
+                  //     isChecked &&
+                  //     cityValue != null) {
+                  //   _formKey.currentState.save();
+                  //   controller
+                  //       .register(
+                  //           UserObject(
+                  //             name: name,
+                  //             address: address,
+                  //             city: cityValue,
+                  //             email: email,
+                  //             id: id,
+                  //             profileImage: null,
+                  //             isVol: isVolunteer,
+                  //             idPhoto: null,
+                  //             phone: phone,
+                  //             orgId: selectedNgo != null
+                  //                 ? selectedNgo.staticId
+                  //                 : null,
+                  //             regisNo: regisNo,
+                  //           ),
+                  //           userType)
+                  //       .whenComplete(() => _navigateToRootApp(context));
+                  // }
+                  _navigateToRootApp(context);
                 },
                 textOnButton: Constants.REGISTER_TEXT,
                 color: Styles.buttonColor2,
@@ -338,6 +339,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           child: Expanded(
               flex: 2,
               child: Card(
+                elevation: 0.0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
                 color: darkThemeProvider.darkTheme
@@ -378,6 +380,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   Widget _buildCSCPicker(DarkThemeProvider darkThemeProvider) {
     return Card(
+      elevation: 0.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       color:
           darkThemeProvider.darkTheme ? Styles.black2 : Styles.textFieldColor,

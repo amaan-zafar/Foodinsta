@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  String city;
+  String city = 'Patna';
   List<String> cities = ['Patna', 'Delhi', 'Patiala', 'Agra'];
 
   @override

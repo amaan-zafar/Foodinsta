@@ -45,12 +45,17 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   # flutter_google_places: ^0.2.8
   # google_maps_webservice: ^0.0.19
-
   # For converting coordinates into address and vice-versa
   geocoder: ^0.2.1
   # To get current location
   geolocator: ^7.0.1
   url_launcher: ^6.0.3
+  # # To generate QRCode
+  # barcode_widget: ^2.0.1
+  # To scan qr
+  qrscan: ^0.2.22
+  # To generate qr
+  qr_flutter: ^4.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

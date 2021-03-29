@@ -22,7 +22,7 @@ class CustomAppCard extends StatelessWidget {
         ],
       ),
       child: Card(
-        elevation: 0,
+        elevation: 0.0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),

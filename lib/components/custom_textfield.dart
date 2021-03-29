@@ -34,6 +34,7 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Card(
+          elevation: 0.0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           color: darkThemeProvider.darkTheme
