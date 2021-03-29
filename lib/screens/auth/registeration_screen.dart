@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
-import 'package:food_insta/components/custom_dropdown.dart';
 import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
@@ -235,30 +234,30 @@ class _RegistrationFormState extends State<RegistrationForm> {
               child: CustomTextButton(
                 highlightColor: Colors.lightBlue,
                 onPressed: () {
-                  // if (_formKey.currentState.validate() &&
-                  //     isChecked &&
-                  //     cityValue != null) {
-                  //   _formKey.currentState.save();
-                  //   controller
-                  //       .register(
-                  //           UserObject(
-                  //             name: name,
-                  //             address: address,
-                  //             city: cityValue,
-                  //             email: email,
-                  //             id: id,
-                  //             profileImage: null,
-                  //             isVol: isVolunteer,
-                  //             idPhoto: null,
-                  //             phone: phone,
-                  //             orgId: selectedNgo != null
-                  //                 ? selectedNgo.staticId
-                  //                 : null,
-                  //             regisNo: regisNo,
-                  //           ),
-                  //           userType)
-                  //       .whenComplete(() => _navigateToRootApp(context));
-                  // }
+                  if (_formKey.currentState.validate() &&
+                      isChecked &&
+                      cityValue != null) {
+                    _formKey.currentState.save();
+                    controller
+                        .register(
+                            UserObject(
+                              name: name,
+                              address: address,
+                              city: cityValue,
+                              email: email,
+                              id: id,
+                              profileImage: null,
+                              isVol: isVolunteer,
+                              idPhoto: null,
+                              phone: phone,
+                              orgId: selectedNgo != null
+                                  ? selectedNgo.staticId
+                                  : null,
+                              regisNo: regisNo,
+                            ),
+                            userType)
+                        .whenComplete(() => _navigateToRootApp(context));
+                  }
                   _navigateToRootApp(context);
                 },
                 textOnButton: Constants.REGISTER_TEXT,
