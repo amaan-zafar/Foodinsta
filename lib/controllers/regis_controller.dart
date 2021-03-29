@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/models/app_types.dart';
 import 'package:food_insta/repository/registration_repo.dart';
 
 enum RegistrationState { Initial, Loading, Loaded }

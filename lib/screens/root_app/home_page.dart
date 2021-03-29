@@ -4,7 +4,7 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
-import 'package:food_insta/models/dark_theme_provder.dart';
+import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/screens/root_app/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;

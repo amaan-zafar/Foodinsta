@@ -6,7 +6,7 @@ import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/models/dark_theme_provder.dart';
+import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/theme.dart';

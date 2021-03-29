@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
+import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/theme.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -139,6 +140,12 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
+  Future<void> _goToLocation(double lat, double lng) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(lat, lng), zoom: 18, bearing: 45.0, tilt: 50.0)));
+  }
+
   Widget _boxes(String _image, double lat, double lng, String restaurantName) {
     return GestureDetector(
       onTap: () {
@@ -196,66 +203,14 @@ class _MapPageState extends State<MapPage> {
         ),
         SizedBox(height: 5.0),
         Container(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-                child: Text(
-              "4.1",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 18.0,
-              ),
-            )),
-            Container(
-              child: Icon(
-                FontAwesomeIcons.solidStar,
-                color: Colors.amber,
-                size: 15.0,
-              ),
-            ),
-            Container(
-              child: Icon(
-                FontAwesomeIcons.solidStar,
-                color: Colors.amber,
-                size: 15.0,
-              ),
-            ),
-            Container(
-              child: Icon(
-                FontAwesomeIcons.solidStar,
-                color: Colors.amber,
-                size: 15.0,
-              ),
-            ),
-            Container(
-              child: Icon(
-                FontAwesomeIcons.solidStar,
-                color: Colors.amber,
-                size: 15.0,
-              ),
-            ),
-            Container(
-              child: Icon(
-                FontAwesomeIcons.solidStarHalf,
-                color: Colors.amber,
-                size: 15.0,
-              ),
-            ),
-            Container(
-                child: Text(
-              "(946)",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 18.0,
-              ),
-            )),
-          ],
+            child: RatingIndicator(
+          rating: 4.5,
+          itemSize: 18,
         )),
         SizedBox(height: 5.0),
         Container(
             child: Text(
-          "American \u00B7 \u0024\u0024 \u00B7 1.6 mi",
+          "50 kgs \u00B7 6 hours ago",
           style: TextStyle(
             color: Colors.black54,
             fontSize: 18.0,
@@ -264,7 +219,7 @@ class _MapPageState extends State<MapPage> {
         SizedBox(height: 5.0),
         Container(
             child: Text(
-          "Closed \u00B7 Opens 17:00 Thu",
+          "36 pending requests",
           style: TextStyle(
               color: Colors.black54,
               fontSize: 18.0,
@@ -274,35 +229,29 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  Future<void> _goToLocation(double lat, double lng) async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(lat, lng))));
-  }
-
-  Widget _buildFabs() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Align(
-        alignment: Alignment.topRight,
-        child: Column(
-          children: [
-            FloatingActionButton(
-              onPressed: () => _onMapTypeButtonPressed(),
-              materialTapTargetSize: MaterialTapTargetSize.padded,
-              backgroundColor: Colors.green,
-              child: const Icon(Icons.map, size: 36.0),
-            ),
-            SizedBox(height: 16.0),
-            FloatingActionButton(
-              onPressed: _onAddMarkerButtonPressed,
-              materialTapTargetSize: MaterialTapTargetSize.padded,
-              backgroundColor: Colors.green,
-              child: const Icon(Icons.add_location, size: 36.0),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildFabs() {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(16.0),
+  //     child: Align(
+  //       alignment: Alignment.topRight,
+  //       child: Column(
+  //         children: [
+  //           FloatingActionButton(
+  //             onPressed: () => _onMapTypeButtonPressed(),
+  //             materialTapTargetSize: MaterialTapTargetSize.padded,
+  //             backgroundColor: Colors.green,
+  //             child: const Icon(Icons.map, size: 36.0),
+  //           ),
+  //           SizedBox(height: 16.0),
+  //           FloatingActionButton(
+  //             onPressed: _onAddMarkerButtonPressed,
+  //             materialTapTargetSize: MaterialTapTargetSize.padded,
+  //             backgroundColor: Colors.green,
+  //             child: const Icon(Icons.add_location, size: 36.0),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

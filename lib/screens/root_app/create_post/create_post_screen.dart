@@ -135,8 +135,9 @@ class _CreatePostState extends State<CreatePost> {
               enabled: false,
               onChanged: (value) {},
               keyboardType: TextInputType.streetAddress,
-              hintText: controller.loadingStatus == LoadingStatus.Initial ||
-                      controller.loadingStatus == LoadingStatus.Loading
+              hintText: controller.loadingStatus ==
+                          CurrentLocationStatus.Initial ||
+                      controller.loadingStatus == CurrentLocationStatus.Loading
                   ? 'Pickup Location'
                   : '${controller.firstAddress.subLocality}, ${controller.firstAddress.locality}',
               validator: (value) {
@@ -146,7 +147,7 @@ class _CreatePostState extends State<CreatePost> {
           ),
           Expanded(
               flex: 1,
-              child: controller.loadingStatus == LoadingStatus.Initial
+              child: controller.loadingStatus == CurrentLocationStatus.Initial
                   ? IconButton(
                       icon: Icon(
                         MdiIcons.crosshairsGps,
@@ -155,7 +156,7 @@ class _CreatePostState extends State<CreatePost> {
                       onPressed: () {
                         controller.setCurrentLocation();
                       })
-                  : controller.loadingStatus == LoadingStatus.Loading
+                  : controller.loadingStatus == CurrentLocationStatus.Loading
                       ? Center(child: CircularProgressIndicator())
                       : Icon(
                           MdiIcons.mapMarkerCheck,

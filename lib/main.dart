@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/controllers/ngo_list_controller.dart';
 import 'package:food_insta/controllers/regis_controller.dart';
-import 'package:food_insta/models/dark_theme_provder.dart';
+import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/repository/auth_repo.dart';
 import 'package:food_insta/repository/ngo_list_repo.dart';
 import 'package:food_insta/repository/registration_repo.dart';
@@ -19,7 +19,7 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:food_insta/controllers/location_controller.dart';
 
-import 'models/dark_theme_provder.dart';
+import 'controllers/dark_theme_provder.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
