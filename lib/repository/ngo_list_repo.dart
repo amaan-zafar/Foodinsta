@@ -7,12 +7,10 @@ import 'package:food_insta/utils/Failure.dart';
 import 'package:food_insta/utils/authentication.dart';
 
 class NgoListRepository {
-  final FlutterSecureStorage _secureStorage;
   final CustomHttpClient _customHttpClient;
 
   NgoListRepository(
     this._customHttpClient,
-    this._secureStorage,
   );
 
   Future<List<Ngo>> getNgoList() async {

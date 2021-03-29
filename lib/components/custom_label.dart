@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/theme.dart';
 
 class CustomLabel extends StatelessWidget {
   final String label;

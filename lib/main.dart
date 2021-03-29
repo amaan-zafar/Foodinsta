@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -45,7 +44,7 @@ Future<void> main() async {
       RegistrationRepository(_customHttpClient, _secureStorage);
 
   final NgoListRepository ngoListRepository =
-      NgoListRepository(_customHttpClient, _secureStorage);
+      NgoListRepository(_customHttpClient);
 
   final PostRepository postRepo = PostRepository(_customHttpClient);
 

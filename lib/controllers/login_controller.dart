@@ -10,7 +10,7 @@ class LoginController with ChangeNotifier {
   int status = 1;
   String email;
 
-  LoginController(this.authRepository) {}
+  LoginController(this.authRepository);
 
   Future<String> loginWithGoogle() async {
     loginState = LoginState.Loading;

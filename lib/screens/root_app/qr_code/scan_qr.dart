@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/screens/root_app/qr_code/deal_completed.dart';
-import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -22,7 +19,6 @@ class _ScanQRState extends State<ScanQR> {
   String actualQrResult = 'Thanks for using our app.';
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(

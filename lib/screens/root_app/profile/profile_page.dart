@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
-import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/profile_card.dart';
-import 'package:food_insta/components/rating_indicator.dart';
-import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/components/order_status_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/dark_theme_provder.dart';
