@@ -266,3 +266,50 @@ var myPostJson = [
         "https://images.unsplash.com/photo-1567337710282-00832b415979?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=888&q=80"
   },
 ];
+
+var requestsJson = [
+  {
+    "member_type": "NGO",
+    "rating": 4.0,
+    "name": "NSS",
+    "lat": 28.53390839372382,
+    "lng": 77.61829046854496,
+    "accepted": false,
+    "status": 0,
+    "dp":
+        "https://lh3.googleusercontent.com/QBUjcghpZYfVBfz39U-b2NTWq6530mP7cIHYS9iHWPDmUIyhZB8Iapkb1Ijc82D1nsZ1fW3NXdsS07Jl7y-rMEmtN3A=w1000",
+  },
+  {
+    "member_type": "Business",
+    "rating": 5.0,
+    "name": "Nirman",
+    "lat": 28.69390839372382,
+    "lng": 77.51829046854496,
+    "accepted": false,
+    "status": 0,
+    "dp":
+        "https://lh3.googleusercontent.com/QBUjcghpZYfVBfz39U-b2NTWq6530mP7cIHYS9iHWPDmUIyhZB8Iapkb1Ijc82D1nsZ1fW3NXdsS07Jl7y-rMEmtN3A=w1000",
+  },
+  {
+    "member_type": "Individual",
+    "rating": 4.5,
+    "name": "Rahul",
+    "lat": 27.63390839372382,
+    "lng": 77.41829046854496,
+    "accepted": false,
+    "status": 0,
+    "dp":
+        "https://images.unsplash.com/photo-1500048993953-d23a436266cf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1049&q=80",
+  },
+  {
+    "member_type": "Individual",
+    "rating": 5.0,
+    "name": "Kunal",
+    "lat": 28.69390839372382,
+    "lng": 77.51829046854496,
+    "accepted": false,
+    "status": 0,
+    "dp":
+        "https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+  },
+];

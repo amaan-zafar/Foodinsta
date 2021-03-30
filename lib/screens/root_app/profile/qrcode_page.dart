@@ -7,7 +7,7 @@ import 'package:food_insta/constants.dart' as Constants;
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCodePage extends StatelessWidget {
-  String textToCode = 'Thank you for using FoodInsta';
+  String textToCode = 'Thank you for using Foodinsta';
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;

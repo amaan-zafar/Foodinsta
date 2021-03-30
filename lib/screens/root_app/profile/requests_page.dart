@@ -5,6 +5,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/models/post.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -57,8 +58,15 @@ class _RequestsPageState extends State<RequestsPage> {
                       CustomIconButton(
                         onPressed: () {
                           showAlert(context, 'DELETE ALL REQUESTS',
-                                  'Are you sure you want to delete all requests?')
-                              .show();
+                              'Are you sure you want to delete all requests?',
+                              () {
+                            setState(() {
+                              requestsJson.clear();
+                              Navigator.pop(context);
+                            });
+                          }, () {
+                            Navigator.pop(context);
+                          }).show();
                         },
                         icon: Icon(
                           MdiIcons.deleteEmpty,
@@ -81,47 +89,81 @@ class _RequestsPageState extends State<RequestsPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RequestApprovalPage()));
+                                  builder: (context) => RequestApprovalPage(
+                                        index: index,
+                                      )));
                         },
                         child: CustomAppCard(
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/placeholder_img.png'),
-                                  radius: 24,
+                                  backgroundImage: requestsJson[index]['dp'] ==
+                                          null
+                                      ? AssetImage('assets/placeholder_img.png')
+                                      : NetworkImage(requestsJson[index]['dp']),
+                                  radius: 28,
                                 ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'NIRMAN',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1
-                                            .copyWith(fontSize: 16),
-                                      ),
-                                      UserTypeLabel(
-                                        label: 'Business',
-                                      ),
-                                    ],
+                                SizedBox(width: 12),
+                                Column(
+                                  children: [
+                                    Text(
+                                      requestsJson[index]['name'],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1
+                                          .copyWith(fontSize: 18),
+                                    ),
+                                    UserTypeLabel(
+                                      horizontalPadding: 12,
+                                      fontSize: 12,
+                                      label: requestsJson[index]['member_type'],
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                Visibility(
+                                  visible: requestsJson[index]['status'] == 0,
+                                  child: CustomIconButton(
+                                    color: Styles.customApprovedButtonColor,
+                                    height: 42,
+                                    elevation: 0,
+                                    onPressed: () {
+                                      setState(() {
+                                        requestsJson[index]['status'] = 1;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      MdiIcons.check,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 8,
+                                Visibility(
+                                  visible: requestsJson[index]['status'] == 0,
+                                  child: CustomIconButton(
+                                    color: Styles.customDeclineButtonColor,
+                                    height: 42,
+                                    elevation: 0,
+                                    onPressed: () {
+                                      setState(() {
+                                        requestsJson.removeAt(index);
+                                      });
+                                    },
+                                    icon: Icon(
+                                      MdiIcons.close,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
-                                Icon(
-                                  Icons.check_circle,
-                                  size: 24,
-                                  color: Styles.customApprovedButtonColor,
-                                ),
-                                Icon(
-                                  Icons.cancel,
-                                  size: 24,
-                                  color: Styles.customDeclineButtonColor,
-                                ),
+                                Visibility(
+                                    visible: requestsJson[index]['status'] != 0,
+                                    child: Icon(
+                                      MdiIcons.checkDecagram,
+                                      color: Styles.customApprovedButtonColor,
+                                      size: 28,
+                                    ))
                               ],
                             )
                           ],
@@ -129,7 +171,7 @@ class _RequestsPageState extends State<RequestsPage> {
                       );
                     },
                     separatorBuilder: (_, i) => SizedBox(height: 12),
-                    itemCount: 10),
+                    itemCount: requestsJson.length),
               ))
             ],
           ))

@@ -37,18 +37,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // String _name(dynamic user) {
-  //   return user['name']['first'];
-  // }
-
-  // String _location(dynamic user) {
-  //   return user['location']['country'];
-  // }
-
-  // String _age(Map<dynamic, dynamic> user) {
-  //   return "Age: " + user['dob']['age'].toString();
-  // }
-
   Future<void> _getData() async {
     setState(() {
       fetchUsers();

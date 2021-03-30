@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
+import 'package:food_insta/components/user_profile_card.dart';
 import 'package:food_insta/components/profile_card.dart';
 import 'package:food_insta/components/order_status_label.dart';
 import 'package:food_insta/constants.dart' as Constants;
@@ -15,6 +16,7 @@ import 'package:food_insta/models/order.dart';
 import 'package:food_insta/models/post.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -80,7 +82,8 @@ class _ProfilePageState extends State<ProfilePage> {
         // Body
         Expanded(
           child: SingleChildScrollView(
-            child: ProfileCard(
+            physics: BouncingScrollPhysics(),
+            child: UserProfileCard(
               userObject: _userObject,
               userType: _userType,
               children: [
@@ -143,8 +146,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.circular(32),
                 child: ListTile(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PostDetail()));
+                    myPostJson[index]['status'] == 0
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostDetail(index: index)))
+                        : myPostJson[index]['status'] == 1
+                            ? Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "Deal Completed! Post is not available now."),
+                              ))
+                            : Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text("Post has been removed")));
                   },
                   tileColor: tileColor,
                   leading: ClipRRect(
@@ -202,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ? MdiIcons.qrcode
                           : myPostJson[index]['status'] == 1
                               ? MdiIcons.check
-                              : Icons.cancel,
+                              : MdiIcons.close,
                       color: Colors.white,
                     ),
                   ),

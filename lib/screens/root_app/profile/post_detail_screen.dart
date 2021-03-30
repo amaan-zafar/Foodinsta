@@ -5,12 +5,22 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/item_card.dart';
+import 'package:food_insta/models/post.dart';
 import 'package:food_insta/screens/root_app/profile/qrcode_page.dart';
 import 'package:food_insta/screens/root_app/profile/requests_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class PostDetail extends StatelessWidget {
+class PostDetail extends StatefulWidget {
+  final index;
+
+  PostDetail({Key key, this.index}) : super(key: key);
+
+  @override
+  _PostDetailState createState() => _PostDetailState();
+}
+
+class _PostDetailState extends State<PostDetail> {
   String randomImg = 'https://picsum.photos/250?image=9';
 
   @override
@@ -40,9 +50,10 @@ class PostDetail extends StatelessWidget {
               // Body
               Expanded(
                   child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Stack(
                   children: [
-                    ItemCard(children: [
+                    ItemCard(index: widget.index, json: myPostJson, children: [
                       SizedBox(height: 16),
                       CustomTextButton(
                         onPressed: () {
@@ -69,7 +80,16 @@ class PostDetail extends StatelessWidget {
                       child: CustomIconButton(
                         onPressed: () {
                           showAlert(context, 'DELETE POST',
-                              'Are you sure you want to delete the post');
+                              'Are you sure you want to delete the post', () {
+                            setState(() {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+
+                              myPostJson.removeAt(widget.index);
+                            });
+                          }, () {
+                            Navigator.pop(context);
+                          });
                         },
                         icon: Icon(
                           MdiIcons.deleteEmpty,

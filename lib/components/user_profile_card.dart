@@ -4,13 +4,17 @@ import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/models/user.dart';
 
-class ProfileCard extends StatelessWidget {
+class UserProfileCard extends StatelessWidget {
   final List<Widget> children;
-  final json;
-  final int index;
+  final UserObject userObject;
+  final USERTYPE userType;
 
-  const ProfileCard({Key key, this.children, this.json, this.index})
-      : super(key: key);
+  const UserProfileCard({
+    Key key,
+    this.children,
+    this.userObject,
+    this.userType,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,18 +24,14 @@ class ProfileCard extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundImage:
-                // json != null
-                //     ? NetworkImage(json[index]['dp'])
-                //     : userObject == null || userObject.profileImage == null
-                //         ?
-                AssetImage('assets/placeholder_img.png')
-            // : FileImage(userObject.profileImage)
-            ,
+                userObject == null || userObject.profileImage == null
+                    ? AssetImage('assets/placeholder_img.png')
+                    : FileImage(userObject.profileImage),
             radius: 48,
           ),
           SizedBox(height: 12),
           Text(
-            json != null ? json[index]['name'] : 'Aggarwal Sweets',
+            userObject == null ? 'Aggarwal Sweets' : userObject.name,
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SizedBox(height: 10),
@@ -43,9 +43,9 @@ class ProfileCard extends StatelessWidget {
                 Icon(Icons.home),
                 Flexible(
                   child: Text(
-                    json == null
+                    userObject == null
                         ? 'A-41, Sector 47 Gurgaon, Haryana 1010101'
-                        : 'Pilani, Rajaasthan, India',
+                        : userObject.address,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
@@ -58,23 +58,20 @@ class ProfileCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.phone),
-              Text(json == null ? '+91-9313093130' : '+91-9313093130',
+              Text(userObject == null ? '+91-9313093130' : userObject.phone,
                   style: Theme.of(context).textTheme.bodyText1),
             ],
           ),
-          SizedBox(height: 10),
-          RatingIndicator(
-            rating:
-                // json != null && json == null ? json[index]['rating'] :
-                4.5,
-            itemSize: 22,
-          ),
+          // SizedBox(height: 10),
+          // RatingIndicator(
+          //   rating:
+          //       // json != null && json == null ? json[index]['rating'] :
+          //       4.5,
+          //   itemSize: 22,
+          // ),
           SizedBox(height: 12),
           UserTypeLabel(
-            // userType: userType,
-            label: json != null && json == null
-                ? json[index]['member_type']
-                : 'Business',
+            userType: userType,
             fontSize: 18,
             horizontalPadding: 32,
           ),
