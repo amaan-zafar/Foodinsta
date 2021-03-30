@@ -27,11 +27,9 @@ class ProfileCard extends StatelessWidget {
         width: double.infinity,
         children: [
           CircleAvatar(
-            backgroundImage:
-                //  json != null
-                //     ? NetworkImage(json[index]['img_url'])
-                // :
-                userObject == null || userObject.profileImage == null
+            backgroundImage: json != null
+                ? NetworkImage(json[index]['dp'])
+                : userObject == null || userObject.profileImage == null
                     ? AssetImage('assets/placeholder_img.png')
                     : FileImage(userObject.profileImage),
             radius: 48,
@@ -45,18 +43,26 @@ class ProfileCard extends StatelessWidget {
                     : userObject.name,
             style: Theme.of(context).textTheme.subtitle1,
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              userObject == null
-                  ? 'A-41, Sector 47 Gurgaon, Haryana 1010101'
-                  : userObject.address,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.home),
+                Flexible(
+                  child: Text(
+                    userObject == null
+                        ? 'A-41, Sector 47 Gurgaon, Haryana 1010101'
+                        : userObject.address,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+              ],
             ),
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -65,7 +71,7 @@ class ProfileCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1)
             ],
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 10),
           RatingIndicator(
             rating: json != null ? json[index]['rating'] : 4.5,
             itemSize: 22,

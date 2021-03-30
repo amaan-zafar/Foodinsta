@@ -101,7 +101,8 @@ class _ProfilePageState extends State<ProfilePage> {
         darkThemeProvider.darkTheme ? Styles.black2 : Styles.tileColorLight;
     return DefaultTabController(
       length: 2,
-      initialIndex: 0, // Change it according to user type
+      initialIndex:
+          _userType == USERTYPE.NGO ? 1 : 0, // Change it according to user type
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -152,26 +153,33 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: 48,
                       height: 48,
                       child: Image(
-                        image: AssetImage('assets/food_large.png'),
+                        image: myPostJson[index]['img_url'] == null
+                            ? AssetImage('assets/food_large.png')
+                            : NetworkImage(myPostJson[index]['img_url']),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  title: Row(
-                    children: [
-                      Icon(MdiIcons.accountGroup,
-                          color: Styles.customRequestButtonColor),
-                      SizedBox(width: 8),
-                      Text('36'),
-                      Spacer(),
-                    ],
-                  ),
+                  title: myPostJson[index]['status'] == 0
+                      ? Row(
+                          children: [
+                            Icon(MdiIcons.accountGroup,
+                                color: Styles.customRequestButtonColor),
+                            SizedBox(width: 8),
+                            Text(myPostJson[index]['num_of_requests']
+                                .toString()),
+                            Spacer(),
+                          ],
+                        )
+                      : myPostJson[index]['status'] == 1
+                          ? Text('Finished')
+                          : Text('Removed'),
                   subtitle: Row(
                     children: [
                       Icon(MdiIcons.weight, color: Styles.blueIconColor),
                       SizedBox(width: 8),
                       Text(
-                        '50 kg',
+                        myPostJson[index]['weight'],
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1
@@ -181,12 +189,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   trailing: CustomIconButton(
-                    color: Styles.iconColor,
+                    color: myPostJson[index]['status'] == 0
+                        ? Styles.iconColor
+                        : myPostJson[index]['status'] == 1
+                            ? Styles.customApprovedButtonColor
+                            : Styles.customDeclineButtonColor,
                     height: double.infinity,
                     elevation: 0,
                     onPressed: () {},
                     icon: Icon(
-                      MdiIcons.qrcode,
+                      myPostJson[index]['status'] == 0
+                          ? MdiIcons.qrcode
+                          : myPostJson[index]['status'] == 1
+                              ? MdiIcons.check
+                              : Icons.cancel,
                       color: Colors.white,
                     ),
                   ),
@@ -194,7 +210,7 @@ class _ProfilePageState extends State<ProfilePage> {
               );
             },
             separatorBuilder: (_, i) => SizedBox(height: 12),
-            itemCount: 10));
+            itemCount: myPostJson.length));
   }
 
   Widget buildOrdersTab(Color tileColor) {

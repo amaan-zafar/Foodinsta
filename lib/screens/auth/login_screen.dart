@@ -29,81 +29,86 @@ class _LoginPageState extends State<LoginPage> {
                 CustomAppBar(
                   centerTitle: true,
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                      12, Styles.cardTopPadding, 12, 0),
-                  child: CustomAppCard(
-                    children: [
-                      Container(
-                        height: 54,
-                        child: Center(
-                          child: Text(
-                            'Log in to your account',
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                        ),
-                      ),
-                      Consumer<LoginController>(
-                          builder: (context, controller, child) {
-                        if (controller.loginState == LoginState.Loading) {
-                          return CircularProgressIndicator();
-                        } else if (controller.loginState == LoginState.Loaded ||
-                            controller.loginState == LoginState.Initial) {
-                          return MaterialButton(
-                            height: 56,
-                            elevation: 0,
-                            color: Styles.buttonColor1,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                            onPressed: () async {
-                              await controller.loginWithGoogle();
-                              if (controller.status == 1) {
-                                //TODO: Change this shit
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => RootApp(),
-                                  ),
-                                );
-                              } else if (controller.status == 2) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => UserTypePage(),
-                                  ),
-                                );
-                              } else {
-                                //TODO: SHow error dialog
-                              }
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  MdiIcons.google,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                                SizedBox(width: 6),
-                                Text(
-                                  'Sign in with Google',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          12, Styles.cardTopPadding, 12, 0),
+                      child: CustomAppCard(
+                        children: [
+                          Container(
+                            height: 54,
+                            child: Center(
+                              child: Text(
+                                'Log in to your account',
+                                style: Theme.of(context).textTheme.headline2,
+                              ),
                             ),
-                          );
-                        } else
-                          return Container();
-                      }),
-                      SizedBox(
-                        height: 80,
+                          ),
+                          Consumer<LoginController>(
+                              builder: (context, controller, child) {
+                            if (controller.loginState == LoginState.Loading) {
+                              return CircularProgressIndicator();
+                            } else if (controller.loginState ==
+                                    LoginState.Loaded ||
+                                controller.loginState == LoginState.Initial) {
+                              return MaterialButton(
+                                height: 56,
+                                elevation: 0,
+                                color: Styles.buttonColor1,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                                onPressed: () async {
+                                  await controller.loginWithGoogle();
+                                  if (controller.status == 1) {
+                                    //TODO: Change this shit
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => RootApp(),
+                                      ),
+                                    );
+                                  } else if (controller.status == 2) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => UserTypePage(),
+                                      ),
+                                    );
+                                  } else {
+                                    //TODO: SHow error dialog
+                                  }
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      MdiIcons.google,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    SizedBox(width: 6),
+                                    Text(
+                                      'Sign in with Google',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else
+                              return Container();
+                          }),
+                          SizedBox(
+                            height: 80,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 48),
+                            child: Image(
+                              image: AssetImage('assets/login_img.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 48),
-                        child: Image(
-                          image: AssetImage('assets/login_img.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 )
               ],

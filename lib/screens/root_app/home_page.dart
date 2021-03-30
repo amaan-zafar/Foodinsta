@@ -150,7 +150,6 @@ class _HomePageState extends State<HomePage> {
                 });
               },
               items: cities.map((String value) {
-                print('hi $value');
                 return DropdownMenuItem<String>(
                   value: value,
                   child: new Text(
@@ -195,8 +194,10 @@ class _HomePageState extends State<HomePage> {
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.all(0),
                                   leading: CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/placeholder_img.png'),
+                                    backgroundImage: postJson == null
+                                        ? AssetImage(
+                                            'assets/placeholder_img.png')
+                                        : NetworkImage(postJson[index]['dp']),
                                     radius: 24,
                                   ),
                                   title: Text(
