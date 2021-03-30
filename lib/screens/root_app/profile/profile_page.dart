@@ -16,7 +16,6 @@ import 'package:food_insta/models/order.dart';
 import 'package:food_insta/models/post.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -228,47 +227,157 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildOrdersTab(Color tileColor) {
     return Container(
-        child: ListView.separated(
-            itemBuilder: (context, index) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(32),
-                child: ListTile(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OrderDetail(
-                                  orderstatus: ORDERSTATUS.APPROVED,
-                                )));
-                  },
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  tileColor: tileColor,
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage('assets/placeholder_img.png'),
-                    radius: 34,
-                  ),
-                  title: SizedBox(
-                    height: 28,
-                    child: Text(
-                      'Aggarwal Sweets',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          .copyWith(fontSize: 16),
-                    ),
-                  ),
-                  subtitle: Wrap(
-                    children: [
-                      OrderStatusLabel(
-                        orderstatus: ORDERSTATUS.COMPLETED,
-                      )
-                    ],
-                  ),
-                ),
-              );
+        child: ListView(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(32),
+          child: ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderDetail(
+                            orderstatus: ORDERSTATUS.APPROVED,
+                          )));
             },
-            separatorBuilder: (_, i) => SizedBox(height: 12),
-            itemCount: 10));
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            tileColor: tileColor,
+            leading: CircleAvatar(
+              backgroundImage: AssetImage('assets/placeholder_img.png'),
+              radius: 34,
+            ),
+            title: SizedBox(
+              height: 28,
+              child: Text(
+                'Punjabi Dhaba',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontSize: 16),
+              ),
+            ),
+            subtitle: Wrap(
+              children: [
+                OrderStatusLabel(
+                  orderstatus: ORDERSTATUS.COMPLETED,
+                )
+              ],
+            ),
+          ),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(32),
+          child: ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderDetail(
+                            orderstatus: ORDERSTATUS.APPROVED,
+                          )));
+            },
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            tileColor: tileColor,
+            leading: CircleAvatar(
+              backgroundImage: AssetImage('assets/placeholder_img.png'),
+              radius: 34,
+            ),
+            title: SizedBox(
+              height: 28,
+              child: Text(
+                'Haldirams',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontSize: 16),
+              ),
+            ),
+            subtitle: Wrap(
+              children: [
+                OrderStatusLabel(
+                  orderstatus: ORDERSTATUS.APPROVED,
+                )
+              ],
+            ),
+          ),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(32),
+          child: ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderDetail(
+                            orderstatus: ORDERSTATUS.PENDING,
+                          )));
+            },
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            tileColor: tileColor,
+            leading: CircleAvatar(
+              backgroundImage: AssetImage('assets/placeholder_img.png'),
+              radius: 34,
+            ),
+            title: SizedBox(
+              height: 28,
+              child: Text(
+                'Aggarwal Sweets',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontSize: 16),
+              ),
+            ),
+            subtitle: Wrap(
+              children: [
+                OrderStatusLabel(
+                  orderstatus: ORDERSTATUS.COMPLETED,
+                )
+              ],
+            ),
+          ),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(32),
+          child: ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderDetail(
+                            orderstatus: ORDERSTATUS.APPROVED,
+                          )));
+            },
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            tileColor: tileColor,
+            leading: CircleAvatar(
+              backgroundImage: AssetImage('assets/placeholder_img.png'),
+              radius: 34,
+            ),
+            title: SizedBox(
+              height: 28,
+              child: Text(
+                'Aggarwal Sweets',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontSize: 16),
+              ),
+            ),
+            subtitle: Wrap(
+              children: [
+                OrderStatusLabel(
+                  orderstatus: ORDERSTATUS.COMPLETED,
+                )
+              ],
+            ),
+          ),
+        )
+      ],
+    ));
   }
 }
