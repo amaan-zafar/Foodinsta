@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   bool userAuthorised = true;
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [
@@ -61,7 +60,6 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () async {
                                   await controller.loginWithGoogle();
                                   if (controller.status == 1) {
-                                    //TODO: Change this shit
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: (context) => RootApp(),
@@ -73,8 +71,6 @@ class _LoginPageState extends State<LoginPage> {
                                         builder: (context) => UserTypePage(),
                                       ),
                                     );
-                                  } else {
-                                    //TODO: SHow error dialog
                                   }
                                 },
                                 child: Row(

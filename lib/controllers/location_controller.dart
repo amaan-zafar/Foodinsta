@@ -27,6 +27,11 @@ class LocationController with ChangeNotifier {
     notifyListeners();
   }
 
+  // Future<Address> getAddressFromCoordinates(double lat, double lng) async {
+  //   Address address = await locationRepository.getAddress(lat, lng);
+  //   return address;
+  // }
+
   Future<Map> getCityCoordinates(String city) async {
     citySelected = city;
     coordinatesStatus = CityCoordinatesStatus.Loading;

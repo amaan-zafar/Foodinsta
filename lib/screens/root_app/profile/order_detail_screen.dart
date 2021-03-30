@@ -4,16 +4,15 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/item_card.dart';
+import 'package:food_insta/components/launcher_widgets.dart';
 import 'package:food_insta/components/profile_card.dart';
-import 'package:food_insta/models/order.dart';
-import 'package:food_insta/models/post.dart';
 import 'package:food_insta/theme.dart';
 
 class OrderDetail extends StatefulWidget {
-  final ORDERSTATUS orderstatus;
   final int index;
+  final json;
 
-  const OrderDetail({Key key, this.orderstatus, this.index}) : super(key: key);
+  const OrderDetail({Key key, this.index, this.json}) : super(key: key);
 
   @override
   _OrderDetailState createState() => _OrderDetailState();
@@ -47,20 +46,23 @@ class _OrderDetailState extends State<OrderDetail> {
               // Body
               Expanded(
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       ProfileCard(
-                        json: postJson,
+                        json: widget.json,
                         index: widget.index,
                       ),
                       ItemCard(
-                        json: postJson,
+                        json: widget.json,
                         index: widget.index,
                         children: [
                           Divider(),
-                          postJson[widget.index]['requested'] == false
-                              ? sendRequest(context)
-                              : pendingRequest(context),
+                          widget.json[widget.index]['status'] == 4
+                              ? reqNotSent(context)
+                              : widget.json[widget.index]['status'] == 1
+                                  ? approved(context)
+                                  : reqSent(context),
                         ],
                       )
                     ],
@@ -74,11 +76,11 @@ class _OrderDetailState extends State<OrderDetail> {
     ));
   }
 
-  Widget sendRequest(context) {
+  Widget reqNotSent(context) {
     return CustomTextButton(
       onPressed: () {
         setState(() {
-          postJson[widget.index]['requested'] = true;
+          widget.json[widget.index]['status'] = 0;
         });
       },
       textOnButton: 'Send Request',
@@ -86,7 +88,31 @@ class _OrderDetailState extends State<OrderDetail> {
     );
   }
 
-  Widget pendingRequest(context) {
+  Widget approved(context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            'Request Approved!',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            'Contact :',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ),
+        LauncherWidgets(
+          phone: '7870193349',
+        ),
+      ],
+    );
+  }
+
+  Widget reqSent(context) {
     return Column(
       children: [
         Padding(
@@ -99,7 +125,7 @@ class _OrderDetailState extends State<OrderDetail> {
         CustomTextButton(
           onPressed: () {
             setState(() {
-              postJson[widget.index]['requested'] = false;
+              widget.json[widget.index]['status'] = 4;
             });
           },
           textOnButton: 'Cancel Request',

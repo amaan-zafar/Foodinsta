@@ -5,7 +5,6 @@ import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/screens/root_app/qr_code/deal_completed.dart';
 import 'package:food_insta/theme.dart';
-import 'package:food_insta/constants.dart' as Constants;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 

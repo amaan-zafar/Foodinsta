@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:provider/provider.dart';
 

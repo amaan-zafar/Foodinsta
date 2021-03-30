@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/theme.dart';
 
 class CustomBackground extends StatelessWidget {

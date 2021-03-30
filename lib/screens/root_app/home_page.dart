@@ -7,14 +7,9 @@ import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/models/post.dart';
-import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/settings_page.dart';
 import 'package:food_insta/theme.dart';
-import 'package:food_insta/constants.dart' as Constants;
-import 'package:http/http.dart' as http;
-import 'package:food_insta/models/order.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'dart:convert';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 
 import 'package:provider/provider.dart';
@@ -26,10 +21,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _selectCity = false;
-  List<dynamic> _users = [];
 
   String city = 'Delhi';
-  List<String> cities = ['Patna', 'Delhi', 'Patiala', 'Agra'];
+  List<String> cities = ['Delhi', 'Patiala', 'Agra'];
 
   @override
   void initState() {
@@ -158,8 +152,8 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (_) => OrderDetail(
-                                      orderstatus: ORDERSTATUS.PENDING,
                                       index: index,
+                                      json: postJson,
                                     )));
                       },
                       child: Padding(
@@ -204,8 +198,8 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                                 builder: (_) => OrderDetail(
-                                      orderstatus: ORDERSTATUS.PENDING,
                                       index: index,
+                                      json: postJson,
                                     )));
                       },
                       child: ClipRRect(
@@ -238,8 +232,8 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(16)),
                           onPressed: () {
                             setState(() {
-                              postJson[index]['requested'] =
-                                  !postJson[index]['requested'];
+                              postJson[index]['status'] =
+                                  postJson[index]['status'] == 4 ? 0 : 4;
                             });
                           },
                           child: Row(
@@ -257,9 +251,11 @@ class _HomePageState extends State<HomePage> {
                                             color: Colors.white, fontSize: 13)),
                               ),
                               Text(
-                                postJson[index]['requested'] == false
+                                postJson[index]['status'] == 4
                                     ? 'Request'
-                                    : 'Requested',
+                                    : postJson[index]['status'] == 0
+                                        ? 'Requested'
+                                        : 'Request',
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle1

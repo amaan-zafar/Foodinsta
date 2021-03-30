@@ -55,6 +55,7 @@ class _RequestApprovalPageState extends State<RequestApprovalPage> {
               // Body
               Expanded(
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 48),
                     child: ProfileCard(
@@ -74,10 +75,22 @@ class _RequestApprovalPageState extends State<RequestApprovalPage> {
                           ),
                         ),
                         Visibility(
-                          visible: requestsJson[index]['status'] == -1,
+                          visible: requestsJson[index]['status'] == 0,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              IconButton(
+                                  iconSize: 48,
+                                  icon: Icon(
+                                    MdiIcons.check,
+                                    color: Styles.customApprovedButtonColor,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      requestsJson[index]['satus'] = 1;
+                                    });
+                                  }),
+                              SizedBox(width: 8),
                               IconButton(
                                   iconSize: 48,
                                   icon: Icon(
@@ -89,18 +102,15 @@ class _RequestApprovalPageState extends State<RequestApprovalPage> {
                                       requestsJson[index]['satus'] = -1;
                                     });
                                   }),
-                              SizedBox(width: 8),
-                              IconButton(
-                                  iconSize: 48,
-                                  icon: Icon(
-                                    MdiIcons.check,
-                                    color: Styles.customApprovedButtonColor,
-                                  ),
-                                  onPressed: () {}),
                             ],
                           ),
                         ),
-                        Text('Request Accepted!'),
+                        Visibility(
+                            visible: requestsJson[index]['satus'] == -1,
+                            child: Text('Request Accepted!')),
+                        Visibility(
+                            visible: requestsJson[index]['satus'] == 1,
+                            child: Text('Request Accepted!')),
                         Divider(),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),

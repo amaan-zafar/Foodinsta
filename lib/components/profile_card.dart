@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
-import 'package:food_insta/models/user.dart';
 
 class ProfileCard extends StatelessWidget {
   final List<Widget> children;
@@ -19,14 +18,9 @@ class ProfileCard extends StatelessWidget {
         width: double.infinity,
         children: [
           CircleAvatar(
-            backgroundImage:
-                // json != null
-                //     ? NetworkImage(json[index]['dp'])
-                //     : userObject == null || userObject.profileImage == null
-                //         ?
-                AssetImage('assets/placeholder_img.png')
-            // : FileImage(userObject.profileImage)
-            ,
+            backgroundImage: json != null
+                ? NetworkImage(json[index]['dp'])
+                : AssetImage('assets/placeholder_img.png'),
             radius: 48,
           ),
           SizedBox(height: 12),
@@ -45,7 +39,7 @@ class ProfileCard extends StatelessWidget {
                   child: Text(
                     json == null
                         ? 'A-41, Sector 47 Gurgaon, Haryana 1010101'
-                        : 'Pilani, Rajaasthan, India',
+                        : json[index]['address'],
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),

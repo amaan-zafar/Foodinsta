@@ -156,6 +156,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         Container(
             height: MediaQuery.of(context).size.height / 1.7,
             child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Form(
                 key: _formKey,
                 child: Column(

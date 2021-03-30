@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/user_profile_card.dart';
-import 'package:food_insta/components/profile_card.dart';
 import 'package:food_insta/components/order_status_label.dart';
-import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/models/user.dart';
@@ -227,18 +225,42 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildOrdersTab(Color tileColor) {
     return Container(
-        child: ListView(
-      children: [
-        ClipRRect(
+        child: ListView.builder(
+      itemCount: ordersJson.length,
+      itemBuilder: (context, index) {
+        ORDERSTATUS status;
+        switch (ordersJson[index]['status']) {
+          case 0:
+            status = ORDERSTATUS.PENDING;
+            break;
+          case 1:
+            status = ORDERSTATUS.APPROVED;
+            break;
+          case 2:
+            status = ORDERSTATUS.REJECTED;
+            break;
+          case 3:
+            status = ORDERSTATUS.COMPLETED;
+            break;
+
+          default:
+        }
+        return ClipRRect(
           borderRadius: BorderRadius.circular(32),
           child: ListTile(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderDetail(
-                            orderstatus: ORDERSTATUS.APPROVED,
-                          )));
+              status == ORDERSTATUS.COMPLETED
+                  ? Scaffold.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text("Deal Completed! Post is not available now."),
+                    ))
+                  : Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OrderDetail(
+                                index: index,
+                                json: ordersJson,
+                              )));
             },
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -250,7 +272,7 @@ class _ProfilePageState extends State<ProfilePage> {
             title: SizedBox(
               height: 28,
               child: Text(
-                'Punjabi Dhaba',
+                ordersJson[index]['name'],
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
@@ -258,126 +280,11 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             subtitle: Wrap(
-              children: [
-                OrderStatusLabel(
-                  orderstatus: ORDERSTATUS.COMPLETED,
-                )
-              ],
+              children: [OrderStatusLabel(orderstatus: status)],
             ),
           ),
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(32),
-          child: ListTile(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderDetail(
-                            orderstatus: ORDERSTATUS.APPROVED,
-                          )));
-            },
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            tileColor: tileColor,
-            leading: CircleAvatar(
-              backgroundImage: AssetImage('assets/placeholder_img.png'),
-              radius: 34,
-            ),
-            title: SizedBox(
-              height: 28,
-              child: Text(
-                'Haldirams',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    .copyWith(fontSize: 16),
-              ),
-            ),
-            subtitle: Wrap(
-              children: [
-                OrderStatusLabel(
-                  orderstatus: ORDERSTATUS.APPROVED,
-                )
-              ],
-            ),
-          ),
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(32),
-          child: ListTile(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderDetail(
-                            orderstatus: ORDERSTATUS.PENDING,
-                          )));
-            },
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            tileColor: tileColor,
-            leading: CircleAvatar(
-              backgroundImage: AssetImage('assets/placeholder_img.png'),
-              radius: 34,
-            ),
-            title: SizedBox(
-              height: 28,
-              child: Text(
-                'Aggarwal Sweets',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    .copyWith(fontSize: 16),
-              ),
-            ),
-            subtitle: Wrap(
-              children: [
-                OrderStatusLabel(
-                  orderstatus: ORDERSTATUS.COMPLETED,
-                )
-              ],
-            ),
-          ),
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(32),
-          child: ListTile(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderDetail(
-                            orderstatus: ORDERSTATUS.APPROVED,
-                          )));
-            },
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            tileColor: tileColor,
-            leading: CircleAvatar(
-              backgroundImage: AssetImage('assets/placeholder_img.png'),
-              radius: 34,
-            ),
-            title: SizedBox(
-              height: 28,
-              child: Text(
-                'Aggarwal Sweets',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    .copyWith(fontSize: 16),
-              ),
-            ),
-            subtitle: Wrap(
-              children: [
-                OrderStatusLabel(
-                  orderstatus: ORDERSTATUS.COMPLETED,
-                )
-              ],
-            ),
-          ),
-        )
-      ],
+        );
+      },
     ));
   }
 }

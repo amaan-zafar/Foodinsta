@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/models/user.dart';
 
@@ -18,7 +17,7 @@ class UserProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 18, 12, 8),
+      padding: const EdgeInsets.fromLTRB(12, 18, 12, 48),
       child: CustomAppCard(
         width: double.infinity,
         children: [

@@ -7,7 +7,6 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/models/post.dart';
 import 'package:food_insta/theme.dart';
-import 'package:food_insta/constants.dart' as Constants;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:food_insta/screens/root_app/profile/request_approval.dart';
 
