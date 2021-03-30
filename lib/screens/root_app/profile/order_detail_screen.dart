@@ -9,11 +9,17 @@ import 'package:food_insta/models/order.dart';
 import 'package:food_insta/models/post.dart';
 import 'package:food_insta/theme.dart';
 
-class OrderDetail extends StatelessWidget {
+class OrderDetail extends StatefulWidget {
   final ORDERSTATUS orderstatus;
   final int index;
 
   const OrderDetail({Key key, this.orderstatus, this.index}) : super(key: key);
+
+  @override
+  _OrderDetailState createState() => _OrderDetailState();
+}
+
+class _OrderDetailState extends State<OrderDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,26 +49,18 @@ class OrderDetail extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ProfileCard(),
+                      ProfileCard(
+                        json: postJson,
+                        index: widget.index,
+                      ),
                       ItemCard(
                         json: postJson,
-                        index: index,
+                        index: widget.index,
                         children: [
                           Divider(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(
-                              'Request Pending',
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ),
-                          CustomTextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            textOnButton: 'Cancel Request',
-                            color: Styles.customRejectedButtonColor,
-                          ),
+                          postJson[widget.index]['requested'] == false
+                              ? sendRequest(context)
+                              : pendingRequest(context),
                         ],
                       )
                     ],
@@ -74,5 +72,40 @@ class OrderDetail extends StatelessWidget {
         )
       ],
     ));
+  }
+
+  Widget sendRequest(context) {
+    return CustomTextButton(
+      onPressed: () {
+        setState(() {
+          postJson[widget.index]['requested'] = true;
+        });
+      },
+      textOnButton: 'Send Request',
+      color: Styles.customRequestButtonColor,
+    );
+  }
+
+  Widget pendingRequest(context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            'Request Pending',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ),
+        CustomTextButton(
+          onPressed: () {
+            setState(() {
+              postJson[widget.index]['requested'] = false;
+            });
+          },
+          textOnButton: 'Cancel Request',
+          color: Styles.customRejectedButtonColor,
+        ),
+      ],
+    );
   }
 }

@@ -241,7 +241,8 @@ class _HomePageState extends State<HomePage> {
                               child: Container(
                                 color: Colors.black,
                                 child: Image(
-                                  image: AssetImage('assets/food_large.png'),
+                                  image:
+                                      NetworkImage(postJson[index]['img_url']),
                                   fit: BoxFit.cover,
                                 ),
                                 height: 220,
@@ -269,7 +270,12 @@ class _HomePageState extends State<HomePage> {
                                 highlightColor: Colors.pink,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16)),
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    postJson[index]['requested'] =
+                                        !postJson[index]['requested'];
+                                  });
+                                },
                                 child: Row(
                                   children: [
                                     Icon(MdiIcons.accountGroup,
@@ -288,7 +294,9 @@ class _HomePageState extends State<HomePage> {
                                                   fontSize: 13)),
                                     ),
                                     Text(
-                                      'Request',
+                                      postJson[index]['requested'] == false
+                                          ? 'Request'
+                                          : 'Requested',
                                       style: Theme.of(context)
                                           .textTheme
                                           .subtitle1

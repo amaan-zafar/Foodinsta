@@ -15,58 +15,34 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _controller = Completer();
-  final Set<Marker> _markers = {
-    Marker(
-        markerId: MarkerId('delhi1'),
-        position: LatLng(28.744800, 77.116721),
-        infoWindow: InfoWindow(title: 'Marker1'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure)),
-    Marker(
-        markerId: MarkerId('delhi2'),
-        position: LatLng(28.944800, 77.296721),
-        infoWindow: InfoWindow(title: 'Marker2'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure)),
-    Marker(
-        markerId: MarkerId('delhi3'),
-        position: LatLng(28.544800, 77.006721),
-        infoWindow: InfoWindow(title: 'Marker3'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure)),
-  };
+  // final Set<Marker> _markers = {
+  //   Marker(
+  //       markerId: MarkerId('delhi1'),
+  //       position: LatLng(28.744800, 77.116721),
+  //       infoWindow: InfoWindow(title: 'Marker1'),
+  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure)),
+  // };
+
+  Set<Marker> markers = {};
+  getMarkers() {
+    for (int i = 0; i < postJson.length; i++) {
+      markers.add(Marker(
+          markerId: MarkerId('$i'),
+          position: LatLng(postJson[i]['lat'], postJson[i]['lng']),
+          infoWindow: InfoWindow(title: postJson[i]['name']),
+          icon: BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueAzure)));
+    }
+    return markers;
+  }
 
   LatLng _lastMapPosition = _center;
-
-  void _onCameraMove(CameraPosition position) {
-    _lastMapPosition = position.target;
-  }
-
-  Widget _buildMapInfoContainer() {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 32),
-        height: 150.0,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: postJson.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _boxes(
-                    "https://images.unsplash.com/photo-1504940892017-d23b9053d5d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-                    28.544800,
-                    77.006721,
-                    postJson[index]['name'],
-                    index),
-              );
-            }),
-      ),
-    );
-  }
 
   MapType _currentMapType = MapType.normal;
   static const LatLng _center = const LatLng(28.644800, 77.216721);
   @override
   Widget build(BuildContext context) {
+    markers = getMarkers();
     return Column(
       children: [
         CustomAppBar(
@@ -85,39 +61,44 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
+  void _onCameraMove(CameraPosition position) {
+    _lastMapPosition = position.target;
+  }
+
+  Widget _buildMapInfoContainer() {
+    return Align(
+      alignment: Alignment.bottomLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 32),
+        height: 150.0,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: postJson.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _boxes(
+                    postJson[index]['img_url'],
+                    postJson[index]['lat'],
+                    postJson[index]['lng'],
+                    postJson[index]['name'],
+                    index),
+              );
+            }),
+      ),
+    );
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete((controller));
   }
-
-  // void _onMapTypeButtonPressed() {
-  //   setState(() {
-  //     _currentMapType = _currentMapType == MapType.normal
-  //         ? MapType.satellite
-  //         : MapType.normal;
-  //   });
-  // }
-
-  // void _onAddMarkerButtonPressed() {
-  //   setState(() {
-  //     _markers.add(Marker(
-  //       // This marker id can be anything that uniquely identifies each marker.
-  //       markerId: MarkerId(_lastMapPosition.toString()),
-  //       position: _lastMapPosition,
-  //       infoWindow: InfoWindow(
-  //         title: 'Really cool place',
-  //         snippet: '5 Star Rating',
-  //       ),
-  //       icon: BitmapDescriptor.defaultMarker,
-  //     ));
-  //   });
-  // }
 
   Widget _buildGoogleMap() {
     return GoogleMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(target: _center, zoom: 11.0),
       mapType: _currentMapType,
-      markers: _markers,
+      markers: markers,
       onCameraMove: _onCameraMove,
     );
   }
@@ -125,7 +106,7 @@ class _MapPageState extends State<MapPage> {
   Future<void> _goToLocation(double lat, double lng) async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(lat, lng), zoom: 18, bearing: 45.0, tilt: 50.0)));
+        target: LatLng(lat, lng), zoom: 15, bearing: 45.0, tilt: 50.0)));
   }
 
   Widget _boxes(
@@ -145,7 +126,7 @@ class _MapPageState extends State<MapPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 180,
+                  width: 240,
                   height: 200,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16.0),
@@ -216,30 +197,4 @@ class _MapPageState extends State<MapPage> {
       ],
     );
   }
-
-  // Widget _buildFabs() {
-  //   return Padding(
-  //     padding: const EdgeInsets.all(16.0),
-  //     child: Align(
-  //       alignment: Alignment.topRight,
-  //       child: Column(
-  //         children: [
-  //           FloatingActionButton(
-  //             onPressed: () => _onMapTypeButtonPressed(),
-  //             materialTapTargetSize: MaterialTapTargetSize.padded,
-  //             backgroundColor: Colors.green,
-  //             child: const Icon(Icons.map, size: 36.0),
-  //           ),
-  //           SizedBox(height: 16.0),
-  //           FloatingActionButton(
-  //             onPressed: _onAddMarkerButtonPressed,
-  //             materialTapTargetSize: MaterialTapTargetSize.padded,
-  //             backgroundColor: Colors.green,
-  //             child: const Icon(Icons.add_location, size: 36.0),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

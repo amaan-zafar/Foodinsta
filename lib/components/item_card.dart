@@ -21,6 +21,15 @@ class ItemCard extends StatelessWidget {
     }
   }
 
+  static void navigateTo(double lat, double lng) async {
+    var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+    if (await canLaunch(uri.toString())) {
+      await launch(uri.toString());
+    } else {
+      throw 'Could not launch ${uri.toString()}';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,7 +43,9 @@ class ItemCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                image: AssetImage('assets/food_large.png'),
+                image: json == null
+                    ? AssetImage('assets/food_large.png')
+                    : NetworkImage(json[index]['img_url']),
                 fit: BoxFit.cover,
               ),
             ),
@@ -92,7 +103,9 @@ class ItemCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
                 onPressed: () {
-                  launchMap('Delhi, India');
+                  json == null
+                      ? launchMap('Delhi, India')
+                      : navigateTo(json[index]['lat'], json[index]['lng']);
                 },
                 highlightColor: Colors.green,
                 child: Row(

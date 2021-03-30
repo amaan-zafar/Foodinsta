@@ -28,7 +28,7 @@ class Post {
   }
 }
 
-const postJson = [
+var postJson = [
   {
     "description":
         "There is dal, rice and some chappatis in the meal. All the things are fresh and fit for eating.",
@@ -39,7 +39,12 @@ const postJson = [
     "name": "Haldirams",
     "time": "5 hours ago",
     "static_id": "7b7e4e55-19cb-4ae1-aae3-0c77e4e773bd",
-    "num_of_requests": 10
+    "num_of_requests": 10,
+    "lat": 28.649547323130424,
+    "lng": 77.09882243372553,
+    "requested": false,
+    "img_url":
+        "https://images.unsplash.com/photo-1567337710282-00832b415979?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=888&q=80"
   },
   {
     "description":
@@ -51,7 +56,12 @@ const postJson = [
     "name": "Garvit",
     "time": "7 hours ago",
     "static_id": "7b7e4e55-19cb-4ae1-aae3-0c77e4e773bd",
-    "num_of_requests": 26
+    "num_of_requests": 26,
+    "lat": 28.54327886621543,
+    "lng": 77.19318626055964,
+    "requested": false,
+    "img_url":
+        "https://images.unsplash.com/photo-1564836235910-c3055ca0f912?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80"
   },
   {
     "description":
@@ -64,7 +74,12 @@ const postJson = [
     "created_at": "26-03-2021 14:57:15",
     "time": "3 hours ago",
     "static_id": "7b7e4e55-19cb-4ae1-aae3-0c77e4e773bd",
-    "num_of_requests": 12
+    "num_of_requests": 12,
+    "lat": 28.633887124128144,
+    "lng": 77.22259424581607,
+    "requested": false,
+    "img_url":
+        "https://images.unsplash.com/photo-1574126154517-d1e0d89ef734?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=967&q=80"
   },
   {
     "description": " ",
@@ -75,7 +90,12 @@ const postJson = [
     "name": "KFC",
     "time": "9 hours ago",
     "static_id": "7b7e4e55-19cb-4ae1-aae3-0c77e4e773bd",
-    "num_of_requests": 14
+    "num_of_requests": 14,
+    "lat": 28.63390839372382,
+    "lng": 77.21829046854496,
+    "requested": false,
+    "img_url":
+        "https://images.unsplash.com/photo-1615380547279-f983fb6241d5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1047&q=80"
   },
   {
     "description":
@@ -87,7 +107,12 @@ const postJson = [
     "name": "Haldirams",
     "time": "1 day ago",
     "static_id": "7b7e4e55-19cb-4ae1-aae3-0c77e4e773bd",
-    "num_of_requests": 10
+    "num_of_requests": 10,
+    "lat": 28.649547323130424,
+    "lng": 77.09882243372553,
+    "requested": false,
+    "img_url":
+        "https://images.unsplash.com/photo-1567337710282-00832b415979?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=888&q=80"
   },
   {
     "description":
@@ -99,7 +124,12 @@ const postJson = [
     "name": "Amaan",
     "time": "5 hours ago",
     "static_id": "7b7e4e55-19cb-4ae1-aae3-0c77e4e773bd",
-    "num_of_requests": 26
+    "num_of_requests": 26,
+    "lat": 28.54327886621543,
+    "lng": 77.19318626055964,
+    "requested": false,
+    "img_url":
+        "https://images.unsplash.com/photo-1564836235910-c3055ca0f912?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80"
   },
   {
     "description":
@@ -111,7 +141,12 @@ const postJson = [
     "name": "Dominos",
     "time": "5 hours ago",
     "static_id": "7b7e4e55-19cb-4ae1-aae3-0c77e4e773bd",
-    "num_of_requests": 12
+    "num_of_requests": 12,
+    "lat": 28.633887124128144,
+    "lng": 77.22259424581607,
+    "requested": false,
+    "img_url":
+        "https://images.unsplash.com/photo-1574126154517-d1e0d89ef734?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=967&q=80"
   },
   {
     "description": " ",
@@ -122,6 +157,11 @@ const postJson = [
     "name": "KFC",
     "time": "6 hours ago",
     "static_id": "7b7e4e55-19cb-4ae1-aae3-0c77e4e773bd",
-    "num_of_requests": 14
+    "num_of_requests": 14,
+    "lat": 28.63390839372382,
+    "lng": 77.21829046854496,
+    "requested": false,
+    "img_url":
+        "https://images.unsplash.com/photo-1615380547279-f983fb6241d5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1047&q=80"
   }
 ];

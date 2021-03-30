@@ -8,8 +8,16 @@ class ProfileCard extends StatelessWidget {
   final List<Widget> children;
   final UserObject userObject;
   final USERTYPE userType;
+  final json;
+  final int index;
 
-  const ProfileCard({Key key, this.children, this.userObject, this.userType})
+  const ProfileCard(
+      {Key key,
+      this.children,
+      this.userObject,
+      this.userType,
+      this.json,
+      this.index})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -20,6 +28,9 @@ class ProfileCard extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundImage:
+                //  json != null
+                //     ? NetworkImage(json[index]['img_url'])
+                // :
                 userObject == null || userObject.profileImage == null
                     ? AssetImage('assets/placeholder_img.png')
                     : FileImage(userObject.profileImage),
@@ -27,7 +38,11 @@ class ProfileCard extends StatelessWidget {
           ),
           SizedBox(height: 12),
           Text(
-            userObject == null ? 'Aggarwal Sweets' : userObject.name,
+            json != null
+                ? json[index]['name']
+                : userObject == null
+                    ? 'Aggarwal Sweets'
+                    : userObject.name,
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SizedBox(height: 12),
@@ -52,12 +67,13 @@ class ProfileCard extends StatelessWidget {
           ),
           SizedBox(height: 12),
           RatingIndicator(
-            rating: 4.5,
+            rating: json != null ? json[index]['rating'] : 4.5,
             itemSize: 22,
           ),
           SizedBox(height: 12),
           UserTypeLabel(
             userType: userType,
+            label: json != null ? json[index]['member_type'] : null,
             fontSize: 18,
             horizontalPadding: 32,
           ),
