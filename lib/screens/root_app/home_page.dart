@@ -4,8 +4,10 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
@@ -24,32 +26,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _selectCity = false;
-
-  final String apiUrl = "https://randomuser.me/api/?results=10";
-
   List<dynamic> _users = [];
 
-  void fetchUsers() async {
-    var result = await http
-        .get(Uri.parse(apiUrl), headers: {"Accept": "application/json"});
-    setState(() {
-      _users = json.decode(result.body)['results'];
-    });
-  }
-
-  Future<void> _getData() async {
-    setState(() {
-      fetchUsers();
-    });
-  }
-
-  String city = 'Patna';
+  String city = 'Delhi';
   List<String> cities = ['Patna', 'Delhi', 'Patiala', 'Agra'];
 
   @override
   void initState() {
+    String currentCity =
+        Provider.of<AppUserController>(context, listen: false).userObject.city;
+    cities.add(currentCity);
+    city = currentCity;
     super.initState();
-    fetchUsers();
   }
 
   @override
@@ -156,167 +144,144 @@ class _HomePageState extends State<HomePage> {
 
   buildBody() {
     return Expanded(
-      child: _users.length != 0
-          ? RefreshIndicator(
-              onRefresh: _getData,
-              child: ListView.builder(
-                  itemCount: postJson.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      child: CustomAppCard(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => OrderDetail(
-                                            orderstatus: ORDERSTATUS.PENDING,
-                                            index: index,
-                                          )));
-                            },
-                            child: Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.all(0),
-                                  leading: CircleAvatar(
-                                    backgroundImage: postJson == null
-                                        ? AssetImage(
-                                            'assets/placeholder_img.png')
-                                        : NetworkImage(postJson[index]['dp']),
-                                    radius: 24,
-                                  ),
-                                  title: Text(
-                                    postJson[index]['name'],
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  subtitle: Text(
-                                    postJson[index]['time'],
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  trailing: Column(
-                                    children: [
-                                      RatingIndicator(
-                                        itemSize: 15,
-                                        rating: postJson[index]['rating'],
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      UserTypeLabel(
-                                        horizontalPadding: 12,
-                                        label: postJson[index]['member_type'],
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => OrderDetail(
-                                            orderstatus: ORDERSTATUS.PENDING,
-                                            index: index,
-                                          )));
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Container(
-                                color: Colors.black,
-                                child: Image(
-                                  image:
-                                      NetworkImage(postJson[index]['img_url']),
-                                  fit: BoxFit.cover,
-                                ),
-                                height: 220,
-                                width: double.infinity,
-                              ),
+        child: ListView.builder(
+            itemCount: postJson.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: CustomAppCard(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => OrderDetail(
+                                      orderstatus: ORDERSTATUS.PENDING,
+                                      index: index,
+                                    )));
+                      },
+                      child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(0),
+                            leading: CircleAvatar(
+                              backgroundImage: postJson == null
+                                  ? AssetImage('assets/placeholder_img.png')
+                                  : NetworkImage(postJson[index]['dp']),
+                              radius: 24,
                             ),
+                            title: Text(
+                              postJson[index]['name'],
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            subtitle: Text(
+                              postJson[index]['time'],
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w600),
+                            ),
+                            trailing: Column(
+                              children: [
+                                RatingIndicator(
+                                  itemSize: 15,
+                                  rating: postJson[index]['rating'],
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                UserTypeLabel(
+                                  horizontalPadding: 12,
+                                  label: postJson[index]['member_type'],
+                                ),
+                              ],
+                            ),
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => OrderDetail(
+                                      orderstatus: ORDERSTATUS.PENDING,
+                                      index: index,
+                                    )));
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Container(
+                          color: Colors.black,
+                          child: Image(
+                            image: NetworkImage(postJson[index]['img_url']),
+                            fit: BoxFit.cover,
                           ),
-                          Row(
+                          height: 220,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(MdiIcons.weight, color: Styles.blueIconColor),
+                        SizedBox(width: 4),
+                        Text(
+                          postJson[index]['weight'],
+                          style: Theme.of(context).textTheme.subtitle2.copyWith(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                        ),
+                        Spacer(),
+                        MaterialButton(
+                          color: Color(0xFFF54580),
+                          highlightColor: Colors.pink,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          onPressed: () {
+                            setState(() {
+                              postJson[index]['requested'] =
+                                  !postJson[index]['requested'];
+                            });
+                          },
+                          child: Row(
                             children: [
-                              Icon(MdiIcons.weight,
-                                  color: Styles.blueIconColor),
-                              SizedBox(width: 4),
+                              Icon(MdiIcons.accountGroup, color: Colors.white),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(4, 0, 8, 0),
+                                child: Text(
+                                    postJson[index]['num_of_requests']
+                                        .toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        .copyWith(
+                                            color: Colors.white, fontSize: 13)),
+                              ),
                               Text(
-                                postJson[index]['weight'],
+                                postJson[index]['requested'] == false
+                                    ? 'Request'
+                                    : 'Requested',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2
-                                    .copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                              ),
-                              Spacer(),
-                              MaterialButton(
-                                color: Color(0xFFF54580),
-                                highlightColor: Colors.pink,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16)),
-                                onPressed: () {
-                                  setState(() {
-                                    postJson[index]['requested'] =
-                                        !postJson[index]['requested'];
-                                  });
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(MdiIcons.accountGroup,
-                                        color: Colors.white),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(4, 0, 8, 0),
-                                      child: Text(
-                                          postJson[index]['num_of_requests']
-                                              .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2
-                                              .copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: 13)),
-                                    ),
-                                    Text(
-                                      postJson[index]['requested'] == false
-                                          ? 'Request'
-                                          : 'Requested',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1
-                                          .copyWith(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
+                                    .subtitle1
+                                    .copyWith(color: Colors.white),
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            child: Text(
-                              postJson[index]['description'],
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  .copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                            ),
-                          )
-                        ],
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      child: Text(
+                        postJson[index]['description'],
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.caption.copyWith(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
-                    );
-                  }),
-            )
-          : Center(
-              child: CircularProgressIndicator(),
-            ),
-    );
+                    )
+                  ],
+                ),
+              );
+            }));
   }
 }
