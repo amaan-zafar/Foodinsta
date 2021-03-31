@@ -1,16 +1,29 @@
-# food_insta
+# Foodinsta
 
-A new Flutter project.
+A flutter based mobile android app created for Google Solutions Challenge mainly aimed at accomplishing SDG 2(Zero Hunger), SDG 3(Good health and Wellbeing) and SDG 12(Responsible Consumption and Production).
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. Clone the repository from GitHub:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+git clone https://github.com/amaan-zafar/Foodinsta
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+2. Navigate to project's root directory:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+cd Foodinsta
+```
+
+3. Check for Flutter setup and connected devices:
+
+```bash
+flutter doctor
+```
+
+4. Run the app:
+
+```bash
+flutter run
+```
