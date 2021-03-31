@@ -10,6 +10,8 @@ This is the source code for the app of our solution FoodInsta made for Google So
 
 * Google Firebase for authentication and notifications and Google Drive for media file storage
 
+* Django based backend - https://github.com/ingenium-cipher/FoodInsta-Backend
+
 # Usage
 
 This project was build on Flutter 2.0.1
