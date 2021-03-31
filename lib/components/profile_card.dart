@@ -47,15 +47,15 @@ class ProfileCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.phone),
-              Text(json == null ? '+91-9313093130' : '+91-9313093130',
-                  style: Theme.of(context).textTheme.bodyText1),
-            ],
-          ),
+          // SizedBox(height: 10),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Icon(Icons.phone),
+          //     Text(json == null ? '+91-9313093130' : '+91-9313093130',
+          //         style: Theme.of(context).textTheme.bodyText1),
+          //   ],
+          // ),
           SizedBox(height: 10),
           RatingIndicator(
             rating:

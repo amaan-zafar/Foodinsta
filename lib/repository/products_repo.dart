@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:food_insta/utils/Failure.dart';
-import 'package:food_insta/utils/authentication.dart';
 import 'package:food_insta/models/post.dart';
 
 class PostRepository {
