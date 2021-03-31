@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/repository/post_repo.dart';
+import 'package:food_insta/repository/products_repo.dart';
 import 'package:food_insta/models/post.dart';
 
 class PostController with ChangeNotifier {
