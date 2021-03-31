@@ -1,6 +1,6 @@
 # Foodinsta
 
-A flutter based mobile android app created for Google Solutions Challenge mainly aimed at accomplishing SDG 2(Zero Hunger), SDG 3(Good health and Wellbeing) and SDG 12(Responsible Consumption and Production).
+Foodinsta is a flutter based mobile android app created for Google Solutions Challenge 2021 mainly aimed at accomplishing UN's SDG 2(Zero Hunger), SDG 3(Good health and Wellbeing) and SDG 12(Responsible Consumption and Production).
 
 ## Getting Started
 
