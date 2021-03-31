@@ -1,16 +1,29 @@
-# food_insta
+# Introduction
 
-A new Flutter project.
+This is the source code for the app of our solution FoodInsta made for Google Solution Challenge. The app aims to solve the problem of hunger, i.e. achieving a zero hunger state which connects people in a way which ensures no food wastage occurs!
 
-## Getting Started
+### Technologies Used
 
-This project is a starting point for a Flutter application.
+* Flutter Framework
 
-A few resources to get you started if this is your first Flutter project:
+* Dart Language
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+* Google Firebase for authentication and notifications and Google Drive for media file storage
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Usage
+
+This project was build on Flutter 2.0.1
+
+To run the project locally:
+
+First clone the repository from Github and switch to the new directory:
+
+    $ git clone https://github.com/amaan-zafar/Foodinsta.git
+    $ cd Foodinsta
+   
+    
+Install required packages:
+
+    $ flutter pub get
+
+Run the app using flutter run command.
