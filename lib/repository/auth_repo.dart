@@ -20,7 +20,7 @@ class AuthRepository {
       if (user == null)
         throw Failure('Sigin was aborted');
       else {
-        print("API IS CALLED NOW");
+        print("Login API IS CALLED NOW");
         var email = user.email;
         var response = await _customHttpClient.postRequest(
             'users/login/', {"firebase_id": user.uid},

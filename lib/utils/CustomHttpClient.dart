@@ -43,7 +43,7 @@ class CustomHttpClient {
       {@required bool requireAuth}) async {
     try {
       if (requireAuth) {
-        var uri = Uri.https('bitsnssappl.herokuapp.com', path, queryParameters);
+        var uri = Uri.https(_baseURL, path, queryParameters);
         var response = await _client.get(uri,
             headers: {'Authorization': await _secureStorage.read(key: 'JWT')});
         if (response.statusCode != 200)
@@ -75,7 +75,10 @@ class CustomHttpClient {
         var jwt = await _secureStorage.read(key: 'JWT');
         var response = await _client.post(
           Uri.https(_baseURL, path),
-          headers: {'Authorization': jwt},
+          headers: {
+            'Authorization': jwt,
+            "Content-Type": "application/json; charset=UTF-8"
+          },
           body: body,
         );
         if (response.statusCode != 200)
@@ -86,7 +89,9 @@ class CustomHttpClient {
         var response = await _client.post(
           Uri.https(_baseURL, path),
           body: jsonEncode(body),
+          headers: {"Content-Type": "application/json; charset=UTF-8"},
         );
+        print('Respose body at customhttp is ${response.body}');
         if (response.statusCode != 200)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');

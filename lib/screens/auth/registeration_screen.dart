@@ -220,7 +220,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
         Consumer<RegisController>(builder: (context, controller, child) {
           String email =
               Provider.of<LoginController>(context, listen: false).email;
-          print('Email at login screen is $email');
           if (controller.registrationState == RegistrationState.Loading) {
             return CircularProgressIndicator();
           } else {
@@ -249,27 +248,25 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         regisNo: _regisNo,
                       ),
                     );
-
-                    // controller
-                    //     .register(
-                    //         UserObject(
-                    //           _name: _name,
-                    //           _address: _address,
-                    //           city: _cityValue,
-                    //           email: email,
-                    //           _volId: _volId,
-                    //           _profileImage: null,
-                    //           isVol: _isVolunteer,
-                    //           _idPhoto: null,
-                    //           _phone: _phone,
-                    //           orgId: _selectedNgo != null
-                    //               ? _selectedNgo.staticId
-                    //               : null,
-                    //           _regisNo: _regisNo,
-                    //         ),
-                    //         userType)
-                    //     .whenComplete(() => _navigateToRootApp(context));
-                    _navigateToRootApp(context);
+                    controller.register(
+                        UserObject(
+                          name: _name,
+                          address: _address,
+                          city: _cityValue,
+                          email: email,
+                          volId: _volId,
+                          profileImage: _profileImg,
+                          isVol: _isVolunteer,
+                          idPhoto: _idPhoto,
+                          phone: _phone,
+                          orgId: _selectedNgo != null
+                              ? _selectedNgo.staticId
+                              : null,
+                          regisNo: _regisNo,
+                        ),
+                        _userType);
+                    // .whenComplete(() => _navigateToRootApp(context));
+                    // _navigateToRootApp(context);
                   }
                 },
                 textOnButton: Constants.REGISTER_TEXT,

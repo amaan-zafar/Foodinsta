@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_bottomnavbar.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
-import 'package:food_insta/screens/root_app/home_page.dart';
+import 'package:food_insta/screens/root_app/home/home_page.dart';
 import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/root_app/profile/profile_page.dart';
 import 'package:food_insta/theme.dart';

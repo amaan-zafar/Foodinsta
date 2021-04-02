@@ -58,7 +58,10 @@ class _LoginPageState extends State<LoginPage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16)),
                                 onPressed: () async {
-                                  await controller.loginWithGoogle();
+                                  String email =
+                                      await controller.loginWithGoogle();
+                                  print(
+                                      'Email first received on screen is $email');
                                   if (controller.status == 1) {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(

@@ -7,7 +7,7 @@ import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/models/post.dart';
-import 'package:food_insta/screens/root_app/settings_page.dart';
+import 'package:food_insta/screens/root_app/home/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';

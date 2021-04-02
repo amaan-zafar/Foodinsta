@@ -26,7 +26,7 @@ class RegistrationRepository {
                 "contact_no": int.parse(obj.phone),
                 "member_type": "NGO",
                 "city": obj.city,
-                "address": obj.address
+                "address": obj.address,
               },
               "name": obj.name,
               "reg_number": obj.regisNo
@@ -39,9 +39,9 @@ class RegistrationRepository {
               "member": {
                 "auth_user": {"email": obj.email},
                 "contact_no": int.parse(obj.phone),
-                "member_type": "Volunteer",
+                "member_type": "Individual",
                 "city": obj.city,
-                "address": obj.address
+                "address": obj.address,
               },
               "name": obj.name,
               "is_volunteer": obj.isVol,
@@ -58,7 +58,7 @@ class RegistrationRepository {
                 "contact_no": int.parse(obj.phone),
                 "member_type": "Restaurant",
                 "city": obj.city,
-                "address": obj.address
+                "address": obj.address,
               },
               "name": obj.name,
             },
