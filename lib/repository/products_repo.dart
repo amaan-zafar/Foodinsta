@@ -18,7 +18,7 @@ class PostRepository {
           {
             "product": {
               "description": post.product.description,
-              "fresh_upto": post.product.freshUpto,
+              // "fresh_upto": post.product.freshUpto,
               "weight": post.product.weight
             },
             "address": post.address,

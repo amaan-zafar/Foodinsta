@@ -5,8 +5,9 @@ class Post {
   String address;
   String location;
   String city;
+  String phone;
 
-  Post({this.product, this.address, this.location, this.city});
+  Post({this.product, this.address, this.location, this.city, this.phone});
 
   Post.fromJson(Map<String, dynamic> json) {
     product =

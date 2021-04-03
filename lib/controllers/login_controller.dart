@@ -18,7 +18,6 @@ class LoginController with ChangeNotifier {
     map = await authRepository.signInWithGoogle();
     status = map['status'];
     email = map['email'];
-    print('status in lc is $status and email is $email');
     loginState = LoginState.Loaded;
     notifyListeners();
     return email;

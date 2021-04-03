@@ -10,14 +10,13 @@ import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_textfield.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/location_controller.dart';
+import 'package:food_insta/models/post.dart';
+import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-
-const kGoogleApiKey = "AIzaSyDFbXEFzzx7CUhk6CaGdz64KUGVnBZ2FvI";
-
-// GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class CreatePost extends StatefulWidget {
   @override
@@ -25,16 +24,24 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+  Post post = Post();
   File _foodImg;
   final picker = ImagePicker();
-  String _selectedUnit;
+  String _selectedUnit = 'kg';
   List<String> _units = ['kg', 'Meals'];
   final _formKey = GlobalKey<FormState>();
-  String city = 'Pickup Location';
-  // LocationController locationController = LocationController();
+
   String _validate(String value, bool isRequired) {
     if (value.isEmpty && isRequired) return Constants.ERR_EMPTY_FIELD;
     return null;
+  }
+
+  String _validatePhone(String value) {
+    int _phone = int.tryParse(value);
+    if (value.length != 10 || _phone == null)
+      return 'Invalid Phone Number';
+    else
+      return null;
   }
 
   @override
@@ -86,15 +93,19 @@ class _CreatePostState extends State<CreatePost> {
                     _buildPickupLocation(),
                     _buildQuantity(context),
                     CustomTextField(
-                      onChanged: (value) {},
+                      onSaved: (value) {
+                        post.phone = value;
+                      },
                       keyboardType: TextInputType.phone,
                       hintText: 'Contact Details',
                       validator: (value) {
-                        return _validate(value, true);
+                        return _validatePhone(value);
                       },
                     ),
                     CustomTextField(
-                      onChanged: (value) {},
+                      onSaved: (value) {
+                        post.product.description = value;
+                      },
                       minLines: 4,
                       maxLines: 4,
                       keyboardType: TextInputType.multiline,
@@ -112,9 +123,10 @@ class _CreatePostState extends State<CreatePost> {
           child: CustomTextButton(
             highlightColor: Colors.lightBlue,
             onPressed: () async {
-              // if (_formKey.currentState.validate()) {
-              //   _formKey.currentState.save();
-              // }
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                Navigator.of(context).pop();
+              }
             },
             textOnButton: 'Post',
             color: Styles.buttonColor2,
@@ -127,21 +139,26 @@ class _CreatePostState extends State<CreatePost> {
 
   Widget _buildPickupLocation() {
     return Consumer<LocationController>(builder: (context, controller, child) {
+      Address address = controller.firstAddress;
       return Row(
         children: [
           Expanded(
             flex: 3,
             child: CustomTextField(
               enabled: false,
-              onChanged: (value) {},
+              onSaved: (value) {
+                post.address = address.addressLine;
+                post.city = address.locality;
+                post.location = address.coordinates.toString();
+              },
               keyboardType: TextInputType.streetAddress,
               hintText: controller.loadingStatus ==
                           CurrentLocationStatus.Initial ||
                       controller.loadingStatus == CurrentLocationStatus.Loading
                   ? 'Pickup Location'
-                  : '${controller.firstAddress.subLocality}, ${controller.firstAddress.locality}',
+                  : '${address.subLocality}, ${address.locality}',
               validator: (value) {
-                return _validate(value, true);
+                return address == null ? 'Pickup Location is required' : null;
               },
             ),
           ),
@@ -173,7 +190,9 @@ class _CreatePostState extends State<CreatePost> {
         Expanded(
           flex: 3,
           child: CustomTextField(
-            onChanged: (value) {},
+            onSaved: (value) {
+              post.product.weight = value.toString() + ' ' + _selectedUnit;
+            },
             keyboardType: TextInputType.number,
             hintText: 'Approx. quantity',
             validator: (value) {
@@ -290,6 +309,7 @@ class _CreatePostState extends State<CreatePost> {
     setState(() {
       if (pickedFile != null) {
         _foodImg = File(pickedFile.path);
+        post.product.prodImg = _foodImg;
       } else {
         print('No image selected.');
       }

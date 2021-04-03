@@ -1,6 +1,6 @@
 import 'dart:io';
 
-enum USERTYPE { NGO, BUSINESS, INDIVIDUAL, VOLUNTEER }
+enum UserType { NGO, BUSINESS, INDIVIDUAL, VOLUNTEER }
 
 class UserObject {
   final String name;
@@ -9,6 +9,7 @@ class UserObject {
   final String address;
   final File profileImage;
   final String email;
+  final UserType userType;
 
   final String regisNo;
   final File idPhoto;
@@ -18,8 +19,9 @@ class UserObject {
   final String volId;
 
   UserObject(
-      {this.city,
-      this.name,
+      {this.name,
+      this.userType,
+      this.city,
       this.address,
       this.email,
       this.volId,

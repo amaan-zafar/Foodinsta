@@ -22,7 +22,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserObject _userObject;
-  USERTYPE _userType;
+  UserType _userType;
 
   List<Order> orders = [
     Order(
@@ -54,7 +54,6 @@ class _ProfilePageState extends State<ProfilePage> {
         Provider.of<AppUserController>(context, listen: false);
     _userObject = controller.userObject;
     _userType = controller.userType;
-    print('user is ${_userObject.name}');
     return Column(
       children: [
         // AppBar
@@ -102,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return DefaultTabController(
       length: 2,
       initialIndex:
-          _userType == USERTYPE.NGO ? 1 : 0, // Change it according to user type
+          _userType == UserType.NGO ? 1 : 0, // Change it according to user type
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

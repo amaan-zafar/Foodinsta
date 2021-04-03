@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
-import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/controllers/app_user_controller.dart';
@@ -22,19 +21,22 @@ import 'package:provider/provider.dart';
 
 class RegistrationForm extends StatefulWidget {
   final List<Ngo> ngoList;
+  final UserType userType;
+  final String email;
   const RegistrationForm({
     Key key,
     this.ngoList,
+    this.userType,
+    this.email,
   }) : super(key: key);
   @override
-  _RegistrationFormState createState() => _RegistrationFormState(ngoList);
+  _RegistrationFormState createState() => _RegistrationFormState();
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
-  final List<Ngo> ngoList;
   // Common fields
   String _name;
-  String _cityValue;
+  String _city;
   String _phone;
   String _address;
   File _profileImg;
@@ -46,16 +48,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
   Ngo _selectedNgo;
   String _volId;
 
-  USERTYPE _userType;
   bool _isChecked = false;
 
   final _formKey = GlobalKey<FormState>();
   File _idProofImg;
   final picker = ImagePicker();
-
-  _RegistrationFormState(
-    this.ngoList,
-  );
 
   String _validate(String value, bool isRequired) {
     if (value.isEmpty && isRequired) return Constants.ERR_EMPTY_FIELD;
@@ -70,13 +67,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
       return null;
   }
 
-  String _getUserTypeName(USERTYPE userType) {
+  String _getUserTypeName(UserType userType) {
     switch (userType) {
-      case USERTYPE.NGO:
+      case UserType.NGO:
         return "NGO";
-      case USERTYPE.INDIVIDUAL:
+      case UserType.INDIVIDUAL:
         return "";
-      case USERTYPE.BUSINESS:
+      case UserType.VOLUNTEER:
+        return "";
+      case UserType.BUSINESS:
         return "Business";
       default:
         return "";
@@ -103,7 +102,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   Future _getidProofImg(source) async {
     final pickedFile = await picker.getImage(source: source);
-
     setState(() {
       if (pickedFile != null) {
         _idProofImg = File(pickedFile.path);
@@ -116,7 +114,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
-    _userType = Provider.of<AppUserController>(context, listen: false).userType;
     return Scaffold(
         body: Stack(
       children: [
@@ -143,7 +140,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   _buildForm(DarkThemeProvider darkThemeProvider) {
-    String userTypeName = _getUserTypeName(_userType);
+    String userTypeName = _getUserTypeName(widget.userType);
     return CustomAppCard(
       children: [
         SizedBox(height: 16),
@@ -218,8 +215,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
               ),
             )),
         Consumer<RegisController>(builder: (context, controller, child) {
-          String email =
-              Provider.of<LoginController>(context, listen: false).email;
           if (controller.registrationState == RegistrationState.Loading) {
             return CircularProgressIndicator();
           } else {
@@ -230,43 +225,28 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 onPressed: () {
                   if (_formKey.currentState.validate() &&
                       _isChecked &&
-                      _cityValue != null) {
+                      _city != null) {
                     _formKey.currentState.save();
-                    Provider.of<AppUserController>(context, listen: false)
-                        .setUserObject(
-                      UserObject(
-                        name: _name,
-                        address: _address,
-                        city: _cityValue,
-                        email: null,
-                        volId: _volId,
-                        profileImage: _profileImg,
-                        isVol: _isVolunteer,
-                        idPhoto: _idPhoto,
-                        phone: _phone,
-                        orgId: null,
-                        regisNo: _regisNo,
-                      ),
-                    );
-                    controller.register(
-                        UserObject(
-                          name: _name,
-                          address: _address,
-                          city: _cityValue,
-                          email: email,
-                          volId: _volId,
-                          profileImage: _profileImg,
-                          isVol: _isVolunteer,
-                          idPhoto: _idPhoto,
-                          phone: _phone,
-                          orgId: _selectedNgo != null
-                              ? _selectedNgo.staticId
-                              : null,
-                          regisNo: _regisNo,
-                        ),
-                        _userType);
-                    // .whenComplete(() => _navigateToRootApp(context));
-                    // _navigateToRootApp(context);
+                    controller
+                        .register(
+                            UserObject(
+                              name: _name,
+                              userType: widget.userType,
+                              address: _address,
+                              city: _city,
+                              email: widget.email,
+                              volId: _volId,
+                              profileImage: _profileImg,
+                              isVol: _isVolunteer,
+                              idPhoto: _idPhoto,
+                              phone: _phone,
+                              orgId: _selectedNgo != null
+                                  ? _selectedNgo.staticId
+                                  : null,
+                              regisNo: _regisNo,
+                            ),
+                            context)
+                        .whenComplete(() => _navigateToRootApp(context));
                   }
                 },
                 textOnButton: Constants.REGISTER_TEXT,
@@ -350,7 +330,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           },
           onCityChanged: (value) {
             setState(() {
-              _cityValue = value;
+              _city = value;
             });
           },
         ),
@@ -359,15 +339,16 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   Widget _buildVolunteerFields(DarkThemeProvider darkThemeProvider) {
-    return _userType == USERTYPE.INDIVIDUAL || _userType == USERTYPE.VOLUNTEER
+    return widget.userType == UserType.INDIVIDUAL ||
+            widget.userType == UserType.VOLUNTEER
         ? Column(
             children: [
               CheckboxListTile(
                 onChanged: (bool value) {
                   Provider.of<AppUserController>(context, listen: false)
                       .setUsertype(value == true
-                          ? USERTYPE.VOLUNTEER
-                          : USERTYPE.INDIVIDUAL);
+                          ? UserType.VOLUNTEER
+                          : UserType.INDIVIDUAL);
                   setState(() {
                     _isVolunteer = value;
                   });
@@ -406,7 +387,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                                 _selectedNgo = ngo;
                               });
                             },
-                            items: ngoList.map((Ngo ngo) {
+                            items: widget.ngoList.map((Ngo ngo) {
                               return DropdownMenuItem<Ngo>(
                                 child: Padding(
                                   padding:
@@ -444,7 +425,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   Widget _buildNgoFields() {
-    return _userType == USERTYPE.NGO
+    return widget.userType == UserType.NGO
         ? Column(
             children: [
               CustomTextField(

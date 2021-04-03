@@ -12,6 +12,9 @@ import 'package:food_insta/theme.dart';
 import 'package:provider/provider.dart';
 
 class UserTypePage extends StatelessWidget {
+  final String email;
+
+  const UserTypePage({Key key, this.email}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,13 +63,13 @@ class UserTypePage extends StatelessWidget {
                               ),
                             ),
                             _buildButton(context, 'I represent an NGO',
-                                USERTYPE.NGO, controller),
+                                UserType.NGO, controller),
                             SizedBox(height: 8),
                             _buildButton(context, 'I represent a Business',
-                                USERTYPE.BUSINESS, controller),
+                                UserType.BUSINESS, controller),
                             SizedBox(height: 8),
                             _buildButton(context, 'I am Individual/Volunteer',
-                                USERTYPE.INDIVIDUAL, controller),
+                                UserType.INDIVIDUAL, controller),
                             SizedBox(height: 24),
                           ],
                         ),
@@ -82,7 +85,7 @@ class UserTypePage extends StatelessWidget {
     );
   }
 
-  SizedBox _buildButton(BuildContext context, String text, USERTYPE userType,
+  SizedBox _buildButton(BuildContext context, String text, UserType userType,
       AppUserController controller) {
     return SizedBox(
       width: double.infinity,
@@ -92,10 +95,8 @@ class UserTypePage extends StatelessWidget {
         textOnButton: text,
         onPressed: () async {
           controller.setUserTypeState(UserTypeState.Loading);
-          controller.setUsertype(userType);
           List<Ngo> ngoList;
-          if (userType == USERTYPE.INDIVIDUAL) {
-            print('getting data');
+          if (userType == UserType.INDIVIDUAL) {
             ngoList =
                 await Provider.of<NgoListController>(context, listen: false)
                     .getNgoList();
@@ -104,8 +105,11 @@ class UserTypePage extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => RegistrationForm(ngoList: ngoList)));
-          print('working');
+                  builder: (_) => RegistrationForm(
+                        ngoList: ngoList,
+                        userType: userType,
+                        email: email,
+                      )));
           controller.setUserTypeState(UserTypeState.Loaded);
         },
       ),

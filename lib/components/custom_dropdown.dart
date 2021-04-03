@@ -26,6 +26,7 @@ class CustomDropDown extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: DropdownButtonHideUnderline(
         child: Card(
+          elevation: 0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           color: darkThemeProvider.darkTheme
@@ -34,7 +35,7 @@ class CustomDropDown extends StatelessWidget {
           child: DropdownButton(
             hint: hint,
             isExpanded: true,
-            elevation: 2,
+            elevation: 0,
             itemHeight: itemHeight,
             value: value,
             onChanged: onChanged,

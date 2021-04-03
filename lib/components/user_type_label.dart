@@ -5,7 +5,7 @@ import 'package:food_insta/theme.dart';
 
 class UserTypeLabel extends StatelessWidget {
   final String label;
-  final USERTYPE userType;
+  final UserType userType;
   final double fontSize;
   final double horizontalPadding;
   const UserTypeLabel(
@@ -16,15 +16,15 @@ class UserTypeLabel extends StatelessWidget {
       this.horizontalPadding = 18})
       : super(key: key);
 
-  String _getUserTypeName(USERTYPE userType) {
+  String _getUserTypeName(UserType userType) {
     switch (userType) {
-      case USERTYPE.NGO:
+      case UserType.NGO:
         return "NGO";
-      case USERTYPE.INDIVIDUAL:
+      case UserType.INDIVIDUAL:
         return "Individual";
-      case USERTYPE.BUSINESS:
+      case UserType.BUSINESS:
         return "Business";
-      case USERTYPE.VOLUNTEER:
+      case UserType.VOLUNTEER:
         return "Volunteer";
       default:
         return "Business";

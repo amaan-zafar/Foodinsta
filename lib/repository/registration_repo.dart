@@ -14,10 +14,10 @@ class RegistrationRepository {
     this._secureStorage,
   );
 
-  Future registerUser(UserObject obj, USERTYPE type) async {
+  Future registerUser(UserObject obj) async {
     var response;
     try {
-      if (type == USERTYPE.NGO) {
+      if (obj.userType == UserType.NGO) {
         response = await _customHttpClient.postRequest(
             'users/register/ngo/',
             {
@@ -32,7 +32,7 @@ class RegistrationRepository {
               "reg_number": obj.regisNo
             },
             requireAuth: false);
-      } else if (type == USERTYPE.INDIVIDUAL) {
+      } else if (obj.userType == UserType.INDIVIDUAL) {
         response = await _customHttpClient.postRequest(
             'users/register/individual/',
             {

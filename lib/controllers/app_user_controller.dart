@@ -4,14 +4,14 @@ import 'package:food_insta/models/user.dart';
 enum UserTypeState { Initial, Loading, Loaded }
 
 class AppUserController with ChangeNotifier {
-  UserObject _userObject;
-  USERTYPE _userType;
+  UserObject _userObject = UserObject();
+  UserType _userType;
 
   UserTypeState userTypeState = UserTypeState.Initial;
 
-  get userObject => this._userObject;
+  UserObject get userObject => this._userObject;
 
-  setUserObject(value) {
+  void setUserObject(value) {
     this._userObject = value;
     notifyListeners();
   }
@@ -25,7 +25,6 @@ class AppUserController with ChangeNotifier {
 
   setUserTypeState(value) {
     userTypeState = value;
-    print('state value is $value');
     notifyListeners();
   }
 }

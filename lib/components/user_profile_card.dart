@@ -6,7 +6,7 @@ import 'package:food_insta/models/user.dart';
 class UserProfileCard extends StatelessWidget {
   final List<Widget> children;
   final UserObject userObject;
-  final USERTYPE userType;
+  final UserType userType;
 
   const UserProfileCard({
     Key key,

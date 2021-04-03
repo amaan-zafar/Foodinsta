@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
+import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/screens/auth/user_type_screen.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
@@ -60,18 +61,21 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () async {
                                   String email =
                                       await controller.loginWithGoogle();
-                                  print(
-                                      'Email first received on screen is $email');
+                                  Provider.of<AppUserController>(context,
+                                      listen: false);
+
                                   if (controller.status == 1) {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: (context) => RootApp(),
+                                        builder: (context) =>
+                                            RootApp(email: email),
                                       ),
                                     );
                                   } else if (controller.status == 2) {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: (context) => UserTypePage(),
+                                        builder: (context) =>
+                                            UserTypePage(email: email),
                                       ),
                                     );
                                   }
