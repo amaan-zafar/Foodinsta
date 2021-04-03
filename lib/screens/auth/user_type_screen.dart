@@ -35,47 +35,48 @@ class UserTypePage extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       ),
                     );
-                  }
-                  return Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                            12,
-                            Styles.cardTopPadding,
-                            12,
-                            Styles.cardBottomPadding),
-                        child: CustomAppCard(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(24, 36, 24, 8),
-                              child: Text(
-                                'Hello there! Together we can change this world, right?',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.subtitle1,
+                  } else
+                    return Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(
+                              12,
+                              Styles.cardTopPadding,
+                              12,
+                              Styles.cardBottomPadding),
+                          child: CustomAppCard(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(24, 36, 24, 8),
+                                child: Text(
+                                  'Hello there! Together we can change this world, right?',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(24.0),
-                              child: Text(
-                                'Let’s get started by selecting the right kind of department you represent!',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.subtitle1,
+                              Padding(
+                                padding: const EdgeInsets.all(24.0),
+                                child: Text(
+                                  'Let’s get started by selecting the right kind of department you represent!',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
                               ),
-                            ),
-                            _buildButton(context, 'I represent an NGO',
-                                UserType.NGO, controller),
-                            SizedBox(height: 8),
-                            _buildButton(context, 'I represent a Business',
-                                UserType.BUSINESS, controller),
-                            SizedBox(height: 8),
-                            _buildButton(context, 'I am Individual/Volunteer',
-                                UserType.INDIVIDUAL, controller),
-                            SizedBox(height: 24),
-                          ],
+                              _buildButton(context, 'I represent an NGO',
+                                  UserType.NGO, controller),
+                              SizedBox(height: 8),
+                              _buildButton(context, 'I represent a Business',
+                                  UserType.BUSINESS, controller),
+                              SizedBox(height: 8),
+                              _buildButton(context, 'I am Individual/Volunteer',
+                                  UserType.INDIVIDUAL, controller),
+                              SizedBox(height: 24),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
                 })
               ],
             ),

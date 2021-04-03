@@ -10,6 +10,7 @@ import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/custom_textfield.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/location_controller.dart';
+import 'package:food_insta/controllers/post_controller.dart';
 import 'package:food_insta/models/post.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
@@ -56,14 +57,23 @@ class _CreatePostState extends State<CreatePost> {
               CustomAppBar(
                 centerTitle: true,
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                    child: _buildForm(context),
-                  ),
-                ),
-              ),
+              Consumer<PostController>(builder: (context, controller, child) {
+                if (controller.newPostState == NewPostState.Loading) {
+                  return Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                } else
+                  return Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                        child: _buildForm(context, controller),
+                      ),
+                    ),
+                  );
+              }),
             ],
           ),
         ),
@@ -71,7 +81,7 @@ class _CreatePostState extends State<CreatePost> {
     ));
   }
 
-  _buildForm(context) {
+  _buildForm(BuildContext context, PostController controller) {
     return CustomAppCard(
       children: [
         SizedBox(height: 16),
@@ -125,7 +135,9 @@ class _CreatePostState extends State<CreatePost> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                Navigator.of(context).pop();
+                controller
+                    .createNewPost(post)
+                    .whenComplete(() => Navigator.of(context).pop());
               }
             },
             textOnButton: 'Post',
