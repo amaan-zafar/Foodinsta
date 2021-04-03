@@ -133,6 +133,7 @@ class _CreatePostState extends State<CreatePost> {
           child: CustomTextButton(
             highlightColor: Colors.lightBlue,
             onPressed: () async {
+              // TODO: change newPostState to loading while creating new post
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 controller
