@@ -5,7 +5,7 @@ class Post {
   String address;
   String location;
   String city;
-  String phone;
+  int phone;
 
   Post({this.product, this.address, this.location, this.city, this.phone});
 

@@ -88,10 +88,10 @@ class CustomHttpClient {
         var response = await _client.post(
           Uri.https(_baseURL, path),
           headers: {
-            'Authorization': jwt,
+            'Authorization': 'Bearer $jwt',
             "Content-Type": "application/json; charset=UTF-8"
           },
-          body: body,
+          body: jsonEncode(body),
         );
         print(
             'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');

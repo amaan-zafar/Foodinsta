@@ -12,6 +12,7 @@ import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/location_controller.dart';
 import 'package:food_insta/controllers/post_controller.dart';
 import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/product.dart';
 import 'package:food_insta/theme.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,6 +25,7 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+  Product product = Product();
   Post post = Post();
   File _foodImg;
   final picker = ImagePicker();
@@ -103,7 +105,7 @@ class _CreatePostState extends State<CreatePost> {
                     _buildQuantity(context),
                     CustomTextField(
                       onSaved: (value) {
-                        post.phone = value;
+                        post.phone = int.parse(value);
                       },
                       keyboardType: TextInputType.phone,
                       hintText: 'Contact Details',
@@ -113,7 +115,7 @@ class _CreatePostState extends State<CreatePost> {
                     ),
                     CustomTextField(
                       onSaved: (value) {
-                        post.product.description = value;
+                        product.description = value;
                       },
                       minLines: 4,
                       maxLines: 4,
@@ -135,6 +137,7 @@ class _CreatePostState extends State<CreatePost> {
               // TODO: change newPostState to loading while creating new post
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
+                post.product = product;
                 controller
                     .createNewPost(post)
                     .whenComplete(() => Navigator.of(context).pop());
@@ -203,7 +206,7 @@ class _CreatePostState extends State<CreatePost> {
           flex: 3,
           child: CustomTextField(
             onSaved: (value) {
-              post.product.weight = value.toString() + ' ' + _selectedUnit;
+              product.weight = '$value $_selectedUnit';
             },
             keyboardType: TextInputType.number,
             hintText: 'Approx. quantity',

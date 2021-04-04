@@ -21,6 +21,7 @@ class PostRepository {
               // "fresh_upto": post.product.freshUpto,
               "weight": post.product.weight
             },
+            "contact_no": post.phone,
             "address": post.address,
             "location": post.location,
             "city": post.city
