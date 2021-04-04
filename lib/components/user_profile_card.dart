@@ -6,13 +6,11 @@ import 'package:food_insta/models/user.dart';
 class UserProfileCard extends StatelessWidget {
   final List<Widget> children;
   final UserObject userObject;
-  // final UserType userType;
 
   const UserProfileCard({
     Key key,
     this.children,
     this.userObject,
-    // this.userType,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -22,44 +20,49 @@ class UserProfileCard extends StatelessWidget {
         width: double.infinity,
         children: [
           CircleAvatar(
-            backgroundImage:
-                userObject == null || userObject.profileImage == null
+            backgroundImage: userObject == null
+                ? AssetImage('assets/placeholder_img.png')
+                : userObject.profileImage == null
                     ? AssetImage('assets/placeholder_img.png')
                     : FileImage(userObject.profileImage),
             radius: 48,
           ),
           SizedBox(height: 12),
           Text(
-            userObject == null ? 'Aggarwal Sweets' : userObject.name,
+            userObject == null ? 'Guest User' : userObject.name,
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.home),
-                Flexible(
-                  child: Text(
-                    userObject == null
-                        ? 'A-41, Sector 47 Gurgaon, Haryana 1010101'
-                        : userObject.address,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyText1,
+          Visibility(
+            visible: userObject != null,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.home),
+                  Flexible(
+                    child: Text(
+                      userObject == null ? '' : userObject.address,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.phone),
-              Text(userObject == null ? '+91-9313093130' : userObject.phone,
-                  style: Theme.of(context).textTheme.bodyText1),
-            ],
+          Visibility(
+            visible: userObject != null,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.phone),
+                Text(userObject == null ? 'Contact Number' : userObject.phone,
+                    style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
           ),
           // SizedBox(height: 10),
           // RatingIndicator(
@@ -70,7 +73,9 @@ class UserProfileCard extends StatelessWidget {
           // ),
           SizedBox(height: 12),
           UserTypeLabel(
-            userType: userObject.userType,
+            userType:
+                // userObject != null ? userObject.userType :
+                UserType.INDIVIDUAL,
             fontSize: 18,
             horizontalPadding: 32,
           ),

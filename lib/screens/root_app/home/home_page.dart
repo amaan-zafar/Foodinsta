@@ -7,6 +7,7 @@ import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/home/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -27,12 +28,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    String currentCity =
-        Provider.of<UserProfileController>(context, listen: false)
-            .userObject
-            .city;
-    cities.add(currentCity);
-    city = currentCity;
+    UserObject userObject =
+        Provider.of<UserProfileController>(context, listen: false).userObject;
+    if (userObject != null) {
+      cities.add(userObject.city);
+      city = userObject.city;
+    }
     super.initState();
   }
 

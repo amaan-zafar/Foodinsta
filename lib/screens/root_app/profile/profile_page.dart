@@ -97,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
         darkThemeProvider.darkTheme ? Styles.black2 : Styles.tileColorLight;
     return DefaultTabController(
       length: 2,
-      initialIndex: _userObject.userType == UserType.NGO
+      initialIndex: _userObject != null && _userObject.userType == UserType.NGO
           ? 1
           : 0, // Changing positions according to user type
       child: Column(
