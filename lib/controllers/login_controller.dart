@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_insta/models/user.dart';
 import 'package:food_insta/repository/auth_repo.dart';
+import 'package:food_insta/controllers/user_profile_controller.dart';
+
+import 'package:provider/provider.dart';
 
 enum LoginState { Initial, Loading, Loaded }
 
@@ -18,6 +22,7 @@ class LoginController with ChangeNotifier {
     map = await authRepository.signInWithGoogle();
     status = map['status'];
     email = map['email'];
+    if (status == 1) {}
     loginState = LoginState.Loaded;
     notifyListeners();
     return email;
