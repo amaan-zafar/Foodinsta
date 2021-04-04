@@ -4,8 +4,11 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
+import 'package:food_insta/screens/auth/login_screen.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
+import 'package:food_insta/utils/authentication.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -58,7 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         )
                       ],
                     ),
-                    SizedBox(height: 18),
+                    SizedBox(height: 12),
                     CustomAppCard(
                       width: double.infinity,
                       children: [
@@ -76,7 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         )
                       ],
                     ),
-                    SizedBox(height: 18),
+                    SizedBox(height: 12),
                     CustomAppCard(
                       width: double.infinity,
                       children: [
@@ -90,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         )
                       ],
                     ),
-                    SizedBox(height: 18),
+                    SizedBox(height: 12),
                     CustomAppCard(
                       width: double.infinity,
                       children: [
@@ -104,7 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         )
                       ],
                     ),
-                    SizedBox(height: 18),
+                    SizedBox(height: 12),
                     CustomAppCard(
                       width: double.infinity,
                       children: [
@@ -118,7 +121,27 @@ class _SettingsPageState extends State<SettingsPage> {
                         )
                       ],
                     ),
-                    SizedBox(height: 18),
+                    SizedBox(height: 12),
+                    CustomAppCard(
+                      width: double.infinity,
+                      children: [
+                        ListTile(
+                          title: Text('Sign out'),
+                          trailing: IconButton(
+                            icon: Icon(MdiIcons.logout),
+                            color: Styles.iconColor,
+                            onPressed: () async {
+                              await Authentication.signOut().whenComplete(() =>
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginPage()),
+                                      (Route<dynamic> route) => false));
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 12),
                   ],
                 ),
               )
