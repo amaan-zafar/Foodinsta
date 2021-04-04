@@ -16,12 +16,12 @@ class UserProfileController with ChangeNotifier {
     notifyListeners();
   }
 
-  get userType => this._userType;
+  // get userType => this._userType;
 
-  setUsertype(value) {
-    this._userType = value;
-    notifyListeners();
-  }
+  // setUsertype(value) {
+  //   this._userType = value;
+  //   notifyListeners();
+  // }
 
   setUserTypeState(value) {
     userTypeState = value;
