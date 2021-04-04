@@ -27,7 +27,7 @@ class UserTypePage extends StatelessWidget {
                 CustomAppBar(
                   centerTitle: true,
                 ),
-                Consumer<AppUserController>(
+                Consumer<UserProfileController>(
                     builder: (context, controller, child) {
                   if (controller.userTypeState == UserTypeState.Loading) {
                     return Expanded(
@@ -87,7 +87,7 @@ class UserTypePage extends StatelessWidget {
   }
 
   SizedBox _buildButton(BuildContext context, String text, UserType userType,
-      AppUserController controller) {
+      UserProfileController controller) {
     return SizedBox(
       width: double.infinity,
       child: CustomTextButton(

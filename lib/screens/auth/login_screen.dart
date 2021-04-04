@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () async {
                                   String email =
                                       await controller.loginWithGoogle();
-                                  Provider.of<AppUserController>(context,
+                                  Provider.of<UserProfileController>(context,
                                       listen: false);
 
                                   if (controller.status == 1) {

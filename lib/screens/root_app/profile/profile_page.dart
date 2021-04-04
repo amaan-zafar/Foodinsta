@@ -50,8 +50,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    AppUserController controller =
-        Provider.of<AppUserController>(context, listen: false);
+    UserProfileController controller =
+        Provider.of<UserProfileController>(context, listen: false);
     _userObject = controller.userObject;
     _userType = controller.userType;
     return Column(

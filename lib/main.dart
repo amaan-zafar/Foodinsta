@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
             create: (context) => LocationController(),
           ),
           ChangeNotifierProvider(
-            create: (context) => AppUserController(),
+            create: (context) => UserProfileController(),
           ),
         ],
         child: Consumer<DarkThemeProvider>(builder: (context, value, child) {

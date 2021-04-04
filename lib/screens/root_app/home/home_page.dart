@@ -28,7 +28,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     String currentCity =
-        Provider.of<AppUserController>(context, listen: false).userObject.city;
+        Provider.of<UserProfileController>(context, listen: false)
+            .userObject
+            .city;
     cities.add(currentCity);
     city = currentCity;
     super.initState();

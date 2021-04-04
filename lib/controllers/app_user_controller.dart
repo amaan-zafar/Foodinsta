@@ -3,7 +3,7 @@ import 'package:food_insta/models/user.dart';
 
 enum UserTypeState { Initial, Loading, Loaded }
 
-class AppUserController with ChangeNotifier {
+class UserProfileController with ChangeNotifier {
   UserObject _userObject = UserObject();
   UserType _userType;
 

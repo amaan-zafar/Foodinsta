@@ -8,7 +8,7 @@ enum RegistrationState { Initial, Loading, Loaded }
 
 class RegisController with ChangeNotifier {
   final RegistrationRepository registrationRepository;
-  AppUserController controller;
+  UserProfileController controller;
   RegistrationState registrationState = RegistrationState.Initial;
 
   RegisController(this.registrationRepository);
@@ -17,7 +17,8 @@ class RegisController with ChangeNotifier {
     registrationState = RegistrationState.Loading;
     notifyListeners();
     await registrationRepository.registerUser(obj);
-    Provider.of<AppUserController>(context, listen: false).setUserObject(obj);
+    Provider.of<UserProfileController>(context, listen: false)
+        .setUserObject(obj);
     registrationState = RegistrationState.Loaded;
     notifyListeners();
   }

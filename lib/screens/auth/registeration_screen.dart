@@ -345,7 +345,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
             children: [
               CheckboxListTile(
                 onChanged: (bool value) {
-                  Provider.of<AppUserController>(context, listen: false)
+                  Provider.of<UserProfileController>(context, listen: false)
                       .setUsertype(value == true
                           ? UserType.VOLUNTEER
                           : UserType.INDIVIDUAL);
