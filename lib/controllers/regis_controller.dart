@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_insta/controllers/app_user_controller.dart';
+import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/repository/registration_repo.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:provider/provider.dart';

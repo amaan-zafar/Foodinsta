@@ -4,7 +4,7 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/user_profile_card.dart';
 import 'package:food_insta/components/order_status_label.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
-import 'package:food_insta/controllers/app_user_controller.dart';
+import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
