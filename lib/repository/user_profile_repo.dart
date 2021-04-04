@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:food_insta/models/user.dart';
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:food_insta/utils/Failure.dart';
 
@@ -9,13 +10,13 @@ class UserProfileRepository {
     this._customHttpClient,
   );
 
-  Future<dynamic> getUserProfile(id) async {
+  Future<UserObject> getUserProfile() async {
     try {
       var response = await _customHttpClient.getRequest('users/profile',
           requireAuth: true);
       print('response is $response');
-
-      return response;
+      UserObject userObject = UserObject.fromProfileJson(response);
+      return userObject;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
@@ -26,7 +27,7 @@ class UserProfileRepository {
     }
   }
 
-  Future<dynamic> getUserProfileWith(id) async {
+  Future<UserObject> getUserProfileWith(id) async {
     var queryParameters = {
       'static_id': id,
     };
@@ -36,7 +37,8 @@ class UserProfileRepository {
           requireAuth: true);
       print('response is $response');
 
-      return response;
+      UserObject userObject = UserObject.fromProfileJson(response);
+      return userObject;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');

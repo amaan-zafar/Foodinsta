@@ -15,14 +15,20 @@ class CustomHttpClient {
   Future<dynamic> getRequest(String path, {@required bool requireAuth}) async {
     try {
       if (requireAuth) {
+        var jwt = await _secureStorage.read(key: 'access');
         var response = await _client.get(Uri.https(_baseURL, path),
-            headers: {'Authorization': await _secureStorage.read(key: 'JWT')});
+            headers: {'Authorization': 'Bearer $jwt'});
+        print(
+            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode != 200)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
+
         return jsonDecode(response.body);
       } else {
         var response = await _client.get(Uri.https(_baseURL, path));
+        print(
+            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode != 200)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
@@ -43,15 +49,21 @@ class CustomHttpClient {
       {@required bool requireAuth}) async {
     try {
       if (requireAuth) {
+        var jwt = await _secureStorage.read(key: 'access');
+
         var uri = Uri.https(_baseURL, path, queryParameters);
-        var response = await _client.get(uri,
-            headers: {'Authorization': await _secureStorage.read(key: 'JWT')});
+        var response =
+            await _client.get(uri, headers: {'Authorization': 'Bearer $jwt'});
+        print(
+            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode != 200)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
         return jsonDecode(response.body);
       } else {
         var response = await _client.get(Uri.https(_baseURL, path));
+        print(
+            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode != 200)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
@@ -72,7 +84,7 @@ class CustomHttpClient {
       {bool requireAuth = false}) async {
     try {
       if (requireAuth) {
-        var jwt = await _secureStorage.read(key: 'JWT');
+        var jwt = await _secureStorage.read(key: 'access');
         var response = await _client.post(
           Uri.https(_baseURL, path),
           headers: {
@@ -81,7 +93,9 @@ class CustomHttpClient {
           },
           body: body,
         );
-        if (response.statusCode != 200)
+        print(
+            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
+        if (response.statusCode != 200 && response.statusCode != 201)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
         return json.decode(response.body);
@@ -91,8 +105,9 @@ class CustomHttpClient {
           body: jsonEncode(body),
           headers: {"Content-Type": "application/json; charset=UTF-8"},
         );
-        print('Respose body at customhttp is ${response.body}');
-        if (response.statusCode != 200)
+        print(
+            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
+        if (response.statusCode != 200 && response.statusCode != 201)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
         return json.decode(response.body);
@@ -112,13 +127,14 @@ class CustomHttpClient {
       {@required bool requireAuth}) async {
     try {
       if (requireAuth) {
-        var jwt = await _secureStorage.read(key: 'JWT');
+        var jwt = await _secureStorage.read(key: 'access');
         var response = await _client.post(
           Uri.https(_baseURL, path),
           headers: {'Authorization': jwt},
           body: body,
         );
-        print(response);
+        print(
+            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
       } else {
         await _client.post(Uri.https(_baseURL, path), body: body);
       }

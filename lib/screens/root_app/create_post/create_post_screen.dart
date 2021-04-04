@@ -12,7 +12,6 @@ import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/location_controller.dart';
 import 'package:food_insta/controllers/post_controller.dart';
 import 'package:food_insta/models/post.dart';
-import 'package:food_insta/screens/root_app/root_app.dart';
 import 'package:food_insta/theme.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:image_picker/image_picker.dart';

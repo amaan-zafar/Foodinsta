@@ -10,6 +10,7 @@ import 'package:food_insta/repository/auth_repo.dart';
 import 'package:food_insta/repository/products_repo.dart';
 import 'package:food_insta/repository/ngo_list_repo.dart';
 import 'package:food_insta/repository/registration_repo.dart';
+import 'package:food_insta/repository/user_profile_repo.dart';
 import 'package:food_insta/route_generator.dart';
 import 'package:food_insta/screens/auth/login_screen.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
@@ -20,7 +21,6 @@ import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:food_insta/controllers/location_controller.dart';
 import 'package:food_insta/controllers/post_controller.dart';
-
 import 'controllers/dark_theme_provder.dart';
 
 Future<void> main() async {
@@ -48,6 +48,8 @@ Future<void> main() async {
       NgoListRepository(_customHttpClient);
 
   final PostRepository postRepo = PostRepository(_customHttpClient);
+  final UserProfileRepository userProfileRepo =
+      UserProfileRepository(_customHttpClient);
 
   bool isloggedIn = !((await _secureStorage.read(key: 'access')) == null);
 
@@ -58,6 +60,7 @@ Future<void> main() async {
     registrationRepository: registrationRepository,
     ngoListRepository: ngoListRepository,
     postRepo: postRepo,
+    userProfileRepo: userProfileRepo,
   ));
 }
 
@@ -65,6 +68,7 @@ class MyApp extends StatelessWidget {
   final DarkThemeProvider darkThemeProvider;
   final bool isLoggedIn;
   final AuthRepository authRepository;
+  final UserProfileRepository userProfileRepo;
   final RegistrationRepository registrationRepository;
   final NgoListRepository ngoListRepository;
   final PostRepository postRepo;
@@ -72,7 +76,8 @@ class MyApp extends StatelessWidget {
       {this.authRepository,
       this.registrationRepository,
       this.ngoListRepository,
-      this.postRepo});
+      this.postRepo,
+      this.userProfileRepo});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +87,8 @@ class MyApp extends StatelessWidget {
             create: (context) => darkThemeProvider,
           ),
           ChangeNotifierProvider(
-            create: (context) => LoginController(authRepository),
+            create: (context) =>
+                LoginController(authRepository, userProfileRepo),
           ),
           ChangeNotifierProvider(
             create: (context) => RegisController(registrationRepository),

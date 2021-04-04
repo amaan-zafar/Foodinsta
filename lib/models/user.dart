@@ -3,20 +3,20 @@ import 'dart:io';
 enum UserType { NGO, BUSINESS, INDIVIDUAL, VOLUNTEER }
 
 class UserObject {
-  final String name;
-  final String city;
-  final String phone;
-  final String address;
-  final File profileImage;
-  final String email;
-  final UserType userType;
+  String name;
+  String city;
+  String phone;
+  String address;
+  File profileImage;
+  String email;
+  UserType userType;
 
-  final String regisNo;
-  final File idPhoto;
+  String regisNo;
+  File idPhoto;
 
-  final bool isVol;
-  final String orgId;
-  final String volId;
+  bool isVol;
+  String orgId;
+  String volId;
 
   UserObject(
       {this.name,
@@ -31,4 +31,19 @@ class UserObject {
       this.phone,
       this.profileImage,
       this.regisNo});
+
+  UserObject.fromProfileJson(Map<String, dynamic> json) {
+    phone = json['contact_no'].toString();
+    userType = json['member_type'] == 'Individual'
+        ? UserType.INDIVIDUAL
+        : json['member_type'] == 'Volunteer'
+            ? UserType.VOLUNTEER
+            : json['member_type'] == 'Business'
+                ? UserType.BUSINESS
+                : UserType.NGO;
+    profileImage = json['profile_pic'];
+    address = json['address'];
+    city = json['city'];
+    name = json['name'];
+  }
 }

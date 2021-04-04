@@ -12,4 +12,14 @@ class DarkThemePreference {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool(THEME_STATUS) ?? false;
   }
+
+  setLoggedInEmail(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('EMAIL', value);
+  }
+
+  Future<String> getLoggedInEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('EMAIL') ?? null;
+  }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
-import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/screens/auth/user_type_screen.dart';
 import 'package:food_insta/screens/root_app/root_app.dart';
@@ -60,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                                     borderRadius: BorderRadius.circular(16)),
                                 onPressed: () async {
                                   String email =
-                                      await controller.loginWithGoogle();
+                                      await controller.loginWithGoogle(context);
 
                                   if (controller.status == 1) {
                                     Navigator.of(context).pushReplacement(

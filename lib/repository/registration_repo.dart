@@ -44,7 +44,23 @@ class RegistrationRepository {
                 "address": obj.address,
               },
               "name": obj.name,
-              "is_volunteer": obj.isVol,
+              "is_volunteer": false,
+              "id_number": obj.volId,
+            },
+            requireAuth: false);
+      } else if (obj.userType == UserType.VOLUNTEER) {
+        response = await _customHttpClient.postRequest(
+            'users/register/individual/',
+            {
+              "member": {
+                "auth_user": {"email": obj.email},
+                "contact_no": int.parse(obj.phone),
+                "member_type": "Individual",
+                "city": obj.city,
+                "address": obj.address,
+              },
+              "name": obj.name,
+              "is_volunteer": true,
               "id_number": obj.volId,
               "ngo_static_id": obj.orgId
             },
