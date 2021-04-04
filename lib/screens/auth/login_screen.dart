@@ -61,14 +61,11 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () async {
                                   String email =
                                       await controller.loginWithGoogle();
-                                  Provider.of<UserProfileController>(context,
-                                      listen: false);
 
                                   if (controller.status == 1) {
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            RootApp(email: email),
+                                        builder: (context) => RootApp(),
                                       ),
                                     );
                                   } else if (controller.status == 2) {

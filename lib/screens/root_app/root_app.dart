@@ -14,9 +14,6 @@ import 'package:food_insta/screens/root_app/qr_code/scan_qr.dart';
 int pageIndex = 0;
 
 class RootApp extends StatefulWidget {
-  final String email;
-
-  const RootApp({Key key, this.email}) : super(key: key);
   @override
   _RootAppState createState() => _RootAppState();
 }
