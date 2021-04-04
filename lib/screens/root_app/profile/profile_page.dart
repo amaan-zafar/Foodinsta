@@ -22,7 +22,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserObject _userObject;
-  UserType _userType;
 
   List<Order> orders = [
     Order(
@@ -53,7 +52,6 @@ class _ProfilePageState extends State<ProfilePage> {
     UserProfileController controller =
         Provider.of<UserProfileController>(context, listen: false);
     _userObject = controller.userObject;
-    _userType = controller.userType;
     return Column(
       children: [
         // AppBar
@@ -81,7 +79,6 @@ class _ProfilePageState extends State<ProfilePage> {
             physics: BouncingScrollPhysics(),
             child: UserProfileCard(
               userObject: _userObject,
-              userType: _userType,
               children: [
                 SizedBox(height: 8),
                 Divider(),
@@ -100,8 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
         darkThemeProvider.darkTheme ? Styles.black2 : Styles.tileColorLight;
     return DefaultTabController(
       length: 2,
-      initialIndex:
-          _userType == UserType.NGO ? 1 : 0, // Change it according to user type
+      initialIndex: _userObject.userType == UserType.NGO
+          ? 1
+          : 0, // Changing positions according to user type
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -118,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           Container(
-              height: 400, //height of TabBarView
+              height: 400,
               decoration: BoxDecoration(
                   border:
                       Border(top: BorderSide(color: Colors.grey, width: 0.5))),

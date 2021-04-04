@@ -3,7 +3,6 @@ import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/controllers/regis_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
-import 'package:food_insta/controllers/app_user_controller.dart';
 import 'package:food_insta/repository/ngo_list_repo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +29,13 @@ class RegistrationForm extends StatefulWidget {
     this.email,
   }) : super(key: key);
   @override
-  _RegistrationFormState createState() => _RegistrationFormState();
+  _RegistrationFormState createState() => _RegistrationFormState(userType);
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
   // Common fields
   String _name;
+  UserType _userType;
   String _city;
   String _phone;
   String _address;
@@ -53,6 +53,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final _formKey = GlobalKey<FormState>();
   File _idProofImg;
   final picker = ImagePicker();
+
+  _RegistrationFormState(this._userType);
 
   String _validate(String value, bool isRequired) {
     if (value.isEmpty && isRequired) return Constants.ERR_EMPTY_FIELD;
@@ -140,7 +142,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   _buildForm(DarkThemeProvider darkThemeProvider) {
-    String userTypeName = _getUserTypeName(widget.userType);
+    String userTypeName = _getUserTypeName(_userType);
     return CustomAppCard(
       children: [
         SizedBox(height: 16),
@@ -231,7 +233,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         .register(
                             UserObject(
                               name: _name,
-                              userType: widget.userType,
+                              userType: _userType,
                               address: _address,
                               city: _city,
                               email: widget.email,
@@ -339,16 +341,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   Widget _buildVolunteerFields(DarkThemeProvider darkThemeProvider) {
-    return widget.userType == UserType.INDIVIDUAL ||
-            widget.userType == UserType.VOLUNTEER
+    return _userType == UserType.INDIVIDUAL || _userType == UserType.VOLUNTEER
         ? Column(
             children: [
               CheckboxListTile(
                 onChanged: (bool value) {
-                  Provider.of<UserProfileController>(context, listen: false)
-                      .setUsertype(value == true
-                          ? UserType.VOLUNTEER
-                          : UserType.INDIVIDUAL);
+                  _userType =
+                      value == true ? UserType.VOLUNTEER : UserType.INDIVIDUAL;
                   setState(() {
                     _isVolunteer = value;
                   });
@@ -425,7 +424,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   Widget _buildNgoFields() {
-    return widget.userType == UserType.NGO
+    return _userType == UserType.NGO
         ? Column(
             children: [
               CustomTextField(

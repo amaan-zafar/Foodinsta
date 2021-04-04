@@ -6,13 +6,13 @@ import 'package:food_insta/models/user.dart';
 class UserProfileCard extends StatelessWidget {
   final List<Widget> children;
   final UserObject userObject;
-  final UserType userType;
+  // final UserType userType;
 
   const UserProfileCard({
     Key key,
     this.children,
     this.userObject,
-    this.userType,
+    // this.userType,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class UserProfileCard extends StatelessWidget {
           // ),
           SizedBox(height: 12),
           UserTypeLabel(
-            userType: userType,
+            userType: userObject.userType,
             fontSize: 18,
             horizontalPadding: 32,
           ),
