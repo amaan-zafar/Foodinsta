@@ -87,8 +87,7 @@ class MyApp extends StatelessWidget {
             create: (context) => darkThemeProvider,
           ),
           ChangeNotifierProvider(
-            create: (context) =>
-                LoginController(authRepository, userProfileRepo),
+            create: (context) => LoginController(authRepository),
           ),
           ChangeNotifierProvider(
             create: (context) => RegisController(registrationRepository),
@@ -103,7 +102,7 @@ class MyApp extends StatelessWidget {
             create: (context) => LocationController(),
           ),
           ChangeNotifierProvider(
-            create: (context) => UserProfileController(),
+            create: (context) => UserProfileController(userProfileRepo),
           ),
         ],
         child: Consumer<DarkThemeProvider>(builder: (context, value, child) {

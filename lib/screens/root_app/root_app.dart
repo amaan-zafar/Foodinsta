@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_bottomnavbar.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
+import 'package:food_insta/controllers/user_profile_controller.dart';
+import 'package:food_insta/models/user.dart';
+import 'package:food_insta/repository/user_profile_repo.dart';
 import 'package:food_insta/screens/root_app/home/home_page.dart';
 import 'package:food_insta/screens/root_app/map_screen.dart';
 import 'package:food_insta/screens/root_app/profile/profile_page.dart';
@@ -20,9 +23,15 @@ class RootApp extends StatefulWidget {
 
 class _RootAppState extends State<RootApp> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<UserProfileController>(context, listen: false)
+        .loadUserProfile();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
-
     return Scaffold(
       body: buildBody(context),
       floatingActionButton: Container(
