@@ -33,12 +33,14 @@ class _HomePageState extends State<HomePage> {
     if (userObject != null) {
       cities.add(userObject.city);
       city = userObject.city;
-    }
+    } else
+      city = 'Delhi';
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (city == null) city = 'Delhi';
     return Column(
       children: [
         // AppBar
@@ -126,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: new Text(
-                    value,
+                    city,
                     overflow: TextOverflow.clip,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
