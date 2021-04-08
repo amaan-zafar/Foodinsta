@@ -46,10 +46,10 @@ class _RootAppState extends State<RootApp> {
         child: FloatingActionButton(
           backgroundColor: Styles.iconColor,
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CreatePost()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CreatePostPage()));
           },
-          tooltip: 'Create a Post',
+          tooltip: 'Create a CreatePost',
           child: Icon(Icons.add),
           elevation: 0.0,
         ),

@@ -4,7 +4,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/profile_card.dart';
 import 'package:food_insta/components/launcher_widgets.dart';
-import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/create_post.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../theme.dart';

@@ -6,7 +6,7 @@ import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
-import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/create_post.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/screens/root_app/home/settings_page.dart';
 import 'package:food_insta/theme.dart';

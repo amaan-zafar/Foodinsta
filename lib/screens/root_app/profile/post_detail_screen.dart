@@ -5,7 +5,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/components/item_card.dart';
-import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/create_post.dart';
 import 'package:food_insta/screens/root_app/profile/qrcode_page.dart';
 import 'package:food_insta/screens/root_app/profile/requests_page.dart';
 import 'package:food_insta/theme.dart';

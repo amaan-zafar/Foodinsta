@@ -1,15 +1,16 @@
 import 'package:food_insta/models/product.dart';
 
-class Post {
+class CreatePost {
   Product product;
   String address;
   String location;
   String city;
   int phone;
 
-  Post({this.product, this.address, this.location, this.city, this.phone});
+  CreatePost(
+      {this.product, this.address, this.location, this.city, this.phone});
 
-  Post.fromJson(Map<String, dynamic> json) {
+  CreatePost.fromJson(Map<String, dynamic> json) {
     product =
         json['product'] != null ? new Product.fromJson(json['product']) : null;
     address = json['address'];

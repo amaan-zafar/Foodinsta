@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:food_insta/utils/Failure.dart';
-import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/create_post.dart';
 
 class PostRepository {
   final CustomHttpClient _customHttpClient;
@@ -10,7 +10,7 @@ class PostRepository {
     this._customHttpClient,
   );
 
-  Future<void> createPost(Post post) async {
+  Future<void> createPost(CreatePost post) async {
     var response;
     try {
       response = response = await _customHttpClient.postRequest(

@@ -93,7 +93,7 @@ class Styles {
         fontSize: 18,
         fontWeight: FontWeight.w700,
         letterSpacing: 0.37), // Buttons
-    // Post Caption
+    // CreatePost Caption
     caption: GoogleFonts.nunito(
         fontSize: 11, fontWeight: FontWeight.w400, letterSpacing: -0.17),
     overline: GoogleFonts.nunito(

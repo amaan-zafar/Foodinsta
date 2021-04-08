@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/repository/products_repo.dart';
-import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/create_post.dart';
 
 enum NewPostState { Initial, Loading, Loaded }
 
@@ -10,7 +10,7 @@ class PostController with ChangeNotifier {
 
   PostController(this.postRepository);
 
-  Future<void> createNewPost(Post post) async {
+  Future<void> createNewPost(CreatePost post) async {
     notifyListeners();
     await postRepository.createPost(post);
   }

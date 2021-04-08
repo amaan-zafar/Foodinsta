@@ -11,7 +11,7 @@ import 'package:food_insta/components/custom_textfield.dart';
 import 'package:food_insta/constants.dart' as Constants;
 import 'package:food_insta/controllers/location_controller.dart';
 import 'package:food_insta/controllers/post_controller.dart';
-import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/create_post.dart';
 import 'package:food_insta/models/product.dart';
 import 'package:food_insta/theme.dart';
 import 'package:geocoder/geocoder.dart';
@@ -19,14 +19,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
-class CreatePost extends StatefulWidget {
+class CreatePostPage extends StatefulWidget {
   @override
-  _CreatePostState createState() => _CreatePostState();
+  _CreatePostPageState createState() => _CreatePostPageState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class _CreatePostPageState extends State<CreatePostPage> {
   Product product = Product();
-  Post post = Post();
+  CreatePost post = CreatePost();
   File _foodImg;
   final picker = ImagePicker();
   String _selectedUnit = 'kg';
@@ -143,7 +143,7 @@ class _CreatePostState extends State<CreatePost> {
                     .whenComplete(() => Navigator.of(context).pop());
               }
             },
-            textOnButton: 'Post',
+            textOnButton: 'CreatePost',
             color: Styles.buttonColor2,
           ),
         ),

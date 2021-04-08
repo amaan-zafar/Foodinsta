@@ -11,7 +11,7 @@ import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/screens/root_app/qr_code/deal_completed.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/models/order.dart';
-import 'package:food_insta/models/post.dart';
+import 'package:food_insta/models/create_post.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:food_insta/models/user_post.dart';
@@ -158,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   //     ? Scaffold.of(context)
                                   //         .showSnackBar(SnackBar(
                                   //         content: Text(
-                                  //             "Deal Completed! Post is not available now."),
+                                  //             "Deal Completed! CreatePost is not available now."),
                                   //       ))
                                   : Scaffold.of(context).showSnackBar(SnackBar(
                                       content: Text("Your post has expired")));
@@ -270,8 +270,8 @@ class _ProfilePageState extends State<ProfilePage> {
             onTap: () {
               status == ORDERSTATUS.COMPLETED
                   ? Scaffold.of(context).showSnackBar(SnackBar(
-                      content:
-                          Text("Deal Completed! Post is not available now."),
+                      content: Text(
+                          "Deal Completed! CreatePost is not available now."),
                     ))
                   : Navigator.push(
                       context,
