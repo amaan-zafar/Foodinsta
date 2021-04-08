@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:food_insta/utils/Failure.dart';
+import 'package:food_insta/models/user_post.dart';
 
 class UserProfileRepository {
   final CustomHttpClient _customHttpClient;
@@ -49,13 +50,16 @@ class UserProfileRepository {
     }
   }
 
-  Future<dynamic> getUserPostsList(id) async {
+  Future<List<UserPost>> getUserPostsList() async {
     try {
       var response = await _customHttpClient.getRequest('products/all_posts',
           requireAuth: true);
-      print('response is $response');
+      List<UserPost> userPosts = [];
+      response.forEach((i) {
+        userPosts.add(UserPost.fromJson(i));
+      });
 
-      return response;
+      return userPosts;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
@@ -66,7 +70,7 @@ class UserProfileRepository {
     }
   }
 
-  Future<dynamic> getPostRequestsLis(id) async {
+  Future<dynamic> getPostRequestsList(id) async {
     var queryParameters = {
       'static_id': id,
     };
@@ -87,7 +91,7 @@ class UserProfileRepository {
     }
   }
 
-  Future<dynamic> getUserOrdersList(id) async {
+  Future<dynamic> getUserOrdersList() async {
     try {
       var response = await _customHttpClient.getRequest('products/all_orders',
           requireAuth: true);

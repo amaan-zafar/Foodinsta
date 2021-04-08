@@ -14,6 +14,7 @@ import 'package:food_insta/models/order.dart';
 import 'package:food_insta/models/post.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:food_insta/models/user_post.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -22,35 +23,12 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserObject _userObject;
-
-  List<Order> orders = [
-    Order(
-        orderedTo: "Ayush grawal",
-        createdTime: "26-03-2021 15:06:04",
-        image: null,
-        orderStatus: ORDERSTATUS.PENDING),
-    Order(
-        orderedTo: "Ayush kumar",
-        createdTime: "26-03-2021 15:06:04",
-        image: null,
-        orderStatus: ORDERSTATUS.APPROVED),
-    Order(
-        orderedTo: "Ayush pandey",
-        createdTime: "26-03-2021 15:06:04",
-        image: null,
-        orderStatus: ORDERSTATUS.COMPLETED),
-    Order(
-        orderedTo: "kunal grawal",
-        createdTime: "26-03-2021 15:06:04",
-        image: null,
-        orderStatus: ORDERSTATUS.APPROVED)
-  ];
-  List<Post> posts = [];
+  List<UserPost> userPosts = [];
+  UserProfileController controller;
 
   @override
   Widget build(BuildContext context) {
-    UserProfileController controller =
-        Provider.of<UserProfileController>(context, listen: false);
+    controller = Provider.of<UserProfileController>(context);
     _userObject = controller.userObject;
     return Column(
       children: [
@@ -133,91 +111,135 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildPostsTab(Color tileColor) {
-    return Container(
-        child: ListView.separated(
-            itemBuilder: (context, index) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(32),
-                child: ListTile(
-                  onTap: () {
-                    myPostJson[index]['status'] == 0
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PostDetail(index: index)))
-                        : myPostJson[index]['status'] == 1
-                            ? Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    "Deal Completed! Post is not available now."),
-                              ))
-                            : Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text("Post has been removed")));
-                  },
-                  tileColor: tileColor,
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      child: Image(
-                        image: myPostJson[index]['img_url'] == null
-                            ? AssetImage('assets/food_large.png')
-                            : NetworkImage(myPostJson[index]['img_url']),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  title: myPostJson[index]['status'] == 0
-                      ? Row(
-                          children: [
-                            Icon(MdiIcons.accountGroup,
-                                color: Styles.customRequestButtonColor),
-                            SizedBox(width: 8),
-                            Text(myPostJson[index]['num_of_requests']
-                                .toString()),
-                            Spacer(),
-                          ],
-                        )
-                      : myPostJson[index]['status'] == 1
-                          ? Text('Finished')
-                          : Text('Removed'),
-                  subtitle: Row(
-                    children: [
-                      Icon(MdiIcons.weight, color: Styles.blueIconColor),
-                      SizedBox(width: 8),
-                      Text(
-                        myPostJson[index]['weight'],
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                  trailing: CustomIconButton(
-                    color: myPostJson[index]['status'] == 0
-                        ? Styles.iconColor
-                        : myPostJson[index]['status'] == 1
-                            ? Styles.customApprovedButtonColor
-                            : Styles.customDeclineButtonColor,
-                    height: double.infinity,
-                    elevation: 0,
-                    onPressed: () {},
-                    icon: Icon(
-                      myPostJson[index]['status'] == 0
-                          ? MdiIcons.qrcode
-                          : myPostJson[index]['status'] == 1
-                              ? MdiIcons.check
-                              : MdiIcons.close,
-                      color: Colors.white,
-                    ),
-                  ),
+    return FutureBuilder<List<UserPost>>(
+        future: controller.getUserPosts(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.none)
+            return Container(
+              child: Center(
+                child: Text('Check your internet connection'),
+              ),
+            );
+          else if (snapshot.connectionState == ConnectionState.waiting)
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          else {
+            if (snapshot.hasError)
+              return new Text('Error: ${snapshot.error}');
+            else if (snapshot.data == null)
+              return Container(
+                child: Center(
+                  child: Text('You have not created any post'),
                 ),
               );
-            },
-            separatorBuilder: (_, i) => SizedBox(height: 12),
-            itemCount: myPostJson.length));
+            else {
+              userPosts = snapshot.data;
+              print('userpostsss is $userPosts');
+              print(userPosts[0].staticId);
+              print('List is ${snapshot.data}');
+              return Container(
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(32),
+                          child: ListTile(
+                            onTap: () {
+                              userPosts[index].postStatus ==
+                                      UserPostStatus.Active
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PostDetail(index: index)))
+                                  // : myPostJson[index]['status'] == 1
+                                  //     ? Scaffold.of(context)
+                                  //         .showSnackBar(SnackBar(
+                                  //         content: Text(
+                                  //             "Deal Completed! Post is not available now."),
+                                  //       ))
+                                  : Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Your post has expired")));
+                            },
+                            tileColor: tileColor,
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Container(
+                                width: 48,
+                                height: 48,
+                                child: Image(
+                                  image: myPostJson[index]['img_url'] == null
+                                      ? AssetImage('assets/food_large.png')
+                                      : NetworkImage(
+                                          myPostJson[index]['img_url']),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            title: userPosts[index].postStatus ==
+                                    UserPostStatus.Active
+                                ? Row(
+                                    children: [
+                                      Icon(MdiIcons.accountGroup,
+                                          color:
+                                              Styles.customRequestButtonColor),
+                                      SizedBox(width: 8),
+                                      Text(myPostJson[index]['num_of_requests']
+                                          .toString()),
+                                      Spacer(),
+                                    ],
+                                  )
+                                : userPosts[index].postStatus ==
+                                        UserPostStatus.Expired
+                                    ? Text('Expired')
+                                    : Text('Completed'),
+                            subtitle: Row(
+                              children: [
+                                Icon(MdiIcons.weight,
+                                    color: Styles.blueIconColor),
+                                SizedBox(width: 8),
+                                Text(
+                                  myPostJson[index]['weight'],
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .copyWith(fontWeight: FontWeight.w600),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                            trailing: CustomIconButton(
+                              color: userPosts[index].postStatus ==
+                                      UserPostStatus.Active
+                                  ? Styles.iconColor
+                                  : userPosts[index].postStatus ==
+                                          UserPostStatus.Completed
+                                      ? Styles.customApprovedButtonColor
+                                      : Styles.customDeclineButtonColor,
+                              height: double.infinity,
+                              elevation: 0,
+                              onPressed: () {},
+                              icon: Icon(
+                                userPosts[index].postStatus ==
+                                        UserPostStatus.Active
+                                    ? MdiIcons.qrcode
+                                    : userPosts[index].postStatus ==
+                                            UserPostStatus.Active
+                                        ? MdiIcons.check
+                                        : MdiIcons.close,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (_, i) => SizedBox(height: 12),
+                      itemCount: userPosts.length));
+            }
+          }
+        });
   }
 
   Widget buildOrdersTab(Color tileColor) {
