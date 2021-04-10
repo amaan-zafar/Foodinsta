@@ -152,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           builder: (context) =>
                                               PostDetailScreen(
                                                 index: index,
-                                                postId:
+                                                postStaticId:
                                                     userPosts[index].staticId,
                                               )))
                                   // : myPostJson[index]['status'] == 1

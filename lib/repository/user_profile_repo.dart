@@ -3,6 +3,7 @@ import 'package:food_insta/models/user.dart';
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:food_insta/utils/Failure.dart';
 import 'package:food_insta/models/user_post.dart';
+import 'package:food_insta/models/post_request.dart';
 
 class UserProfileRepository {
   final CustomHttpClient _customHttpClient;
@@ -28,7 +29,7 @@ class UserProfileRepository {
     }
   }
 
-  Future<UserObject> getUserProfileWith(id) async {
+  Future<UserObject> getUserProfileWithId(id) async {
     var queryParameters = {
       'static_id': id,
     };
@@ -51,10 +52,10 @@ class UserProfileRepository {
   }
 
   Future<List<UserPost>> getUserPostsList() async {
+    List<UserPost> userPosts = [];
     try {
       var response = await _customHttpClient.getRequest('products/all_posts',
           requireAuth: true);
-      List<UserPost> userPosts = [];
       response.forEach((i) {
         userPosts.add(UserPost.fromJson(i));
       });
@@ -70,17 +71,19 @@ class UserProfileRepository {
     }
   }
 
-  Future<dynamic> getPostRequestsList(id) async {
+  Future<List<PostRequest>> getPostRequestsList(id) async {
+    List<PostRequest> postRequests = [];
     var queryParameters = {
       'static_id': id,
     };
     try {
       var response = await _customHttpClient.getRequestWithParams(
-          'products/all_posts', queryParameters,
+          'products/all_requests', queryParameters,
           requireAuth: true);
-      print('response is $response');
-
-      return response;
+      response.forEach((i) {
+        postRequests.add(PostRequest.fromJson(i));
+      });
+      return postRequests;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');

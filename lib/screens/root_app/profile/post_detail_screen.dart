@@ -16,8 +16,8 @@ import 'package:provider/provider.dart';
 
 class PostDetailScreen extends StatefulWidget {
   final int index;
-  final String postId;
-  PostDetailScreen({Key key, this.index, this.postId}) : super(key: key);
+  final String postStaticId;
+  PostDetailScreen({Key key, this.index, this.postStaticId}) : super(key: key);
 
   @override
   _PostDetailState createState() => _PostDetailState();
@@ -53,7 +53,7 @@ class _PostDetailState extends State<PostDetailScreen> {
               Expanded(
                 child: FutureBuilder<PostDetail>(
                     future: Provider.of<PostController>(context)
-                        .getPostDetail(widget.postId),
+                        .getPostDetail(widget.postStaticId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.none)
                         return Container(
@@ -94,8 +94,10 @@ class _PostDetailState extends State<PostDetailScreen> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      RequestsPage()));
+                                                  builder: (_) => RequestsPage(
+                                                        postStaticId:
+                                                            widget.postStaticId,
+                                                      )));
                                         },
                                         textOnButton: 'Show requests',
                                         color: Styles.customRequestButtonColor,

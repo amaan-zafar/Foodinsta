@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/models/user.dart';
 
 class ProfileCard extends StatelessWidget {
   final List<Widget> children;
+  final UserObject userObject;
   final json;
   final int index;
 
-  const ProfileCard({Key key, this.children, this.json, this.index})
+  const ProfileCard(
+      {Key key, this.children, this.json, this.index, this.userObject})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -18,14 +21,16 @@ class ProfileCard extends StatelessWidget {
         width: double.infinity,
         children: [
           CircleAvatar(
-            backgroundImage: json != null
-                ? NetworkImage(json[index]['dp'])
-                : AssetImage('assets/placeholder_img.png'),
+            backgroundImage: userObject == null
+                ? AssetImage('assets/placeholder_img.png')
+                : userObject.profileImage == null
+                    ? AssetImage('assets/placeholder_img.png')
+                    : FileImage(userObject.profileImage),
             radius: 48,
           ),
           SizedBox(height: 12),
           Text(
-            json != null ? json[index]['name'] : 'Aggarwal Sweets',
+            userObject == null ? json[index]['name'] : userObject.name,
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SizedBox(height: 10),
@@ -37,9 +42,9 @@ class ProfileCard extends StatelessWidget {
                 Icon(Icons.home),
                 Flexible(
                   child: Text(
-                    json == null
-                        ? 'A-41, Sector 47 Gurgaon, Haryana 1010101'
-                        : json[index]['address'],
+                    userObject == null
+                        ? json[index]['address']
+                        : userObject.address,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
@@ -66,9 +71,9 @@ class ProfileCard extends StatelessWidget {
           SizedBox(height: 12),
           UserTypeLabel(
             // userType: userType,
-            label: json != null && json == null
+            label: userObject == null
                 ? json[index]['member_type']
-                : 'Business',
+                : userObject.userType,
             fontSize: 18,
             horizontalPadding: 32,
           ),
