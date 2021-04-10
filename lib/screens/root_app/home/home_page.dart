@@ -9,6 +9,7 @@ import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/models/create_post.dart';
 import 'package:food_insta/models/user.dart';
+import 'package:food_insta/models/feed_post.dart';
 import 'package:food_insta/screens/root_app/home/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -23,15 +24,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _selectCity = false;
 
-  String city = 'Delhi';
-  List<String> cities = ['Delhi', 'Patiala', 'Agra'];
+  String city;
+  List<String> cities = [];
+  List<FeedPost> feedPosts = [];
 
   @override
   void initState() {
     UserObject userObject =
         Provider.of<UserProfileController>(context, listen: false).userObject;
     if (userObject != null) {
-      cities.add(userObject.city);
       city = userObject.city;
     } else
       city = 'Delhi';
@@ -40,7 +41,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (city == null) city = 'Delhi';
     return Column(
       children: [
         // AppBar
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(width: 4),
               Text(
-                city,
+                city ?? 'City',
                 style: Theme.of(context)
                     .textTheme
                     .headline2
@@ -106,46 +106,79 @@ class _HomePageState extends State<HomePage> {
         height: 74,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            child: DropdownButton<String>(
-              underline: Container(),
-              hint: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: Text(city, style: Theme.of(context).textTheme.bodyText1),
-              ),
-              isExpanded: true,
-              elevation: 0,
-              onChanged: (value) {
-                setState(() {
-                  print(value);
-                  city = value;
-                  _selectCity = false;
-                });
-              },
-              items: cities.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: new Text(
-                    city,
-                    overflow: TextOverflow.clip,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
+          child: FutureBuilder<List<String>>(
+              future: Provider.of<PostController>(context).getCityList(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.none)
+                  return Container(
+                    child: Center(
+                      child: Text('Check your internet connection'),
+                    ),
+                  );
+                else if (snapshot.connectionState == ConnectionState.waiting)
+                  return Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                else {
+                  if (snapshot.hasError)
+                    return new Text('Error: ${snapshot.error}');
+                  else if (snapshot.data == null)
+                    return Container(
+                      child: Center(
+                        child: Text(
+                            'There are no posts available in the city selected.'),
+                      ),
+                    );
+                  else {
+                    print('data is ${snapshot.data}');
+                    cities = snapshot.data;
+                    city ?? cities[0];
+                    return Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                      child: DropdownButton<String>(
+                        underline: Container(),
+                        hint: Padding(
+                          padding: const EdgeInsets.only(left: 24.0),
+                          child: Text(city,
+                              style: Theme.of(context).textTheme.bodyText1),
+                        ),
+                        isExpanded: true,
+                        onChanged: (value) {
+                          setState(() {
+                            print(value);
+                            city = value;
+                            _selectCity = false;
+                          });
+                        },
+                        items: cities.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: new Text(
+                              value,
+                              overflow: TextOverflow.clip,
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  }
+                }
+              }),
         ),
       ),
     );
   }
 
   buildBody() {
-    var controller = Provider.of<PostController>(context);
+    var postController = Provider.of<PostController>(context);
     return Expanded(
         child: FutureBuilder(
-            future: controller.getFeedPosts(city),
+            future: postController.getFeedPosts(city),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.none)
                 return Container(
@@ -169,8 +202,9 @@ class _HomePageState extends State<HomePage> {
                 //     ),
                 //   );
                 else {
+                  feedPosts = snapshot.data;
                   return ListView.builder(
-                      itemCount: postJson.length,
+                      itemCount: feedPosts.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -257,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                                       color: Styles.blueIconColor),
                                   SizedBox(width: 4),
                                   Text(
-                                    postJson[index]['weight'],
+                                    feedPosts[index].product.weight,
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle2
@@ -317,7 +351,7 @@ class _HomePageState extends State<HomePage> {
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 10, 10),
                                 child: Text(
-                                  postJson[index]['description'],
+                                  feedPosts[index].product.description,
                                   textAlign: TextAlign.start,
                                   style: Theme.of(context)
                                       .textTheme

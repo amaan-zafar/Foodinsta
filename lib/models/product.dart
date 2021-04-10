@@ -5,6 +5,7 @@ class Product {
   // String freshUpto;
   String weight;
   File prodImg;
+  String fileName;
 
   Product({this.description, this.weight, this.prodImg});
 

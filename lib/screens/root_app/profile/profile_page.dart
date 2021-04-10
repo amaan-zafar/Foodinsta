@@ -170,12 +170,21 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: Container(
                                 width: 48,
                                 height: 48,
-                                child: Image(
-                                  image: myPostJson[index]['img_url'] == null
-                                      ? AssetImage('assets/food_large.png')
-                                      : NetworkImage(
-                                          myPostJson[index]['img_url']),
-                                  fit: BoxFit.cover,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child:
+                                      // userPosts[index].prodImgFile != null
+                                      //     ? Image.file(
+                                      //         userPosts[index].prodImgFile,
+                                      //         width: double.infinity,
+                                      //         height: 200,
+                                      //         fit: BoxFit.cover,
+                                      //       )
+                                      //     :
+                                      Image(
+                                    image: AssetImage('assets/food_large.png'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

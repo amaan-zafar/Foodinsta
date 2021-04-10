@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'dart:convert';
+import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/bottom_img_picker.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
@@ -303,7 +304,10 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     ),
                     Positioned(
                       child: IconButton(
-                        icon: Icon(Icons.cancel),
+                        icon: Icon(
+                          Icons.cancel,
+                          color: Styles.customDeclineButtonColor,
+                        ),
                         onPressed: () {
                           setState(() {
                             _foodImg = null;
@@ -327,7 +331,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
     setState(() {
       if (pickedFile != null) {
         _foodImg = File(pickedFile.path);
-        post.product.prodImg = _foodImg;
+        product.prodImg = _foodImg;
+        product.fileName = basename(_foodImg.path);
       } else {
         print('No image selected.');
       }

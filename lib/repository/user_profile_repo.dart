@@ -52,14 +52,13 @@ class UserProfileRepository {
   }
 
   Future<List<UserPost>> getUserPostsList() async {
-    List<UserPost> userPosts = [];
     try {
       var response = await _customHttpClient.getRequest('products/all_posts',
           requireAuth: true);
+      List<UserPost> userPosts = [];
       response.forEach((i) {
         userPosts.add(UserPost.fromJson(i));
       });
-
       return userPosts;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')

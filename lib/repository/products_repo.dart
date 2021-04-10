@@ -13,15 +13,17 @@ class PostRepository {
   );
 
   Future<void> createPost(CreatePost post) async {
-    var response;
     try {
-      response = response = await _customHttpClient.postRequest(
-          'products/new/',
-          {
+      await _customHttpClient.postMultipartRequest(
+          file: post.product.prodImg,
+          filename: post.product.fileName,
+          path: 'products/new/',
+          body: {
             "product": {
               "description": post.product.description,
               // "fresh_upto": post.product.freshUpto,
-              "weight": post.product.weight
+              "weight": post.product.weight,
+              // "image": post.product.prodImg
             },
             "contact_no": post.phone,
             "address": post.address,
@@ -32,17 +34,15 @@ class PostRepository {
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
-      return 0;
     } catch (unexpectedError) {
       print("UNEXPECTED ERROR OCCURED: ${unexpectedError.toString()}");
-      return 0;
     }
   }
 
   Future<void> createOrder(id) async {
     var response;
     try {
-      response = response = await _customHttpClient.postRequest(
+      response = await _customHttpClient.postRequest(
           'products/new_order/', {"static_id": id},
           requireAuth: true);
     } on PlatformException catch (error) {
@@ -63,11 +63,32 @@ class PostRepository {
       var response = await _customHttpClient.getRequestWithParams(
           'products/list', queryParameters,
           requireAuth: true);
+      var list = response['results'];
       List<FeedPost> feedPosts = [];
-      response.forEach((i) {
-        feedPosts.add(FeedPost.fromJson(i));
+      list.forEach((i) {
+        FeedPost post = FeedPost.fromJson(i);
+        feedPosts.add(post);
       });
       return feedPosts;
+    } on PlatformException catch (error) {
+      if (error.code == 'network_error')
+        throw Failure('Not connected to internet');
+      return null;
+    } catch (unexpectedError) {
+      print("UNEXPECTED ERROR OCCURED: ${unexpectedError.toString()}");
+      return null;
+    }
+  }
+
+  Future<List<String>> getCityList() async {
+    List<String> cityList = [];
+    try {
+      var response = await _customHttpClient.getRequest('users/city_list',
+          requireAuth: true);
+      response.forEach((i) {
+        cityList.add(i);
+      });
+      return cityList;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
@@ -12,9 +13,9 @@ class ItemCard extends StatelessWidget {
   final json;
   final int index;
   final PostDetail postDetail;
+  File _foodImg;
 
-  const ItemCard(
-      {Key key, this.children, this.json, this.index, this.postDetail})
+  ItemCard({Key key, this.children, this.json, this.index, this.postDetail})
       : super(key: key);
 
   void launchMap(String address) async {
@@ -52,6 +53,15 @@ class ItemCard extends StatelessWidget {
                     ? AssetImage('assets/food_large.png')
                     : NetworkImage(json[index]['img_url']),
                 fit: BoxFit.cover,
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.file(
+                _foodImg,
+                width: double.infinity,
+                height: 200,
+                fit: BoxFit.fitHeight,
               ),
             ),
           ),

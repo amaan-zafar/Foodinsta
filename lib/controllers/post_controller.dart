@@ -13,12 +13,15 @@ class PostController with ChangeNotifier {
   PostController(this.postRepository);
 
   Future<void> createNewPost(CreatePost post) async {
-    notifyListeners();
     await postRepository.createPost(post);
   }
 
   Future<List<FeedPost>> getFeedPosts(String city) async {
     return await postRepository.getFeedPosts(city);
+  }
+
+  Future<List<String>> getCityList() async {
+    return await postRepository.getCityList();
   }
 
   Future<PostDetail> getPostDetail(String id) async {
