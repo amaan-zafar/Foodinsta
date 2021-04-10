@@ -2,6 +2,8 @@ import 'package:flutter/services.dart';
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:food_insta/utils/Failure.dart';
 import 'package:food_insta/models/create_post.dart';
+import 'package:food_insta/models/feed_post.dart';
+import 'package:food_insta/models/post_detail.dart';
 
 class PostRepository {
   final CustomHttpClient _customHttpClient;
@@ -27,7 +29,6 @@ class PostRepository {
             "city": post.city
           },
           requireAuth: true);
-      print('create post response is $response');
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
@@ -44,7 +45,6 @@ class PostRepository {
       response = response = await _customHttpClient.postRequest(
           'products/new_order/', {"static_id": id},
           requireAuth: true);
-      print('create post response is $response');
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
@@ -55,7 +55,7 @@ class PostRepository {
     }
   }
 
-  Future<dynamic> getPostsListFromCity(String city) async {
+  Future<List<FeedPost>> getFeedPosts(String city) async {
     var queryParameters = {
       'city': city,
     };
@@ -63,9 +63,11 @@ class PostRepository {
       var response = await _customHttpClient.getRequestWithParams(
           'products/list', queryParameters,
           requireAuth: true);
-      print('response is $response');
-
-      return response;
+      List<FeedPost> feedPosts = [];
+      response.forEach((i) {
+        feedPosts.add(FeedPost.fromJson(i));
+      });
+      return feedPosts;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
@@ -76,7 +78,7 @@ class PostRepository {
     }
   }
 
-  Future<dynamic> getPostWithId(id) async {
+  Future<PostDetail> getPostWithId(id) async {
     var queryParameters = {
       'static_id': id,
     };
@@ -84,9 +86,8 @@ class PostRepository {
       var response = await _customHttpClient.getRequestWithParams(
           'products/detail', queryParameters,
           requireAuth: true);
-      print('response is $response');
-
-      return response;
+      PostDetail postDetail = PostDetail.fromJson(response);
+      return postDetail;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
@@ -107,7 +108,6 @@ class PostRepository {
             "order_status": orderStatus
           },
           requireAuth: true);
-      print('response is $response');
 
       return response;
     } on PlatformException catch (error) {

@@ -33,7 +33,6 @@ class UserProfileController with ChangeNotifier {
 
   Future<List<UserPost>> getUserPosts() async {
     var list = await userProfileRepo.getUserPostsList();
-    print('UserPost list is $list');
     return list;
   }
 

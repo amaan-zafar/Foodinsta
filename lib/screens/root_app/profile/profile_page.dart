@@ -137,9 +137,6 @@ class _ProfilePageState extends State<ProfilePage> {
               );
             else {
               userPosts = snapshot.data;
-              print('userpostsss is $userPosts');
-              print(userPosts[0].staticId);
-              print('List is ${snapshot.data}');
               return Container(
                   child: ListView.separated(
                       itemBuilder: (context, index) {
@@ -153,7 +150,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              PostDetail(index: index)))
+                                              PostDetailScreen(
+                                                index: index,
+                                                postId:
+                                                    userPosts[index].staticId,
+                                              )))
                                   // : myPostJson[index]['status'] == 1
                                   //     ? Scaffold.of(context)
                                   //         .showSnackBar(SnackBar(
@@ -186,7 +187,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           color:
                                               Styles.customRequestButtonColor),
                                       SizedBox(width: 8),
-                                      Text(myPostJson[index]['num_of_requests']
+                                      Text(userPosts[index]
+                                          .numOfRequests
                                           .toString()),
                                       Spacer(),
                                     ],
@@ -201,7 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     color: Styles.blueIconColor),
                                 SizedBox(width: 8),
                                 Text(
-                                  myPostJson[index]['weight'],
+                                  userPosts[index].weight,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1

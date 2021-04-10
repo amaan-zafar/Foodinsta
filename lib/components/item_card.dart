@@ -1,15 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:food_insta/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:food_insta/models/post_detail.dart';
 
 class ItemCard extends StatelessWidget {
   final List<Widget> children;
   final json;
   final int index;
+  final PostDetail postDetail;
 
-  const ItemCard({Key key, this.children, this.json, this.index})
+  const ItemCard(
+      {Key key, this.children, this.json, this.index, this.postDetail})
       : super(key: key);
 
   void launchMap(String address) async {
@@ -53,8 +58,8 @@ class ItemCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: Text(
-              json == null
-                  ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Posuere nulla non cursus lectus. Sit sagittis, nibh porta orci. Non consectetur tellus id purus pellentesque vitae velit vitae at.'
+              postDetail != null
+                  ? postDetail.product.description
                   : json[index]['description'],
               style: Theme.of(context)
                   .textTheme
@@ -72,7 +77,9 @@ class ItemCard extends StatelessWidget {
                       Icon(MdiIcons.weight, color: Styles.blueIconColor),
                       SizedBox(width: 8),
                       Text(
-                        json == null ? ' 50kg' : json[index]['weight'],
+                        postDetail != null
+                            ? postDetail.product.weight
+                            : json[index]['weight'],
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
@@ -82,8 +89,8 @@ class ItemCard extends StatelessWidget {
                       Icon(MdiIcons.accountGroup, color: Styles.blueIconColor),
                       SizedBox(width: 8),
                       Text(
-                        json == null
-                            ? ' 36'
+                        postDetail != null
+                            ? postDetail.numOfRequests.toString()
                             : json[index]['num_of_requests'].toString(),
                         style: TextStyle(fontSize: 15),
                       ),
@@ -103,8 +110,10 @@ class ItemCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
                 onPressed: () {
-                  json == null
-                      ? launchMap('Delhi, India')
+                  print(
+                      'lat lang is ${postDetail.latitude}, ${postDetail.longitude}');
+                  postDetail != null
+                      ? navigateTo(postDetail.latitude, postDetail.longitude)
                       : navigateTo(json[index]['lat'], json[index]['lng']);
                 },
                 highlightColor: Colors.green,

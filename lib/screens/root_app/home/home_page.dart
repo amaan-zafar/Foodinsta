@@ -4,6 +4,7 @@ import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/controllers/post_controller.dart';
 import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/models/create_post.dart';
@@ -12,7 +13,6 @@ import 'package:food_insta/screens/root_app/home/settings_page.dart';
 import 'package:food_insta/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
-
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -142,147 +142,197 @@ class _HomePageState extends State<HomePage> {
   }
 
   buildBody() {
+    var controller = Provider.of<PostController>(context);
     return Expanded(
-        child: ListView.builder(
-            itemCount: postJson.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: CustomAppCard(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => OrderDetail(
-                                      index: index,
-                                      json: postJson,
-                                    )));
-                      },
-                      child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(0),
-                            leading: CircleAvatar(
-                              backgroundImage: postJson == null
-                                  ? AssetImage('assets/placeholder_img.png')
-                                  : NetworkImage(postJson[index]['dp']),
-                              radius: 24,
-                            ),
-                            title: Text(
-                              postJson[index]['name'],
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            subtitle: Text(
-                              postJson[index]['time'],
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
-                            ),
-                            trailing: Column(
-                              children: [
-                                RatingIndicator(
-                                  itemSize: 15,
-                                  rating: postJson[index]['rating'],
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                UserTypeLabel(
-                                  horizontalPadding: 12,
-                                  label: postJson[index]['member_type'],
-                                ),
-                              ],
-                            ),
-                          )),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => OrderDetail(
-                                      index: index,
-                                      json: postJson,
-                                    )));
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Container(
-                          color: Colors.black,
-                          child: Image(
-                            image: NetworkImage(postJson[index]['img_url']),
-                            fit: BoxFit.cover,
-                          ),
-                          height: 220,
-                          width: double.infinity,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Icon(MdiIcons.weight, color: Styles.blueIconColor),
-                        SizedBox(width: 4),
-                        Text(
-                          postJson[index]['weight'],
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              fontWeight: FontWeight.w500, fontSize: 16),
-                        ),
-                        Spacer(),
-                        MaterialButton(
-                          color: Color(0xFFF54580),
-                          highlightColor: Colors.pink,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
-                          onPressed: () {
-                            setState(() {
-                              postJson[index]['status'] =
-                                  postJson[index]['status'] == 4 ? 0 : 4;
-                            });
-                          },
-                          child: Row(
+        child: FutureBuilder(
+            future: controller.getFeedPosts(city),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.none)
+                return Container(
+                  child: Center(
+                    child: Text('Check your internet connection'),
+                  ),
+                );
+              else if (snapshot.connectionState == ConnectionState.waiting)
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              else {
+                if (snapshot.hasError)
+                  return new Text('Error: ${snapshot.error}');
+                // else if (snapshot.data == null)
+                //   return Container(
+                //     child: Center(
+                //       child: Text('You have not created any post'),
+                //     ),
+                //   );
+                else {
+                  return ListView.builder(
+                      itemCount: postJson.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          child: CustomAppCard(
                             children: [
-                              Icon(MdiIcons.accountGroup, color: Colors.white),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(4, 0, 8, 0),
-                                child: Text(
-                                    postJson[index]['num_of_requests']
-                                        .toString(),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => OrderDetail(
+                                                index: index,
+                                                json: postJson,
+                                              )));
+                                },
+                                child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: ListTile(
+                                      contentPadding: const EdgeInsets.all(0),
+                                      leading: CircleAvatar(
+                                        backgroundImage: postJson == null
+                                            ? AssetImage(
+                                                'assets/placeholder_img.png')
+                                            : NetworkImage(
+                                                postJson[index]['dp']),
+                                        radius: 24,
+                                      ),
+                                      title: Text(
+                                        postJson[index]['name'],
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      subtitle: Text(
+                                        postJson[index]['time'],
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      trailing: Column(
+                                        children: [
+                                          RatingIndicator(
+                                            itemSize: 15,
+                                            rating: postJson[index]['rating'],
+                                          ),
+                                          SizedBox(
+                                            height: 4,
+                                          ),
+                                          UserTypeLabel(
+                                            horizontalPadding: 12,
+                                            label: postJson[index]
+                                                ['member_type'],
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => OrderDetail(
+                                                index: index,
+                                                json: postJson,
+                                              )));
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: Container(
+                                    color: Colors.black,
+                                    child: Image(
+                                      image: NetworkImage(
+                                          postJson[index]['img_url']),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    height: 220,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Icon(MdiIcons.weight,
+                                      color: Styles.blueIconColor),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    postJson[index]['weight'],
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText2
+                                        .subtitle2
                                         .copyWith(
-                                            color: Colors.white, fontSize: 13)),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    color: Color(0xFFF54580),
+                                    highlightColor: Colors.pink,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(16)),
+                                    onPressed: () {
+                                      setState(() {
+                                        postJson[index]['status'] =
+                                            postJson[index]['status'] == 4
+                                                ? 0
+                                                : 4;
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(MdiIcons.accountGroup,
+                                            color: Colors.white),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              4, 0, 8, 0),
+                                          child: Text(
+                                              postJson[index]['num_of_requests']
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2
+                                                  .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 13)),
+                                        ),
+                                        Text(
+                                          postJson[index]['status'] == 4
+                                              ? 'Request'
+                                              : postJson[index]['status'] == 0
+                                                  ? 'Requested'
+                                                  : 'Request',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1
+                                              .copyWith(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                postJson[index]['status'] == 4
-                                    ? 'Request'
-                                    : postJson[index]['status'] == 0
-                                        ? 'Requested'
-                                        : 'Request',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1
-                                    .copyWith(color: Colors.white),
-                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                child: Text(
+                                  postJson[index]['description'],
+                                  textAlign: TextAlign.start,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14),
+                                ),
+                              )
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      child: Text(
-                        postJson[index]['description'],
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.caption.copyWith(
-                            fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
-                    )
-                  ],
-                ),
-              );
+                        );
+                      });
+                }
+              }
             }));
   }
 }

@@ -164,7 +164,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
               onSaved: (value) {
                 post.address = address.addressLine;
                 post.city = address.locality;
-                post.location = address.coordinates.toString();
+                post.location = address.coordinates.latitude.toString() +
+                    ',' +
+                    address.coordinates.longitude.toString();
               },
               keyboardType: TextInputType.streetAddress,
               hintText: controller.loadingStatus ==
@@ -178,22 +180,23 @@ class _CreatePostPageState extends State<CreatePostPage> {
             ),
           ),
           Expanded(
-              flex: 1,
-              child: controller.loadingStatus == CurrentLocationStatus.Initial
-                  ? IconButton(
-                      icon: Icon(
-                        MdiIcons.crosshairsGps,
+            flex: 1,
+            child: controller.loadingStatus == CurrentLocationStatus.Initial
+                ? IconButton(
+                    icon: Icon(
+                      MdiIcons.crosshairsGps,
+                      color: Styles.iconColor,
+                    ),
+                    onPressed: () {
+                      controller.setCurrentLocation();
+                    })
+                : controller.loadingStatus == CurrentLocationStatus.Loading
+                    ? Center(child: CircularProgressIndicator())
+                    : Icon(
+                        MdiIcons.mapMarkerCheck,
                         color: Styles.iconColor,
                       ),
-                      onPressed: () {
-                        controller.setCurrentLocation();
-                      })
-                  : controller.loadingStatus == CurrentLocationStatus.Loading
-                      ? Center(child: CircularProgressIndicator())
-                      : Icon(
-                          MdiIcons.mapMarkerCheck,
-                          color: Styles.iconColor,
-                        ))
+          ),
         ],
       );
     });
