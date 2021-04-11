@@ -57,7 +57,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat ut et, massa est in. Viverra enim commodo semper lectus. Molestie viverra metus lorem lobortis viverra. Sed feugiat nullam lectus scelerisque blandit eleifend.'),
+                            'FoodInsta app is made for Google Solution Challenge. The app aims to solve the problem of hunger, i.e. achieving a zero hunger state which connects people in a way which ensures no food wastage occurs!',
+                            textAlign: TextAlign.center,
+                          ),
                         )
                       ],
                     ),

@@ -131,7 +131,6 @@ class PostRepository {
   }
 
   Future<PostDetail> getPostWithId(id) async {
-    print('static is is $id');
     var queryParameters = {
       'static_id': id,
     };

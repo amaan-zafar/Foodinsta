@@ -158,12 +158,12 @@ class _HomePageState extends State<HomePage> {
                     child: Text('Check your internet connection'),
                   ),
                 );
-              else if (snapshot.connectionState == ConnectionState.waiting)
-                return Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
+              // else if (snapshot.connectionState == ConnectionState.waiting)
+              //   return Container(
+              //     child: Center(
+              //       child: CircularProgressIndicator(),
+              //     ),
+              //   );
               else {
                 if (snapshot.hasError)
                   return new Text('Error: ${snapshot.error}');
