@@ -5,20 +5,20 @@ import 'package:food_insta/theme.dart';
 
 enum ORDERSTATUS { PENDING, APPROVED, REJECTED, COMPLETED }
 
-class Order {
+class UserOrder {
   String orderedTo;
   String createdTime;
   ORDERSTATUS orderStatus;
   File image;
 
-  Order({this.orderedTo, this.createdTime, this.orderStatus, this.image});
+  UserOrder({this.orderedTo, this.createdTime, this.orderStatus, this.image});
 
-  // Order.fromJson(Map<String, dynamic> json) {
-  //   orderedTo = json['ordered_to'];
-  //   createdTime = json['created_time'];
-  //   orderStatus = json['order_status'];
-  //   image = json['image'];
-  // }
+  UserOrder.fromJson(Map<String, dynamic> json) {
+    orderedTo = json['ordered_to'];
+    createdTime = json['created_time'];
+    orderStatus = getStatus(json['order_status']);
+    image = json['image'];
+  }
 
   // Map<String, dynamic> toJson() {
   //   final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -28,6 +28,19 @@ class Order {
   //   data['image'] = this.image;
   //   return data;
   // }
+
+  ORDERSTATUS getStatus(String status) {
+    switch (status) {
+      case 'Approved':
+        return ORDERSTATUS.APPROVED;
+      case 'Completed':
+        return ORDERSTATUS.COMPLETED;
+      case 'Rejected':
+        return ORDERSTATUS.REJECTED;
+      case 'Pending':
+        return ORDERSTATUS.PENDING;
+    }
+  }
 
   String toLabel(ORDERSTATUS orderstatus) {
     switch (orderStatus) {

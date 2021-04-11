@@ -3,6 +3,7 @@ import 'package:food_insta/models/user.dart';
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:food_insta/utils/Failure.dart';
 import 'package:food_insta/models/user_post.dart';
+import 'package:food_insta/models/user_order.dart';
 import 'package:food_insta/models/post_request.dart';
 
 class UserProfileRepository {
@@ -16,7 +17,6 @@ class UserProfileRepository {
     try {
       var response = await _customHttpClient.getRequest('users/profile',
           requireAuth: true);
-      print('response is $response');
       UserObject userObject = UserObject.fromProfileJson(response);
       return userObject;
     } on PlatformException catch (error) {
@@ -37,7 +37,6 @@ class UserProfileRepository {
       var response = await _customHttpClient.getRequestWithParams(
           'users/profile', queryParameters,
           requireAuth: true);
-      print('response is $response');
 
       UserObject userObject = UserObject.fromProfileJson(response);
       return userObject;
@@ -94,12 +93,14 @@ class UserProfileRepository {
   }
 
   Future<dynamic> getUserOrdersList() async {
+    List<UserOrder> userOrders = [];
     try {
       var response = await _customHttpClient.getRequest('products/all_orders',
           requireAuth: true);
-      print('response is $response');
-
-      return response;
+      response.forEach((i) {
+        userOrders.add(UserOrder.fromJson(i));
+      });
+      return userOrders;
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');

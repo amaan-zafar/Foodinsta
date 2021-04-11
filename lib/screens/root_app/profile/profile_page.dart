@@ -10,7 +10,7 @@ import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/screens/root_app/qr_code/deal_completed.dart';
 import 'package:food_insta/theme.dart';
-import 'package:food_insta/models/order.dart';
+import 'package:food_insta/models/user_order.dart';
 import 'package:food_insta/models/create_post.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -24,12 +24,20 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   UserObject _userObject;
   List<UserPost> userPosts = [];
+  List<UserOrder> userOrders;
   UserProfileController controller;
+
+  _fetchOrders() async {
+    userOrders = await controller.getUserOrders();
+  }
 
   @override
   Widget build(BuildContext context) {
     controller = Provider.of<UserProfileController>(context);
     _userObject = controller.userObject;
+    setState(() {
+      _fetchOrders();
+    });
     return Column(
       children: [
         // AppBar
@@ -254,67 +262,59 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildOrdersTab(Color tileColor) {
-    return Container(
-        child: ListView.builder(
-      itemCount: ordersJson.length,
-      itemBuilder: (context, index) {
-        ORDERSTATUS status;
-        switch (ordersJson[index]['status']) {
-          case 0:
-            status = ORDERSTATUS.PENDING;
-            break;
-          case 1:
-            status = ORDERSTATUS.APPROVED;
-            break;
-          case 2:
-            status = ORDERSTATUS.REJECTED;
-            break;
-          case 3:
-            status = ORDERSTATUS.COMPLETED;
-            break;
-
-          default:
-        }
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(32),
-          child: ListTile(
-            onTap: () {
-              status == ORDERSTATUS.COMPLETED
-                  ? Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          "Deal Completed! CreatePost is not available now."),
-                    ))
-                  : Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OrderDetail(
-                                index: index,
-                                json: ordersJson,
-                              )));
+    return userOrders == null
+        ? Center(
+            child: Text('No orders placed'),
+          )
+        : Container(
+            child: ListView.builder(
+            itemCount: userOrders.length - 1,
+            itemBuilder: (context, index) {
+              ORDERSTATUS status = userOrders[index].orderStatus;
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(32),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: ListTile(
+                    // TODO: Pass post static_id to order detail
+                    // onTap: () {
+                    //   status == ORDERSTATUS.COMPLETED
+                    //       ? Scaffold.of(context).showSnackBar(SnackBar(
+                    //           content: Text(
+                    //               "Deal Completed! CreatePost is not available now."),
+                    //         ))
+                    //       : Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => OrderDetail(
+                    //                     index: index,
+                    //                     json: ordersJson,
+                    //                   )));
+                    // },
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
+                    tileColor: tileColor,
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage('assets/placeholder_img.png'),
+                      radius: 34,
+                    ),
+                    title: SizedBox(
+                      height: 28,
+                      child: Text(
+                        userOrders[index].orderedTo,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            .copyWith(fontSize: 16),
+                      ),
+                    ),
+                    subtitle: Wrap(
+                      children: [OrderStatusLabel(orderstatus: status)],
+                    ),
+                  ),
+                ),
+              );
             },
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            tileColor: tileColor,
-            leading: CircleAvatar(
-              backgroundImage: AssetImage('assets/placeholder_img.png'),
-              radius: 34,
-            ),
-            title: SizedBox(
-              height: 28,
-              child: Text(
-                ordersJson[index]['name'],
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    .copyWith(fontSize: 16),
-              ),
-            ),
-            subtitle: Wrap(
-              children: [OrderStatusLabel(orderstatus: status)],
-            ),
-          ),
-        );
-      },
-    ));
+          ));
   }
 }

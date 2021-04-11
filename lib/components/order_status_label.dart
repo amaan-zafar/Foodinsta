@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_label.dart';
 import 'package:food_insta/theme.dart';
-import 'package:food_insta/models/order.dart';
+import 'package:food_insta/models/user_order.dart';
 
 class OrderStatusLabel extends StatelessWidget {
   final ORDERSTATUS orderstatus;

@@ -19,8 +19,6 @@ class CustomHttpClient {
         var jwt = await _secureStorage.read(key: 'access');
         var response = await _client.get(Uri.https(_baseURL, path),
             headers: {'Authorization': 'Bearer $jwt'});
-        print(
-            'Respose body at customhttp getRequest is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode == 401) {
           print('doing');
           String firebaseId = await _secureStorage.read(key: 'firebase');
@@ -31,7 +29,6 @@ class CustomHttpClient {
           );
           var decodedRes = json.decode(response.body);
           int status = decodedRes['status'];
-          print('response is $response');
           print(status);
           if (status == 1) {
             await _secureStorage.write(
@@ -76,16 +73,12 @@ class CustomHttpClient {
           'Authorization': 'Bearer $jwt',
           "Content-Type": "application/json; charset=UTF-8"
         });
-        print(
-            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode != 200)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
         return jsonDecode(response.body);
       } else {
         var response = await _client.get(Uri.https(_baseURL, path));
-        print(
-            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode != 200)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
@@ -115,8 +108,6 @@ class CustomHttpClient {
           },
           body: jsonEncode(body),
         );
-        print(
-            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode != 200 && response.statusCode != 201)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
@@ -127,8 +118,6 @@ class CustomHttpClient {
           body: jsonEncode(body),
           headers: {"Content-Type": "application/json; charset=UTF-8"},
         );
-        print(
-            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
         if (response.statusCode != 200 && response.statusCode != 201)
           throw Failure(
               '${response.reasonPhrase}: ${json.decode(response.body)['err']}');
@@ -197,8 +186,6 @@ class CustomHttpClient {
           headers: {'Authorization': jwt},
           body: body,
         );
-        print(
-            'Respose body at customhttp is ${response.body} and res code is ${response.statusCode}');
       } else {
         await _client.post(Uri.https(_baseURL, path), body: body);
       }

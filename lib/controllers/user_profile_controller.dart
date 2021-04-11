@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/models/user_post.dart';
 import 'package:food_insta/models/post_request.dart';
+import 'package:food_insta/models/user_order.dart';
 import 'package:food_insta/repository/user_profile_repo.dart';
 
 enum UserTypeState { Initial, Loading, Loaded }
@@ -47,8 +48,8 @@ class UserProfileController with ChangeNotifier {
     return list;
   }
 
-  Future<void> getUserOrders() async {
-    var response = await userProfileRepo.getUserOrdersList();
-    notifyListeners();
+  Future<List<UserOrder>> getUserOrders() async {
+    var list = await userProfileRepo.getUserOrdersList();
+    return list;
   }
 }

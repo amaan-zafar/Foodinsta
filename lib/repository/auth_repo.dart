@@ -26,7 +26,6 @@ class AuthRepository {
             'users/login/', {"firebase_id": user.uid},
             requireAuth: false);
         int status = response['status'];
-        print('response is $response');
         print(status);
         if (status == 1) {
           await _secureStorage.write(key: 'access', value: response['access']);
