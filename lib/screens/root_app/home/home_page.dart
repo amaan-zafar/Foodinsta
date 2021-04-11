@@ -5,11 +5,8 @@ import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/controllers/post_controller.dart';
-import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/models/create_post.dart';
-import 'package:food_insta/models/post_detail.dart';
-import 'package:food_insta/models/user.dart';
 import 'package:food_insta/models/feed_post.dart';
 import 'package:food_insta/screens/root_app/home/settings_page.dart';
 import 'package:food_insta/theme.dart';
@@ -32,12 +29,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    UserObject userObject =
-        Provider.of<UserProfileController>(context, listen: false).userObject;
-    if (userObject != null) {
-      city = userObject.city;
-    } else
-      city = 'Delhi';
+    fetchCityList().then((value) {
+      setState(() {
+        cities = value;
+        city = value[0];
+        print('city initialised is $city');
+      });
+    });
     super.initState();
   }
 
@@ -56,7 +54,6 @@ class _HomePageState extends State<HomePage> {
 
   buildAppBar(BuildContext context) {
     var darkThemeProvider = Provider.of<DarkThemeProvider>(context);
-
     return CustomAppBar(
       actions: [
         MaterialButton(
@@ -101,76 +98,50 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Future<dynamic> fetchCityList() async {
+    print('fetching cities');
+    return await Provider.of<PostController>(context, listen: false)
+        .getCityList();
+  }
+
   buildCitySelector() {
     return Visibility(
       visible: _selectCity,
       child: SizedBox(
         height: 74,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
-          child: FutureBuilder<List<String>>(
-              future: Provider.of<PostController>(context).getCityList(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.none)
-                  return Container(
-                    child: Center(
-                      child: Text('Check your internet connection'),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
+            child: Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              child: DropdownButton<String>(
+                underline: Container(),
+                hint: Padding(
+                  padding: const EdgeInsets.only(left: 24.0),
+                  child: Text(city ?? 'City',
+                      style: Theme.of(context).textTheme.bodyText1),
+                ),
+                isExpanded: true,
+                onChanged: (value) {
+                  setState(() {
+                    print(value);
+                    city = value;
+                    _selectCity = false;
+                  });
+                },
+                items: cities.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(
+                      value,
+                      overflow: TextOverflow.clip,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   );
-                else if (snapshot.connectionState == ConnectionState.waiting)
-                  return Container(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                else {
-                  if (snapshot.hasError)
-                    return new Text('Error: ${snapshot.error}');
-                  else if (snapshot.data == null)
-                    return Container(
-                      child: Center(
-                        child: Text('No city is available'),
-                      ),
-                    );
-                  else {
-                    print('data is ${snapshot.data}');
-                    cities = snapshot.data;
-                    city ?? cities[0];
-                    return Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
-                      child: DropdownButton<String>(
-                        underline: Container(),
-                        hint: Padding(
-                          padding: const EdgeInsets.only(left: 24.0),
-                          child: Text(city,
-                              style: Theme.of(context).textTheme.bodyText1),
-                        ),
-                        isExpanded: true,
-                        onChanged: (value) {
-                          setState(() {
-                            print(value);
-                            city = value;
-                            _selectCity = false;
-                          });
-                        },
-                        items: cities.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: new Text(
-                              value,
-                              overflow: TextOverflow.clip,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    );
-                  }
-                }
-              }),
-        ),
+                }).toList(),
+              ),
+            )),
       ),
     );
   }

@@ -8,7 +8,6 @@ import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/screens/auth/login_screen.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
-import 'package:food_insta/utils/authentication.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
