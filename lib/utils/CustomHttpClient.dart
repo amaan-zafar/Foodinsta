@@ -176,21 +176,21 @@ class CustomHttpClient {
     }
   }
 
-  Future<void> unhandledPostRequest(String path, Map body,
-      {@required bool requireAuth}) async {
-    try {
-      if (requireAuth) {
-        var jwt = await _secureStorage.read(key: 'access');
-        var response = await _client.post(
-          Uri.https(_baseURL, path),
-          headers: {'Authorization': jwt},
-          body: body,
-        );
-      } else {
-        await _client.post(Uri.https(_baseURL, path), body: body);
-      }
-    } catch (e) {}
-  }
+  // Future<void> unhandledPostRequest(String path, Map body,
+  //     {@required bool requireAuth}) async {
+  //   try {
+  //     if (requireAuth) {
+  //       var jwt = await _secureStorage.read(key: 'access');
+  //       var response = await _client.post(
+  //         Uri.https(_baseURL, path),
+  //         headers: {'Authorization': jwt},
+  //         body: body,
+  //       );
+  //     } else {
+  //       await _client.post(Uri.https(_baseURL, path), body: body);
+  //     }
+  //   } catch (e) {}
+  // }
 }
 
 // Mehul Jain5:34 PM
