@@ -14,7 +14,7 @@ class NgoListRepository {
     Iterable response;
     try {
       response = await _customHttpClient.getRequest('users/ngo_list',
-          requireAuth: true) as List;
+          requireAuth: false) as List;
 
       List<Ngo> ngoList = response.map((i) => Ngo.fromJson(i)).toList();
       return ngoList;

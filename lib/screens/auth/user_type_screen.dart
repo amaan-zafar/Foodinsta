@@ -96,13 +96,12 @@ class UserTypePage extends StatelessWidget {
         textOnButton: text,
         onPressed: () async {
           controller.setUserTypeState(UserTypeState.Loading);
-          List<Ngo> ngoList;
+          List<Ngo> ngoList = [];
           if (userType == UserType.INDIVIDUAL) {
             ngoList =
                 await Provider.of<NgoListController>(context, listen: false)
                     .getNgoList();
-          } else
-            ngoList = null;
+          }
           Navigator.push(
               context,
               MaterialPageRoute(

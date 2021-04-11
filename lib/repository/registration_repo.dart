@@ -83,8 +83,11 @@ class RegistrationRepository {
       print('reg response is $response');
       String access = response['access'];
       String refresh = response['refresh'];
+      await _secureStorage.deleteAll();
       await _secureStorage.write(key: 'access', value: access);
       await _secureStorage.write(key: 'refresh', value: refresh);
+      var jwt = await _secureStorage.read(key: 'access');
+      print('jwt is $jwt');
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');

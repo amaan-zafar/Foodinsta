@@ -1,9 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:food_insta/utils/CustomHttpClient.dart';
 import 'package:food_insta/utils/Failure.dart';
 import 'package:food_insta/models/create_post.dart';
 import 'package:food_insta/models/feed_post.dart';
 import 'package:food_insta/models/post_detail.dart';
+import 'package:http_parser/http_parser.dart';
 
 class PostRepository {
   final CustomHttpClient _customHttpClient;
@@ -13,24 +15,52 @@ class PostRepository {
   );
 
   Future<void> createPost(CreatePost post) async {
+    // try {
+    //   await _customHttpClient.postMultipartRequest(
+    //       file: post.product.prodImg,
+    //       filename: post.product.fileName,
+    //       path: 'products/new/',
+    // body: {
+    //   "product": {
+    //     "description": post.product.description,
+    //     // "fresh_upto": post.product.freshUpto,
+    //     "weight": post.product.weight,
+    //     // "image": post.product.prodImg
+    //   },
+    //   "contact_no": post.phone,
+    //   "address": post.address,
+    //   "location": post.location,
+    //   "city": post.city
+    // },
+    //       requireAuth: true);
+    // }
     try {
+      String fileName = post.product.prodImg.path.split('/').last;
+      MultipartFile multipartFile = await MultipartFile.fromFile(
+          post.product.prodImg.path,
+          filename: fileName,
+          contentType: new MediaType("image", "jpg"));
+      print(multipartFile.filename);
+      FormData formData = FormData.fromMap({
+        // "product": {
+        //   "description": post.product.description,
+        //   // "fresh_upto": post.product.freshUpto,
+        //   "weight": post.product.weight,
+        //   "image": await MultipartFile.fromFile(post.product.prodImg.path,
+        //       filename: fileName, contentType: new MediaType("image", "jpeg")),
+        // },
+        "product.description": post.product.description,
+        // "fresh_upto": post.product.freshUpto,
+        "product.weight": post.product.weight,
+        "product.image": multipartFile,
+
+        "contact_no": post.phone,
+        "address": post.address,
+        "location": post.location,
+        "city": post.city
+      });
       await _customHttpClient.postMultipartRequest(
-          file: post.product.prodImg,
-          filename: post.product.fileName,
-          path: 'products/new/',
-          body: {
-            "product": {
-              "description": post.product.description,
-              // "fresh_upto": post.product.freshUpto,
-              "weight": post.product.weight,
-              // "image": post.product.prodImg
-            },
-            "contact_no": post.phone,
-            "address": post.address,
-            "location": post.location,
-            "city": post.city
-          },
-          requireAuth: true);
+          formData: formData, requireAuth: true);
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
@@ -45,6 +75,7 @@ class PostRepository {
       response = await _customHttpClient.postRequest(
           'products/new_order/', {"static_id": id},
           requireAuth: true);
+      if (response['status'] == 1) print('Order created successfully');
     } on PlatformException catch (error) {
       if (error.code == 'network_error')
         throw Failure('Not connected to internet');
@@ -100,6 +131,7 @@ class PostRepository {
   }
 
   Future<PostDetail> getPostWithId(id) async {
+    print('static is is $id');
     var queryParameters = {
       'static_id': id,
     };

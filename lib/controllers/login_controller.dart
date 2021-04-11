@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/repository/auth_repo.dart';
-import 'package:food_insta/repository/user_profile_repo.dart';
 
 enum LoginState { Initial, Loading, Loaded }
 
@@ -22,5 +21,10 @@ class LoginController with ChangeNotifier {
     loginState = LoginState.Loaded;
     notifyListeners();
     return email;
+  }
+
+  Future<void> logOut() async {
+    await authRepository.signOut();
+    notifyListeners();
   }
 }

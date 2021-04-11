@@ -8,10 +8,12 @@ import 'package:food_insta/controllers/post_controller.dart';
 import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/models/create_post.dart';
+import 'package:food_insta/models/post_detail.dart';
 import 'package:food_insta/models/user.dart';
 import 'package:food_insta/models/feed_post.dart';
 import 'package:food_insta/screens/root_app/home/settings_page.dart';
 import 'package:food_insta/theme.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -127,8 +129,7 @@ class _HomePageState extends State<HomePage> {
                   else if (snapshot.data == null)
                     return Container(
                       child: Center(
-                        child: Text(
-                            'There are no posts available in the city selected.'),
+                        child: Text('No city is available'),
                       ),
                     );
                   else {
@@ -195,16 +196,16 @@ class _HomePageState extends State<HomePage> {
               else {
                 if (snapshot.hasError)
                   return new Text('Error: ${snapshot.error}');
-                // else if (snapshot.data == null)
-                //   return Container(
-                //     child: Center(
-                //       child: Text('You have not created any post'),
-                //     ),
-                //   );
+                else if (snapshot.data == null)
+                  return Container(
+                    child: Center(
+                      child: Text('No post available in this city'),
+                    ),
+                  );
                 else {
                   feedPosts = snapshot.data;
                   return ListView.builder(
-                      itemCount: feedPosts.length,
+                      itemCount: feedPosts.length - 1,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -213,13 +214,19 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => OrderDetail(
-                                                index: index,
-                                                json: postJson,
-                                              )));
+                                  print(
+                                      'stsss is ${feedPosts[index].postStaticId}');
+                                  setState(() {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => OrderDetail(
+                                                  postStaticId: feedPosts[index]
+                                                      .postStaticId,
+                                                  index: index,
+                                                  json: postJson,
+                                                )));
+                                  });
                                 },
                                 child: Padding(
                                     padding: const EdgeInsets.only(bottom: 8),
@@ -238,7 +245,9 @@ class _HomePageState extends State<HomePage> {
                                         style: TextStyle(fontSize: 16),
                                       ),
                                       subtitle: Text(
-                                        postJson[index]['time'],
+                                        Jiffy(feedPosts[index].createdAt,
+                                                "dd-MM-yyyy hh:mm:ss")
+                                            .fromNow(),
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600),
@@ -306,13 +315,16 @@ class _HomePageState extends State<HomePage> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(16)),
-                                    onPressed: () {
-                                      setState(() {
-                                        postJson[index]['status'] =
-                                            postJson[index]['status'] == 4
-                                                ? 0
-                                                : 4;
-                                      });
+                                    onPressed: () async {
+                                      var controller =
+                                          Provider.of<PostController>(context,
+                                              listen: false);
+                                      await controller.createNewOrder(
+                                          feedPosts[index].postStaticId);
+                                      if (feedPosts[index].isRequested == false)
+                                        setState(() {
+                                          feedPosts[index].isRequested = true;
+                                        });
                                     },
                                     child: Row(
                                       children: [
@@ -322,7 +334,8 @@ class _HomePageState extends State<HomePage> {
                                           padding: const EdgeInsets.fromLTRB(
                                               4, 0, 8, 0),
                                           child: Text(
-                                              postJson[index]['num_of_requests']
+                                              feedPosts[index]
+                                                  .numOfRequests
                                                   .toString(),
                                               style: Theme.of(context)
                                                   .textTheme
@@ -332,11 +345,9 @@ class _HomePageState extends State<HomePage> {
                                                       fontSize: 13)),
                                         ),
                                         Text(
-                                          postJson[index]['status'] == 4
-                                              ? 'Request'
-                                              : postJson[index]['status'] == 0
-                                                  ? 'Requested'
-                                                  : 'Request',
+                                          feedPosts[index].isRequested
+                                              ? 'Requested'
+                                              : 'Request',
                                           style: Theme.of(context)
                                               .textTheme
                                               .subtitle1

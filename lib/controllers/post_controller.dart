@@ -16,6 +16,10 @@ class PostController with ChangeNotifier {
     await postRepository.createPost(post);
   }
 
+  Future<void> createNewOrder(String id) async {
+    await postRepository.createOrder(id);
+  }
+
   Future<List<FeedPost>> getFeedPosts(String city) async {
     return await postRepository.getFeedPosts(city);
   }

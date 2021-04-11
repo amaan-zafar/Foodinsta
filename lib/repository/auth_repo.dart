@@ -32,6 +32,7 @@ class AuthRepository {
           await _secureStorage.write(key: 'access', value: response['access']);
           await _secureStorage.write(
               key: 'refresh', value: response['refresh']);
+          await _secureStorage.write(key: 'firebase', value: user.uid);
         }
         Map<String, dynamic> map = {'status': status, 'email': email};
         print('map is $map');
@@ -45,6 +46,19 @@ class AuthRepository {
       print("UNEXPECTED ERROR OCCURED: ${unexpectedError.toString()}");
       await Authentication.signOut();
       return null;
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      await Authentication.signOut();
+      await _secureStorage.delete(key: 'access');
+      await _secureStorage.delete(key: 'refresh');
+    } on PlatformException catch (error) {
+      if (error.code == 'network_error')
+        throw Failure('Not connected to internet');
+    } catch (unexpectedError) {
+      print("UNEXPECTED ERROR OCCURED: ${unexpectedError.toString()}");
     }
   }
 }

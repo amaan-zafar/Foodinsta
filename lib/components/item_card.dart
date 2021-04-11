@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -55,15 +54,15 @@ class ItemCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.file(
-                _foodImg,
-                width: double.infinity,
-                height: 200,
-                fit: BoxFit.fitHeight,
-              ),
-            ),
+            // child: ClipRRect(
+            //   borderRadius: BorderRadius.circular(16),
+            //   child: Image.file(
+            //     _foodImg,
+            //     width: double.infinity,
+            //     height: 200,
+            //     fit: BoxFit.fitHeight,
+            //   ),
+            // ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),

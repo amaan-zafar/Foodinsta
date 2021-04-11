@@ -4,6 +4,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_icon_button.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
+import 'package:food_insta/controllers/login_controller.dart';
 import 'package:food_insta/screens/auth/login_screen.dart';
 import 'package:food_insta/theme.dart';
 import 'package:food_insta/constants.dart' as Constants;
@@ -131,7 +132,10 @@ class _SettingsPageState extends State<SettingsPage> {
                             icon: Icon(MdiIcons.logout),
                             color: Styles.iconColor,
                             onPressed: () async {
-                              await Authentication.signOut().whenComplete(() =>
+                              var controller = Provider.of<LoginController>(
+                                  context,
+                                  listen: false);
+                              await controller.logOut().whenComplete(() =>
                                   Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
                                           builder: (context) => LoginPage()),

@@ -33,7 +33,6 @@ Future<void> main() async {
 
   themeChangeProvider.darkTheme =
       await themeChangeProvider.darkThemePreference.getTheme();
-  // Get a specific camera from the list of available cameras.
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
   final CustomHttpClient _customHttpClient =
       CustomHttpClient('foodinsta.herokuapp.com', Client(), _secureStorage);
