@@ -24,20 +24,20 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   UserObject _userObject;
   List<UserPost> userPosts = [];
-  List<UserOrder> userOrders;
+  List<UserOrder> userOrders = [];
   UserProfileController controller;
 
-  _fetchOrders() async {
-    userOrders = await controller.getUserOrders();
-  }
+  // _fetchOrders() async {
+  //   userOrders = await controller.getUserOrders();
+  // }
 
   @override
   Widget build(BuildContext context) {
     controller = Provider.of<UserProfileController>(context);
     _userObject = controller.userObject;
-    setState(() {
-      _fetchOrders();
-    });
+    // setState(() {
+    //   _fetchOrders();
+    // });
     return Column(
       children: [
         // AppBar
@@ -145,176 +145,217 @@ class _ProfilePageState extends State<ProfilePage> {
               );
             else {
               userPosts = snapshot.data;
-              return Container(
-                  child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(32),
-                          child: ListTile(
-                            onTap: () {
-                              userPosts[index].postStatus ==
-                                      UserPostStatus.Active
-                                  ? Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PostDetailScreen(
-                                                index: index,
-                                                postStaticId:
-                                                    userPosts[index].staticId,
-                                              )))
-                                  // : myPostJson[index]['status'] == 1
-                                  //     ? Scaffold.of(context)
-                                  //         .showSnackBar(SnackBar(
-                                  //         content: Text(
-                                  //             "Deal Completed! CreatePost is not available now."),
-                                  //       ))
-                                  : Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Your post has expired")));
-                            },
-                            tileColor: tileColor,
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Container(
-                                width: 48,
-                                height: 48,
-                                child: ClipRRect(
+              return userPosts.length == 0
+                  ? Center(
+                      child: Text('You have not created any post'),
+                    )
+                  : Container(
+                      child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(32),
+                              child: ListTile(
+                                onTap: () {
+                                  userPosts[index].postStatus ==
+                                          UserPostStatus.Active
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PostDetailScreen(
+                                                    index: index,
+                                                    postStaticId:
+                                                        userPosts[index]
+                                                            .staticId,
+                                                  )))
+                                      // : myPostJson[index]['status'] == 1
+                                      //     ? Scaffold.of(context)
+                                      //         .showSnackBar(SnackBar(
+                                      //         content: Text(
+                                      //             "Deal Completed! CreatePost is not available now."),
+                                      //       ))
+                                      : Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  "Your post has expired")));
+                                },
+                                tileColor: tileColor,
+                                leading: ClipRRect(
                                   borderRadius: BorderRadius.circular(16),
-                                  child:
-                                      // userPosts[index].prodImgFile != null
-                                      //     ? Image.file(
-                                      //         userPosts[index].prodImgFile,
-                                      //         width: double.infinity,
-                                      //         height: 200,
-                                      //         fit: BoxFit.cover,
-                                      //       )
-                                      //     :
-                                      Image(
-                                    image: AssetImage('assets/food_large.png'),
-                                    fit: BoxFit.cover,
+                                  child: Container(
+                                    width: 48,
+                                    height: 48,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child:
+                                          // userPosts[index].prodImgFile != null
+                                          //     ? Image.file(
+                                          //         userPosts[index].prodImgFile,
+                                          //         width: double.infinity,
+                                          //         height: 200,
+                                          //         fit: BoxFit.cover,
+                                          //       )
+                                          //     :
+                                          Image(
+                                        image:
+                                            AssetImage('assets/food_large.png'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                title: userPosts[index].postStatus ==
+                                        UserPostStatus.Active
+                                    ? Row(
+                                        children: [
+                                          Icon(MdiIcons.accountGroup,
+                                              color: Styles
+                                                  .customRequestButtonColor),
+                                          SizedBox(width: 8),
+                                          Text(userPosts[index]
+                                              .numOfRequests
+                                              .toString()),
+                                          Spacer(),
+                                        ],
+                                      )
+                                    : userPosts[index].postStatus ==
+                                            UserPostStatus.Expired
+                                        ? Text('Expired')
+                                        : Text('Completed'),
+                                subtitle: Row(
+                                  children: [
+                                    Icon(MdiIcons.weight,
+                                        color: Styles.blueIconColor),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      userPosts[index].weight,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(
+                                              fontWeight: FontWeight.w600),
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
+                                trailing: CustomIconButton(
+                                  color: userPosts[index].postStatus ==
+                                          UserPostStatus.Active
+                                      ? Styles.iconColor
+                                      : userPosts[index].postStatus ==
+                                              UserPostStatus.Completed
+                                          ? Styles.customApprovedButtonColor
+                                          : Styles.customDeclineButtonColor,
+                                  height: double.infinity,
+                                  elevation: 0,
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    userPosts[index].postStatus ==
+                                            UserPostStatus.Active
+                                        ? MdiIcons.qrcode
+                                        : userPosts[index].postStatus ==
+                                                UserPostStatus.Active
+                                            ? MdiIcons.check
+                                            : MdiIcons.close,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
-                            ),
-                            title: userPosts[index].postStatus ==
-                                    UserPostStatus.Active
-                                ? Row(
-                                    children: [
-                                      Icon(MdiIcons.accountGroup,
-                                          color:
-                                              Styles.customRequestButtonColor),
-                                      SizedBox(width: 8),
-                                      Text(userPosts[index]
-                                          .numOfRequests
-                                          .toString()),
-                                      Spacer(),
-                                    ],
-                                  )
-                                : userPosts[index].postStatus ==
-                                        UserPostStatus.Expired
-                                    ? Text('Expired')
-                                    : Text('Completed'),
-                            subtitle: Row(
-                              children: [
-                                Icon(MdiIcons.weight,
-                                    color: Styles.blueIconColor),
-                                SizedBox(width: 8),
-                                Text(
-                                  userPosts[index].weight,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      .copyWith(fontWeight: FontWeight.w600),
-                                ),
-                                Spacer(),
-                              ],
-                            ),
-                            trailing: CustomIconButton(
-                              color: userPosts[index].postStatus ==
-                                      UserPostStatus.Active
-                                  ? Styles.iconColor
-                                  : userPosts[index].postStatus ==
-                                          UserPostStatus.Completed
-                                      ? Styles.customApprovedButtonColor
-                                      : Styles.customDeclineButtonColor,
-                              height: double.infinity,
-                              elevation: 0,
-                              onPressed: () {},
-                              icon: Icon(
-                                userPosts[index].postStatus ==
-                                        UserPostStatus.Active
-                                    ? MdiIcons.qrcode
-                                    : userPosts[index].postStatus ==
-                                            UserPostStatus.Active
-                                        ? MdiIcons.check
-                                        : MdiIcons.close,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (_, i) => SizedBox(height: 12),
-                      itemCount: userPosts.length));
+                            );
+                          },
+                          separatorBuilder: (_, i) => SizedBox(height: 12),
+                          itemCount: userPosts.length));
             }
           }
         });
   }
 
   Widget buildOrdersTab(Color tileColor) {
-    return userOrders == null
-        ? Center(
-            child: Text('No orders placed'),
-          )
-        : Container(
-            child: ListView.builder(
-            itemCount: userOrders.length - 1,
-            itemBuilder: (context, index) {
-              ORDERSTATUS status = userOrders[index].orderStatus;
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(32),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: ListTile(
-                    // TODO: Pass post static_id to order detail
-                    // onTap: () {
-                    //   status == ORDERSTATUS.COMPLETED
-                    //       ? Scaffold.of(context).showSnackBar(SnackBar(
-                    //           content: Text(
-                    //               "Deal Completed! CreatePost is not available now."),
-                    //         ))
-                    //       : Navigator.push(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //               builder: (context) => OrderDetail(
-                    //                     index: index,
-                    //                     json: ordersJson,
-                    //                   )));
-                    // },
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
-                    tileColor: tileColor,
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage('assets/placeholder_img.png'),
-                      radius: 34,
-                    ),
-                    title: SizedBox(
-                      height: 28,
-                      child: Text(
-                        userOrders[index].orderedTo,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(fontSize: 16),
-                      ),
-                    ),
-                    subtitle: Wrap(
-                      children: [OrderStatusLabel(orderstatus: status)],
-                    ),
-                  ),
+    return FutureBuilder<List<UserOrder>>(
+        future: controller.getUserOrders(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.none)
+            return Container(
+              child: Center(
+                child: Text('Check your internet connection'),
+              ),
+            );
+          else if (snapshot.connectionState == ConnectionState.waiting)
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          else {
+            if (snapshot.hasError)
+              return new Text('Error: ${snapshot.error}');
+            else if (snapshot.data == null)
+              return Container(
+                child: Center(
+                  child: Text('No orders placed'),
                 ),
               );
-            },
-          ));
+            else {
+              userOrders = snapshot.data;
+              return userOrders.length == 0
+                  ? Center(
+                      child: Text('No orders placed'),
+                    )
+                  : Container(
+                      child: ListView.builder(
+                      itemCount: userOrders.length - 1,
+                      itemBuilder: (context, index) {
+                        ORDERSTATUS status = userOrders[index].orderStatus;
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(32),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: ListTile(
+                              // TODO: Pass post static_id to order detail
+                              // onTap: () {
+                              //   status == ORDERSTATUS.COMPLETED
+                              //       ? Scaffold.of(context).showSnackBar(SnackBar(
+                              //           content: Text(
+                              //               "Deal Completed! CreatePost is not available now."),
+                              //         ))
+                              //       : Navigator.push(
+                              //           context,
+                              //           MaterialPageRoute(
+                              //               builder: (context) => OrderDetail(
+                              //                     index: index,
+                              //                     json: ordersJson,
+                              //                   )));
+                              // },
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 12),
+                              tileColor: tileColor,
+                              leading: CircleAvatar(
+                                backgroundImage:
+                                    AssetImage('assets/placeholder_img.png'),
+                                radius: 34,
+                              ),
+                              title: SizedBox(
+                                height: 28,
+                                child: Text(
+                                  userOrders[index].orderedTo,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      .copyWith(fontSize: 16),
+                                ),
+                              ),
+                              subtitle: Wrap(
+                                children: [
+                                  OrderStatusLabel(orderstatus: status)
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ));
+            }
+          }
+        });
   }
 }

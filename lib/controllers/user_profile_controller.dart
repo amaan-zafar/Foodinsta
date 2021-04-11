@@ -39,6 +39,7 @@ class UserProfileController with ChangeNotifier {
   }
 
   Future<List<UserPost>> getUserPosts() async {
+    print('getUserPosts called');
     var list = await userProfileRepo.getUserPostsList();
     return list;
   }
