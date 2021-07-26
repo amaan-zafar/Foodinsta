@@ -14,19 +14,13 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _controller = Completer();
-  // final Set<Marker> _markers = {
-  //   Marker(
-  //       markerId: MarkerId('delhi1'),
-  //       position: LatLng(28.744800, 77.116721),
-  //       infoWindow: InfoWindow(title: 'Marker1'),
-  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure)),
-  // };
 
   Set<Marker> markers = {};
   getMarkers() {
     for (int i = 0; i < postJson.length; i++) {
       markers.add(Marker(
           markerId: MarkerId('$i'),
+          // TODO : Replace with backend data
           position: LatLng(postJson[i]['lat'], postJson[i]['lng']),
           infoWindow: InfoWindow(title: postJson[i]['name']),
           icon: BitmapDescriptor.defaultMarkerWithHue(
@@ -51,7 +45,6 @@ class _MapPageState extends State<MapPage> {
           child: Stack(
             children: [
               _buildGoogleMap(),
-              // _buildFabs(),
               _buildMapInfoContainer(),
             ],
           ),
@@ -77,6 +70,7 @@ class _MapPageState extends State<MapPage> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: _boxes(
+                    // TODO : Replace with backend data
                     postJson[index]['img_url'],
                     postJson[index]['lat'],
                     postJson[index]['lng'],
@@ -150,6 +144,7 @@ class _MapPageState extends State<MapPage> {
   }
 
   Widget myDetailsContainer(String restaurantName, int index) {
+    // TODO : Replace postJson with backend data
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[

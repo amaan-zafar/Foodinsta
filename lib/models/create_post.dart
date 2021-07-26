@@ -30,6 +30,7 @@ class CreatePost {
   }
 }
 
+// TODO 0 : Remove these hardcoded jsons once all APIs are integrated
 var postJson = [
   {
     "description":

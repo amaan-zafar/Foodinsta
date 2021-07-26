@@ -178,6 +178,7 @@ class _HomePageState extends State<HomePage> {
                   return ListView.builder(
                       itemCount: feedPosts.length - 1,
                       itemBuilder: (context, index) {
+                        // TODO 2: Replace all hardcoded data (postJson contains hardcoded strings) with backend fetched image
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 8),
@@ -186,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                               GestureDetector(
                                 onTap: () {
                                   print(
-                                      'stsss is ${feedPosts[index].postStaticId}');
+                                      'Feed Post selected is ${feedPosts[index].postStaticId}');
                                   setState(() {
                                     Navigator.push(
                                         context,

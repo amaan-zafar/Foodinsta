@@ -34,6 +34,7 @@ class PostRepository {
     // },
     //       requireAuth: true);
     // }
+    // TODO 1: Check if image is getting sent to the backend
     try {
       String fileName = post.product.prodImg.path.split('/').last;
       MultipartFile multipartFile = await MultipartFile.fromFile(

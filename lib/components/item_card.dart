@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -12,7 +10,8 @@ class ItemCard extends StatelessWidget {
   final json;
   final int index;
   final PostDetail postDetail;
-  File _foodImg;
+  // TODO: Add this once image is fetched from backend
+  // final File _foodImg;
 
   ItemCard({Key key, this.children, this.json, this.index, this.postDetail})
       : super(key: key);

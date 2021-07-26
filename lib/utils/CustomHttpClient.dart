@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart' as diop;
-import 'package:http_parser/http_parser.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
