@@ -21,16 +21,14 @@ class ProfileCard extends StatelessWidget {
         width: double.infinity,
         children: [
           CircleAvatar(
-            backgroundImage: userObject == null
+            backgroundImage: json['member']['profile_pic'] == null
                 ? AssetImage('assets/placeholder_img.png')
-                : userObject.profileImage == null
-                    ? AssetImage('assets/placeholder_img.png')
-                    : FileImage(userObject.profileImage),
+                : NetworkImage(json['member']['profile_pic']),
             radius: 48,
           ),
           SizedBox(height: 12),
           Text(
-            userObject == null ? json[index]['name'] : userObject.name,
+            userObject == null ? json['member']['name'] : userObject.name,
             style: Theme.of(context).textTheme.subtitle1,
           ),
           SizedBox(height: 10),
@@ -43,7 +41,7 @@ class ProfileCard extends StatelessWidget {
                 Flexible(
                   child: Text(
                     userObject == null
-                        ? json[index]['address']
+                        ? json['member']['address']
                         : userObject.address,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText1,
@@ -65,14 +63,14 @@ class ProfileCard extends StatelessWidget {
           RatingIndicator(
             rating:
                 // json != null && json == null ? json[index]['rating'] :
-                4.5,
+                4.5, // TODO harcoded rating
             itemSize: 22,
           ),
           SizedBox(height: 12),
           UserTypeLabel(
             // userType: userType,
             label: userObject == null
-                ? json[index]['member_type']
+                ? json['member']['member_type']
                 : userObject.userType,
             fontSize: 18,
             horizontalPadding: 32,

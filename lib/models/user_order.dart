@@ -10,14 +10,21 @@ class UserOrder {
   String createdTime;
   ORDERSTATUS orderStatus;
   File image;
+  String postStatiId;
 
-  UserOrder({this.orderedTo, this.createdTime, this.orderStatus, this.image});
+  UserOrder(
+      {this.orderedTo,
+      this.createdTime,
+      this.orderStatus,
+      this.image,
+      this.postStatiId});
 
   UserOrder.fromJson(Map<String, dynamic> json) {
     orderedTo = json['ordered_to'];
     createdTime = json['created_time'];
     orderStatus = getStatus(json['order_status']);
     image = json['image'];
+    postStatiId = json['static_id'];
   }
 
   // Map<String, dynamic> toJson() {

@@ -14,6 +14,8 @@ import 'package:food_insta/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
+enum PostDetailLoadingState { Loading, Loaded }
+
 class PostDetailScreen extends StatefulWidget {
   final int index;
   final String postStaticId;
@@ -24,6 +26,7 @@ class PostDetailScreen extends StatefulWidget {
 }
 
 class _PostDetailState extends State<PostDetailScreen> {
+  PostDetailLoadingState loadingState = PostDetailLoadingState.Loading;
   PostDetail postDetail;
   @override
   Widget build(BuildContext context) {
@@ -79,6 +82,7 @@ class _PostDetailState extends State<PostDetailScreen> {
                           );
                         else {
                           postDetail = snapshot.data;
+                          print(postDetail.toJson().toString());
                           return SingleChildScrollView(
                             physics: BouncingScrollPhysics(),
                             child: Stack(
@@ -86,7 +90,7 @@ class _PostDetailState extends State<PostDetailScreen> {
                                 ItemCard(
                                     postDetail: postDetail,
                                     index: widget.index,
-                                    json: myPostJson,
+                                    json: postDetail.toJson(),
                                     children: [
                                       SizedBox(height: 16),
                                       CustomTextButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_card.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:food_insta/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,9 +48,9 @@ class ItemCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                image: json == null
+                image: json['product']['image'] == null
                     ? AssetImage('assets/food_large.png')
-                    : NetworkImage(json[index]['img_url']),
+                    : NetworkImage(json['product']['image']),
                 fit: BoxFit.cover,
               ),
             ),
@@ -68,7 +69,7 @@ class ItemCard extends StatelessWidget {
             child: Text(
               postDetail != null
                   ? postDetail.product.description
-                  : json[index]['description'],
+                  : json['product']['description'],
               style: Theme.of(context)
                   .textTheme
                   .caption
@@ -87,7 +88,7 @@ class ItemCard extends StatelessWidget {
                       Text(
                         postDetail != null
                             ? postDetail.product.weight
-                            : json[index]['weight'],
+                            : json['product']['weight'],
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
@@ -99,13 +100,16 @@ class ItemCard extends StatelessWidget {
                       Text(
                         postDetail != null
                             ? postDetail.numOfRequests.toString()
-                            : json[index]['num_of_requests'].toString(),
+                            : json['num_of_requests'].toString(),
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
                   ),
                   Text(
-                    json == null ? '6 hours ago' : json[index]['time'],
+                    json == null
+                        ? '6 hours ago'
+                        : Jiffy(json['created_at'], "dd-MM-yyyy hh:mm:ss")
+                            .fromNow(),
                     style: TextStyle(fontSize: 14),
                   ),
                 ],

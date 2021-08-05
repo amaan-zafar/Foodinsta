@@ -25,6 +25,7 @@ class AuthRepository {
         var response = await _customHttpClient.postRequest(
             'users/login/', {"firebase_id": user.uid},
             requireAuth: false);
+        print("response of login: " + response.toString());
         int status = response['status'];
         print(status);
         if (status == 1) {

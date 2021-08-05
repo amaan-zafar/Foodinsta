@@ -9,7 +9,7 @@ class PostDetail {
   double latitude;
   double longitude;
   String address;
-  Null requestStatus;
+  int requestStatus;
   int contactNo;
 
   PostDetail(

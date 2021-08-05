@@ -12,7 +12,7 @@ import 'package:food_insta/theme.dart';
 import 'package:provider/provider.dart';
 
 class OrderDetail extends StatefulWidget {
-  String postStaticId;
+  final String postStaticId;
   final int index;
   final json;
 
@@ -83,22 +83,21 @@ class _OrderDetailState extends State<OrderDetail> {
                             );
                           else {
                             postDetail = snapshot.data;
+                            print(postDetail.toJson());
                             return Column(
                               children: [
                                 ProfileCard(
-                                  json: widget.json,
-                                  index: widget.index,
+                                  json: postDetail.toJson(),
                                 ),
                                 ItemCard(
                                   postDetail: postDetail,
-                                  json: widget.json,
+                                  json: postDetail.toJson(),
                                   index: widget.index,
                                   children: [
                                     Divider(),
-                                    widget.json[widget.index]['status'] == 4
+                                    postDetail.requestStatus == 4
                                         ? reqNotSent(context)
-                                        : widget.json[widget.index]['status'] ==
-                                                1
+                                        : postDetail.requestStatus == 1
                                             ? approved(context)
                                             : reqSent(context),
                                   ],
@@ -121,7 +120,7 @@ class _OrderDetailState extends State<OrderDetail> {
     return CustomTextButton(
       onPressed: () {
         setState(() {
-          widget.json[widget.index]['status'] = 0;
+          postDetail.requestStatus = 0;
         });
       },
       textOnButton: 'Send Request',
@@ -166,7 +165,7 @@ class _OrderDetailState extends State<OrderDetail> {
         CustomTextButton(
           onPressed: () {
             setState(() {
-              widget.json[widget.index]['status'] = 4;
+              postDetail.requestStatus = 4;
             });
           },
           textOnButton: 'Cancel Request',

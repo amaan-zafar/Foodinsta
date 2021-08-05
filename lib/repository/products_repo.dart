@@ -41,7 +41,7 @@ class PostRepository {
           post.product.prodImg.path,
           filename: fileName,
           contentType: new MediaType("image", "jpg"));
-      print(multipartFile.filename);
+      print("Image file name is : " + multipartFile.filename);
       FormData formData = FormData.fromMap({
         // "product": {
         //   "description": post.product.description,

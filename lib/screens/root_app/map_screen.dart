@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:food_insta/components/custom_app_bar.dart';
 import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
+import 'package:food_insta/controllers/post_controller.dart';
 import 'package:food_insta/models/create_post.dart';
+import 'package:food_insta/models/feed_post.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:jiffy/jiffy.dart';
+import 'home/home_page.dart';
 
 class MapPage extends StatefulWidget {
   @override
@@ -14,6 +19,8 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _controller = Completer();
+  List<FeedPost> feedPosts;
+  String city = getSelectedCity(); // TODO remove hardcoded City
 
   Set<Marker> markers = {};
   getMarkers() {
@@ -58,26 +65,59 @@ class _MapPageState extends State<MapPage> {
   }
 
   Widget _buildMapInfoContainer() {
+    PostController postController = Provider.of<PostController>(context);
+
     return Align(
       alignment: Alignment.bottomLeft,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 32),
-        height: 150.0,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: postJson.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _boxes(
-                    // TODO : Replace with backend data
-                    postJson[index]['img_url'],
-                    postJson[index]['lat'],
-                    postJson[index]['lng'],
-                    postJson[index]['name'],
-                    index),
+      child: FutureBuilder(
+        future: postController.getFeedPosts(city),
+        builder: (context, snapshot) {
+          print("Snapshot is: " + snapshot.toString());
+          if (snapshot.connectionState == ConnectionState.none)
+            return Container(
+              child: Center(
+                child: Text('Check your internet connection'),
+              ),
+            );
+          else if (snapshot.connectionState == ConnectionState.waiting)
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          else {
+            feedPosts = snapshot.data;
+            if (snapshot.hasError)
+              return new Text('Error: ${snapshot.error}');
+            else if (feedPosts?.isEmpty ?? true)
+              return Container(
+                child: Center(
+                  child: Text('No post available in this city'),
+                ),
               );
-            }),
+            else {
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 32),
+                height: 150.0,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: feedPosts.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _boxes(
+                            // TODO : Replace with backend data
+                            feedPosts[index].product.prodImg,
+                            postJson[index]['lat'], //TODO harcoded lat and long
+                            postJson[index]['lng'],
+                            feedPosts[index].authorName,
+                            index),
+                      );
+                    }),
+              );
+            }
+          }
+        },
       ),
     );
   }
@@ -125,7 +165,9 @@ class _MapPageState extends State<MapPage> {
                     borderRadius: BorderRadius.circular(16.0),
                     child: Image(
                       fit: BoxFit.fill,
-                      image: NetworkImage(_image),
+                      image: _image == null
+                          ? AssetImage('assets/placeholder_img.png')
+                          : NetworkImage(_image),
                     ),
                   ),
                 ),
@@ -162,18 +204,20 @@ class _MapPageState extends State<MapPage> {
         SizedBox(height: 2.0),
         Container(
             child: RatingIndicator(
-          rating: postJson[index]['rating'],
+          rating: 2.5, // TODO hardcoded rating
           itemSize: 20,
         )),
         SizedBox(height: 5.0),
         UserTypeLabel(
-          label: postJson[index]['member_type'],
+          label: feedPosts[index].authorType,
           horizontalPadding: 28,
         ),
         SizedBox(height: 5.0),
         Container(
             child: Text(
-          "${postJson[index]['weight']} \u00B7 ${postJson[index]['time']}",
+          "${feedPosts[index].product.weight} \u00B7 " +
+              Jiffy(feedPosts[index].createdAt, "dd-MM-yyyy hh:mm:ss")
+                  .fromNow(),
           style: TextStyle(
             color: Colors.black54,
             fontSize: 18.0,
@@ -182,7 +226,7 @@ class _MapPageState extends State<MapPage> {
         SizedBox(height: 5.0),
         Container(
             child: Text(
-          "${postJson[index]['num_of_requests'].toString()} pending requests",
+          "${feedPosts[index].numOfRequests.toString()} pending requests",
           style: TextStyle(
               color: Colors.black54,
               fontSize: 18.0,

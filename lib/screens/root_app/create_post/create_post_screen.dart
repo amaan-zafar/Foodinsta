@@ -136,11 +136,13 @@ class _CreatePostPageState extends State<CreatePostPage> {
             onPressed: () async {
               // TODO: change newPostState to loading while creating new post
               if (_formKey.currentState.validate()) {
+                controller.newPostState = NewPostState.Loading;
                 _formKey.currentState.save();
                 post.product = product;
                 controller
                     .createNewPost(post)
                     .whenComplete(() => Navigator.of(context).pop());
+                controller.newPostState = NewPostState.Loaded;
               }
             },
             textOnButton: 'CreatePost',

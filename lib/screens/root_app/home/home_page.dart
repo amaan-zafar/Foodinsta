@@ -6,7 +6,6 @@ import 'package:food_insta/components/rating_indicator.dart';
 import 'package:food_insta/components/user_type_label.dart';
 import 'package:food_insta/controllers/post_controller.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
-import 'package:food_insta/models/create_post.dart';
 import 'package:food_insta/models/feed_post.dart';
 import 'package:food_insta/screens/root_app/home/settings_page.dart';
 import 'package:food_insta/theme.dart';
@@ -15,15 +14,20 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:food_insta/screens/root_app/profile/order_detail_screen.dart';
 import 'package:provider/provider.dart';
 
+String city;
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
+String getSelectedCity() {
+  return city;
+}
+
 class _HomePageState extends State<HomePage> {
   bool _selectCity = false;
 
-  String city;
   List<String> cities = [];
   List<FeedPost> feedPosts = [];
 
@@ -32,8 +36,8 @@ class _HomePageState extends State<HomePage> {
     fetchCityList().then((value) {
       setState(() {
         cities = value;
-        city = value[0];
-        print('city initialised is $city');
+        city = value[1];
+        print('city initialised is ${city}');
       });
     });
     super.initState();
@@ -152,31 +156,36 @@ class _HomePageState extends State<HomePage> {
         child: FutureBuilder(
             future: postController.getFeedPosts(city),
             builder: (context, snapshot) {
+              print("Snapshot is: " + snapshot.toString());
               if (snapshot.connectionState == ConnectionState.none)
                 return Container(
                   child: Center(
                     child: Text('Check your internet connection'),
                   ),
                 );
-              // else if (snapshot.connectionState == ConnectionState.waiting)
-              //   return Container(
-              //     child: Center(
-              //       child: CircularProgressIndicator(),
-              //     ),
-              //   );
+              else if (snapshot.connectionState == ConnectionState.waiting)
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
               else {
+                feedPosts = snapshot.data;
                 if (snapshot.hasError)
                   return new Text('Error: ${snapshot.error}');
-                else if (snapshot.data == null)
+                else if (feedPosts?.isEmpty ?? true)
                   return Container(
                     child: Center(
                       child: Text('No post available in this city'),
                     ),
                   );
                 else {
-                  feedPosts = snapshot.data;
+                  print(feedPosts);
+                  print(feedPosts[0].product.description +
+                      " " +
+                      feedPosts[0].product.weight);
                   return ListView.builder(
-                      itemCount: feedPosts.length - 1,
+                      itemCount: feedPosts.length,
                       itemBuilder: (context, index) {
                         // TODO 2: Replace all hardcoded data (postJson contains hardcoded strings) with backend fetched image
                         return Padding(
@@ -196,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                                                   postStaticId: feedPosts[index]
                                                       .postStaticId,
                                                   index: index,
-                                                  json: postJson,
+                                                  json: feedPosts,
                                                 )));
                                   });
                                 },
@@ -205,15 +214,17 @@ class _HomePageState extends State<HomePage> {
                                     child: ListTile(
                                       contentPadding: const EdgeInsets.all(0),
                                       leading: CircleAvatar(
-                                        backgroundImage: postJson == null
+                                        backgroundImage: feedPosts[index]
+                                                    .authorPic ==
+                                                null
                                             ? AssetImage(
                                                 'assets/placeholder_img.png')
                                             : NetworkImage(
-                                                postJson[index]['dp']),
+                                                feedPosts[index].authorPic),
                                         radius: 24,
                                       ),
                                       title: Text(
-                                        postJson[index]['name'],
+                                        feedPosts[index].authorName, //
                                         style: TextStyle(fontSize: 16),
                                       ),
                                       subtitle: Text(
@@ -228,15 +239,15 @@ class _HomePageState extends State<HomePage> {
                                         children: [
                                           RatingIndicator(
                                             itemSize: 15,
-                                            rating: postJson[index]['rating'],
+                                            rating:
+                                                2.5, // TODO hardcoded rating
                                           ),
                                           SizedBox(
                                             height: 4,
                                           ),
                                           UserTypeLabel(
                                             horizontalPadding: 12,
-                                            label: postJson[index]
-                                                ['member_type'],
+                                            label: feedPosts[index].authorType,
                                           ),
                                         ],
                                       ),
@@ -249,7 +260,9 @@ class _HomePageState extends State<HomePage> {
                                       MaterialPageRoute(
                                           builder: (_) => OrderDetail(
                                                 index: index,
-                                                json: postJson,
+                                                json: feedPosts[index].toJson(),
+                                                postStaticId: feedPosts[index]
+                                                    .postStaticId,
                                               )));
                                 },
                                 child: ClipRRect(
@@ -257,8 +270,12 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                     color: Colors.black,
                                     child: Image(
-                                      image: NetworkImage(
-                                          postJson[index]['img_url']),
+                                      image: feedPosts[index].product.prodImg ==
+                                              null
+                                          ? AssetImage(
+                                              'assets/placeholder_img.png')
+                                          : NetworkImage(
+                                              feedPosts[index].product.prodImg),
                                       fit: BoxFit.cover,
                                     ),
                                     height: 220,

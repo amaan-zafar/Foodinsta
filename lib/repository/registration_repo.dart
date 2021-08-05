@@ -74,7 +74,7 @@ class RegistrationRepository {
                 "contact_no": int.parse(obj.phone),
                 "member_type": "Restaurant",
                 "city": obj.city,
-                "address": obj.address,
+                "address": obj.address, //TODO profile_pic
               },
               "name": obj.name,
             },

@@ -14,6 +14,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:food_insta/models/user_post.dart';
 
+import 'order_detail_screen.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -166,16 +168,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         userPosts[index]
                                                             .staticId,
                                                   )))
-                                      // : myPostJson[index]['status'] == 1
-                                      //     ? Scaffold.of(context)
-                                      //         .showSnackBar(SnackBar(
-                                      //         content: Text(
-                                      //             "Deal Completed! CreatePost is not available now."),
-                                      //       ))
-                                      : Scaffold.of(context).showSnackBar(
-                                          SnackBar(
+                                      : userPosts[index].postStatus ==
+                                              UserPostStatus.Completed
+                                          ? Scaffold.of(context)
+                                              .showSnackBar(SnackBar(
                                               content: Text(
-                                                  "Your post has expired")));
+                                                  "Deal Completed! CreatePost is not available now."),
+                                            ))
+                                          : Scaffold.of(context).showSnackBar(
+                                              SnackBar(
+                                                  content: Text(
+                                                      "Your post has expired")));
                                 },
                                 tileColor: tileColor,
                                 leading: ClipRRect(
@@ -301,7 +304,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     )
                   : Container(
                       child: ListView.builder(
-                      itemCount: userOrders.length - 1,
+                      itemCount: userOrders.length,
                       itemBuilder: (context, index) {
                         ORDERSTATUS status = userOrders[index].orderStatus;
                         return ClipRRect(
@@ -310,20 +313,24 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: const EdgeInsets.symmetric(vertical: 4.0),
                             child: ListTile(
                               // TODO: Pass post static_id to order detail
-                              // onTap: () {
-                              //   status == ORDERSTATUS.COMPLETED
-                              //       ? Scaffold.of(context).showSnackBar(SnackBar(
-                              //           content: Text(
-                              //               "Deal Completed! CreatePost is not available now."),
-                              //         ))
-                              //       : Navigator.push(
-                              //           context,
-                              //           MaterialPageRoute(
-                              //               builder: (context) => OrderDetail(
-                              //                     index: index,
-                              //                     json: ordersJson,
-                              //                   )));
-                              // },
+                              onTap: () {
+                                status == ORDERSTATUS.COMPLETED
+                                    ? Scaffold.of(context)
+                                        .showSnackBar(SnackBar(
+                                        content: Text(
+                                            "Deal Completed! CreatePost is not available now."),
+                                      ))
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => OrderDetail(
+                                                  index: index,
+                                                  postStaticId:
+                                                      userOrders[index]
+                                                          .postStatiId,
+                                                  // json: ordersJson,
+                                                )));
+                              },
                               contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 12),
                               tileColor: tileColor,

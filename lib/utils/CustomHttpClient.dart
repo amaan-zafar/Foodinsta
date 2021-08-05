@@ -66,6 +66,7 @@ class CustomHttpClient {
     try {
       if (requireAuth) {
         var jwt = await _secureStorage.read(key: 'access');
+        print("JWT IS : " + jwt);
 
         var uri = Uri.https(_baseURL, path, queryParameters);
         var response = await _client.get(uri, headers: {
