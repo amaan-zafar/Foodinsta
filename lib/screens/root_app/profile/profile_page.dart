@@ -6,6 +6,7 @@ import 'package:food_insta/components/order_status_label.dart';
 import 'package:food_insta/controllers/dark_theme_provder.dart';
 import 'package:food_insta/controllers/user_profile_controller.dart';
 import 'package:food_insta/models/user.dart';
+import 'package:food_insta/screens/root_app/profile/offers.dart';
 import 'package:food_insta/screens/root_app/profile/post_detail_screen.dart';
 import 'package:food_insta/screens/root_app/qr_code/deal_completed.dart';
 import 'package:food_insta/theme.dart';
@@ -35,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     controller = Provider.of<UserProfileController>(context);
     _userObject = controller.userObject;
+    print("user object is " + _userObject.toString());
     // setState(() {
     //   _fetchOrders();
     // });
@@ -48,13 +50,23 @@ class _ProfilePageState extends State<ProfilePage> {
               CustomIconButton(
                 onPressed: () {
                   Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => OffersScreen()));
+                },
+                icon: Image.asset(
+                  "assets/fi_coin.png",
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              CustomIconButton(
+                onPressed: () {
+                  Navigator.push(context,
                       MaterialPageRoute(builder: (_) => DealCompletedPage()));
                 },
                 icon: Icon(
                   Icons.notifications,
                   color: Styles.iconColor,
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -198,8 +210,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           //       )
                                           //     :
                                           Image(
-                                        image:
-                                            AssetImage('assets/food_large.png'),
+                                        image: NetworkImage(
+                                            userPosts[index].image),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -336,7 +348,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               tileColor: tileColor,
                               leading: CircleAvatar(
                                 backgroundImage:
-                                    AssetImage('assets/placeholder_img.png'),
+                                    NetworkImage(userOrders[index].image),
                                 radius: 34,
                               ),
                               title: SizedBox(

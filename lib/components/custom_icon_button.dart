@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
-  final Icon icon;
+  final icon;
   final Function onPressed;
   final double elevation;
   final double height;
@@ -19,6 +19,7 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: height,
+      width: 62,
       child: Card(
         color: color,
         elevation: elevation,

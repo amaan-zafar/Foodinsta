@@ -3,7 +3,7 @@ enum UserPostStatus { Active, Completed, Expired }
 class UserPost {
   int numOfRequests;
   String weight;
-  Null image;
+  var image;
   UserPostStatus postStatus;
   String staticId;
 

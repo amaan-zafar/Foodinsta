@@ -4,6 +4,7 @@ import 'package:food_insta/components/custom_background.dart';
 import 'package:food_insta/components/custom_card.dart';
 import 'package:food_insta/components/custom_text_button.dart';
 import 'package:food_insta/screens/root_app/qr_code/deal_completed.dart';
+import 'package:food_insta/screens/root_app/qr_code/splash.dart';
 import 'package:food_insta/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -56,7 +57,10 @@ class _ScanQRState extends State<ScanQR> {
                       textOnButton: 'Scan QR Code',
                       color: Styles.buttonColor2,
                       onPressed: () async {
-                        scanner.scan().then((value) {
+                        print("Scan qr button pressed");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => SplashScreen()));
+                        /* scanner.scan().then((value) {
                           value == actualQrResult
                               ? Navigator.push(
                                   context,
@@ -65,7 +69,7 @@ class _ScanQRState extends State<ScanQR> {
                               : setState(() {
                                   qrResult = value;
                                 });
-                        });
+                        }); */
                       },
                     ),
                     SizedBox(height: 20),

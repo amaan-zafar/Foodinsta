@@ -9,7 +9,7 @@ class UserOrder {
   String orderedTo;
   String createdTime;
   ORDERSTATUS orderStatus;
-  File image;
+  var image;
   String postStatiId;
 
   UserOrder(

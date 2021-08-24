@@ -13,6 +13,7 @@ class Product {
     description = json['description'];
     // freshUpto = json['fresh_upto'];
     weight = json['weight'];
+    prodImg = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -20,6 +21,7 @@ class Product {
     data['description'] = this.description;
     // data['fresh_upto'] = this.freshUpto;
     data['weight'] = this.weight;
+    data['image'] = this.prodImg;
     return data;
   }
 }

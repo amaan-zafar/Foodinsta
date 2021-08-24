@@ -137,6 +137,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
               // TODO: change newPostState to loading while creating new post
               if (_formKey.currentState.validate()) {
                 controller.newPostState = NewPostState.Loading;
+                setState(() {});
                 _formKey.currentState.save();
                 post.product = product;
                 controller

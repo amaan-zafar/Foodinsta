@@ -20,7 +20,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _controller = Completer();
   List<FeedPost> feedPosts;
-  String city = getSelectedCity(); // TODO remove hardcoded City
+  String city = getSelectedCity();
 
   Set<Marker> markers = {};
   getMarkers() {

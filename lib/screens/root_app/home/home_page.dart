@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   List<String> cities = [];
   List<FeedPost> feedPosts = [];
+  bool citiesLoaded = false;
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
         cities = value;
         city = value[1];
         print('city initialised is ${city}');
+        citiesLoaded = true;
       });
     });
     super.initState();
@@ -47,11 +49,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // AppBar
-        buildAppBar(context),
-        buildCitySelector(),
-        // Body
-        buildBody(),
+        if (!citiesLoaded)
+          CircularProgressIndicator()
+        else ...[
+          // AppBar
+          buildAppBar(context),
+          buildCitySelector(),
+          // Body
+          buildBody(),
+        ]
       ],
     );
   }
@@ -70,21 +76,23 @@ class _HomePageState extends State<HomePage> {
               _selectCity = true;
             });
           },
-          child: Row(
-            children: [
-              Icon(
-                Icons.place_rounded,
-                color: Styles.iconColor,
-              ),
-              SizedBox(width: 4),
-              Text(
-                city ?? 'City',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline2
-                    .copyWith(color: Styles.iconColor),
-              )
-            ],
+          child: Container(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.place_rounded,
+                  color: Styles.iconColor,
+                ),
+                SizedBox(width: 4),
+                Text(
+                  city ?? 'City',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2
+                      .copyWith(color: Styles.iconColor),
+                ),
+              ],
+            ),
           ),
         ),
         SizedBox(width: 10),
@@ -255,6 +263,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  print("Slected feedpost is " +
+                                      feedPosts[index]
+                                          .product
+                                          .prodImg
+                                          .toString());
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
